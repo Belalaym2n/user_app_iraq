@@ -1,0 +1,68 @@
+{
+  "onboard": {
+    "1": {
+      "welcome_message": "مرحبًا بك في تطبيقنا",
+      "onboardingDesc1": "استمتع بمجموعة قوية من الأدوات المصممة لتسهيل مهامك اليومية، واختبر تجربة استخدام سلسة منذ اللحظة الأولى داخل التطبيق."
+    },
+    "2": {
+      "onboardingTitle2": "سهل الاستخدام",
+      "onboardingDesc2": "تنقّل بسهولة داخل واجهة بسيطة وواضحة تم تصميمها بعناية لمساعدتك على إتمام كل خطوة بسرعة وبدون أي تعقيد."
+    },
+    "3": {
+      "onboardingTitle3": "ابقَ على اتصال",
+      "onboardingDesc3": "ابقَ قريبًا من أصدقائك وعائلتك مع وصول سريع لخيارات التواصل التي تمنحك شعورًا دائمًا بالقرب مهما كانت المسافة."
+    }
+  },
+  "Login": {
+    "welcome": "مرحبًا" ,
+    "continue_to_login": "متابعة إلى تسجيل الدخول",
+    "password": "كلمة المرور",
+    "email": "البريد الإلكتروني",
+    "enter_email": "أدخل بريدك الإلكتروني",
+    "enter_password": "أدخل كلمة المرور",
+
+    "forget_password": "هل نسيت كلمة المرور؟",
+    "dont_have_account": "ليس لديك حساب؟",
+    "sign_up": "إنشاء حساب",
+    "login": "تسجيل الدخول",
+    "email_required": "البريد الإلكتروني مطلوب",
+    "password_required": "كلمة المرور مطلوبة"
+  },
+  "register": {
+    "create_account": "إنشاء حساب",
+    "enter_details": "أدخل بياناتك لإنشاء حساب جديد",
+    "full_name": "الاسم الكامل",
+    "enter_full_name": "أدخل اسمك الكامل",
+    "email": "البريد الإلكتروني",
+    "enter_email": "أدخل بريدك الإلكتروني",
+    "password": "كلمة المرور",
+    "enter_password": "أدخل كلمة المرور",
+    "confirm_password": "تأكيد كلمة المرور",
+    "enter_confirm_password": "أدخل تأكيد كلمة المرور",
+    "create_account_button": "إنشاء حساب",
+    "already_have_account": "لديك حساب بالفعل؟",
+    "login": "تسجيل الدخول"
+  },
+  "Profile": {
+    "total_loads": "إجمالي التحميلات",
+    "completed": "المكتملة",
+    "account_settings": "إعدادات الحساب",
+    "personal_information": "المعلومات الشخصية",
+    "manage_profile_details": "إدارة تفاصيل ملفك الشخصي",
+    "app_settings": "إعدادات التطبيق",
+    "notifications": "الإشعارات",
+    "language": "اللغة",
+    "theme": "المظهر",
+    "quick_actions": "الإجراءات السريعة",
+    "help_center": "مركز المساعدة",
+    "support": "الدعم",
+    "feedback": "ملاحظاتك",
+    "share_app": "مشاركة التطبيق",
+    "logout": "تسجيل الخروج",
+    "delete_account": "حذف الحساب"
+  },
+
+  "Splash": {
+    "loading": "جارٍ التحميل..."
+  }
+}

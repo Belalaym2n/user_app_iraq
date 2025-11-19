@@ -1,0 +1,71 @@
+{
+  "onboard": {
+    "1": {
+      "welcome_message": "Welcome to our app",
+      "onboardingDesc1": "Experience powerful tools designed to make your daily tasks easier and enjoy a smooth journey from the moment you start using the app."
+    },
+    "2": {
+      "onboardingTitle2": "Easy to Use",
+      "onboardingDesc2": "Navigate effortlessly through a clean and intuitive interface crafted to help every user complete actions quickly and without confusion."
+    },
+    "3": {
+      "onboardingTitle3": "Stay Connected",
+      "onboardingDesc3": "Stay engaged with your friends and family through fast access to communication features that keep you close no matter where you are."
+    }
+  },
+
+  "Login": {
+    "welcome": "Welcome",
+    "continue_to_login": "Continue to Login",
+    "forget_password": "Forget Password?",
+    "dont_have_account": "Don't have an account?",
+    "sign_up": "Sign Up",
+    "login": "Login",
+    "email": "Email",
+    "enter_password": "Enter your password",
+    "enter_email": "Enter your email",
+
+    "password": "Password",
+
+    "email_required": "Email is required",
+    "password_required": "Password is required"
+  },
+
+  "register": {
+    "create_account": "Create Account",
+    "enter_details": "Enter your details to create a new account",
+    "full_name": "Full Name",
+    "enter_full_name": "Enter your full name",
+    "email": "Email",
+    "enter_email": "Enter your email",
+    "password": "Password",
+    "enter_password": "Enter your password",
+    "confirm_password": "Confirm Password",
+    "enter_confirm_password": "Enter confirm password",
+    "create_account_button": "Create Account",
+    "already_have_account": "Already have an account?",
+    "login": "Login"
+  },
+
+  "Profile": {
+    "total_loads": "Total Loads",
+    "completed": "Completed",
+    "account_settings": "Account Settings",
+    "personal_information": "Personal Information",
+    "manage_profile_details": "Manage your profile details",
+    "app_settings": "App Settings",
+    "notifications": "Notifications",
+    "language": "Language",
+    "theme": "Theme",
+    "quick_actions": "Quick Actions",
+    "help_center": "Help Center",
+    "support": "Support",
+    "feedback": "Feedback",
+    "share_app": "Share App",
+    "logout": "Logout",
+    "delete_account": "Delete Account"
+  },
+  "Splash": {
+    "loading": "Loading..."
+  }
+}
