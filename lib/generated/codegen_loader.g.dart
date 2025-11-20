@@ -58,6 +58,23 @@ class CodegenLoader extends AssetLoader{
     "already_have_account": "لديك حساب بالفعل؟",
     "login": "تسجيل الدخول"
   },
+  "Home": {
+    "welcome": "مرحباً",
+    "manage_freight": "قم بإدارة الشحن الخاص بك بسهولة",
+    "post_load": "نشر حمولة",
+    "create_new_shipment": "إنشاء شحنة جديدة",
+    "track": "تتبع",
+    "support": "الدعم",
+    "bidding": "المزايدة",
+    "active": "نشط",
+    "view_live_auctions": "عرض المزادات المباشرة",
+    "assist_247": "مساعدة على مدار 24/7",
+    "no_active_shipments": "لا توجد شحنات نشطة",
+    "active_shipments_info": "ستظهر الشحنات النشطة هنا بمجرد تعيين الحمولات",
+    "no_journey_yet": "لا توجد رحلة بعد",
+    "start_journey": "ابدأ بإنشاء أول حمولة لك لبدء رحلتك",
+    "post_load_action": "نشر حمولة"
+  },
   "Profile": {
     "total_loads": "إجمالي التحميلات",
     "completed": "المكتملة",
@@ -74,6 +91,7 @@ class CodegenLoader extends AssetLoader{
     "feedback": "ملاحظاتك",
     "share_app": "مشاركة التطبيق",
     "logout": "تسجيل الخروج",
+    "Cancel": "إلغاء",
     "delete_account": "حذف الحساب"
   },
   "Splash": {
@@ -124,6 +142,23 @@ static const Map<String,dynamic> _en = {
     "already_have_account": "Already have an account?",
     "login": "Login"
   },
+  "Home": {
+    "welcome": "Welcome",
+    "manage_freight": "Manage your freight seamlessly",
+    "post_load": "Post Load",
+    "create_new_shipment": "Create a new shipment",
+    "track": "Track",
+    "support": "Support",
+    "bidding": "Bidding",
+    "active": "Active",
+    "view_live_auctions": "View live auctions",
+    "assist_247": "24/7 assistance",
+    "no_active_shipments": "No active shipments",
+    "active_shipments_info": "Your active shipments will appear here once loads are assigned",
+    "no_journey_yet": "No journey yet",
+    "start_journey": "Start by creating your first load to begin your journey",
+    "post_load_action": "Post Load"
+  },
   "Profile": {
     "total_loads": "Total Loads",
     "completed": "Completed",
@@ -140,6 +175,7 @@ static const Map<String,dynamic> _en = {
     "feedback": "Feedback",
     "share_app": "Share App",
     "logout": "Logout",
+    "Cancel": "Cancel",
     "delete_account": "Delete Account"
   },
   "Splash": {

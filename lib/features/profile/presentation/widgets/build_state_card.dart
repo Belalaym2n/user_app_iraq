@@ -14,34 +14,28 @@ class BuildStateCard extends StatefulWidget {
 class _BuildStateCardState extends State<BuildStateCard> {
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 3,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Row(
-          children: [
-            Expanded(
-              child: _buildStatItem(
-                LocaleKeys.Profile_total_loads.tr(),
-                "2",
-                Icons.inventory_2_outlined,
-                AppColors.primaryColor
-              ),
+    return Padding(
+      padding: const EdgeInsets.all(20),
+      child: Row(
+        children: [
+          Expanded(
+            child: _buildStatItem(
+              LocaleKeys.Profile_total_loads.tr(),
+              "2",
+              Icons.inventory_2_outlined,
+              AppColors.primaryColor
             ),
-            _buildStatsDivider(),
-            Expanded(
-              child: _buildStatItem(
-                LocaleKeys.Profile_completed.tr(),
-                "3",
+          ),
+           Expanded(
+            child: _buildStatItem(
+              LocaleKeys.Profile_completed.tr(),
+              "3",
 
-                Icons.check_circle_outline,
-                Colors.green,
-              ),
+              Icons.check_circle_outline,
+              Colors.green,
             ),
-            _buildStatsDivider(),
-          ],
-        ),
+          ),
+         ],
       ),
     );
   }
@@ -60,7 +54,7 @@ class _BuildStateCardState extends State<BuildStateCard> {
           value,
           style: TextStyle(
             fontWeight: FontWeight.bold,
-            color: AppColors.surfaceColor,
+            color: AppColors.primaryColor,
           ),
         ),
         const SizedBox(height: 4),

@@ -13,7 +13,6 @@
       "onboardingDesc3": "Stay engaged with your friends and family through fast access to communication features that keep you close no matter where you are."
     }
   },
-
   "Login": {
     "welcome": "Welcome",
     "continue_to_login": "Continue to Login",
@@ -24,13 +23,10 @@
     "email": "Email",
     "enter_password": "Enter your password",
     "enter_email": "Enter your email",
-
     "password": "Password",
-
     "email_required": "Email is required",
     "password_required": "Password is required"
   },
-
   "register": {
     "create_account": "Create Account",
     "enter_details": "Enter your details to create a new account",
@@ -46,6 +42,24 @@
     "already_have_account": "Already have an account?",
     "login": "Login"
   },
+  "Home": {
+    "welcome": "Welcome",
+    "manage_freight": "Manage your freight seamlessly",
+    "post_load": "Post Load",
+    "create_new_shipment": "Create a new shipment",
+    "track": "Track",
+    "support": "Support",
+    "bidding": "Bidding",
+    "active": "Active",
+    "view_live_auctions": "View live auctions",
+    "assist_247": "24/7 assistance",
+    "no_active_shipments": "No active shipments",
+    "active_shipments_info": "Your active shipments will appear here once loads are assigned",
+    "no_journey_yet": "No journey yet",
+    "start_journey": "Start by creating your first load to begin your journey",
+    "post_load_action": "Post Load"
+  },
+
 
   "Profile": {
     "total_loads": "Total Loads",
@@ -63,6 +77,7 @@
     "feedback": "Feedback",
     "share_app": "Share App",
     "logout": "Logout",
+    "Cancel": "Cancel",
     "delete_account": "Delete Account"
   },
   "Splash": {

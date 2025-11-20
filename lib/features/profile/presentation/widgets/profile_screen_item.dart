@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:user_app_iraq/core/utils/app_colors.dart';
+import 'package:user_app_iraq/features/profile/presentation/widgets/profile_buttons.dart';
+import 'package:user_app_iraq/features/profile/presentation/widgets/quick_actions.dart';
 
+import 'build_main_menue.dart';
 import 'build_state_card.dart';
 
 class ProfileScreenItem extends StatefulWidget {
@@ -16,12 +19,30 @@ class _ProfileScreenItemState extends State<ProfileScreenItem> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return Scaffold(body: CustomScrollView(
+    return Scaffold(
+      backgroundColor: AppColors.backgroundColor ,
+      body: CustomScrollView(
         slivers: [
           // Profile Header
-           _buildProfileHeader(theme),
-          BuildStateCard()
-        ]));
+          _buildProfileHeader(theme),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(children: [BuildStateCard(),
+                const SizedBox(height: 20),
+                BuildMainMenu(),
+                const SizedBox(height: 20),
+                BuildQuickActions(),
+                const SizedBox(height:32),
+
+                ProfileButtons()
+
+              ]),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   Widget _buildProfileHeader(ThemeData theme) {
@@ -30,9 +51,7 @@ class _ProfileScreenItemState extends State<ProfileScreenItem> {
       pinned: true,
       backgroundColor: AppColors.primaryColor,
       flexibleSpace: FlexibleSpaceBar(
-        background:
-
-        Container(
+        background: Container(
           child: SafeArea(
             child: Padding(
               padding: const EdgeInsets.all(10.0),

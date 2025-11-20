@@ -43,6 +43,23 @@
     "already_have_account": "لديك حساب بالفعل؟",
     "login": "تسجيل الدخول"
   },
+  "Home":{
+    "welcome": "مرحباً",
+    "manage_freight": "قم بإدارة الشحن الخاص بك بسهولة",
+    "post_load": "نشر حمولة",
+    "create_new_shipment": "إنشاء شحنة جديدة",
+    "track": "تتبع",
+    "support": "الدعم",
+    "bidding": "المزايدة",
+    "active": "نشط",
+    "view_live_auctions": "عرض المزادات المباشرة",
+    "assist_247": "مساعدة على مدار 24/7",
+    "no_active_shipments": "لا توجد شحنات نشطة",
+    "active_shipments_info": "ستظهر الشحنات النشطة هنا بمجرد تعيين الحمولات",
+    "no_journey_yet": "لا توجد رحلة بعد",
+    "start_journey": "ابدأ بإنشاء أول حمولة لك لبدء رحلتك",
+    "post_load_action": "نشر حمولة"
+  },
   "Profile": {
     "total_loads": "إجمالي التحميلات",
     "completed": "المكتملة",
@@ -59,6 +76,8 @@
     "feedback": "ملاحظاتك",
     "share_app": "مشاركة التطبيق",
     "logout": "تسجيل الخروج",
+    "Cancel": "إلغاء",
+
     "delete_account": "حذف الحساب"
   },
 
