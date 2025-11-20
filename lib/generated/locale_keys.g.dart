@@ -3,6 +3,8 @@
 // ignore_for_file: constant_identifier_names
 
 abstract class  LocaleKeys {
+  static const Splash_loading = 'Splash.loading';
+  static const Splash = 'Splash';
   static const onboard_1_welcome_message = 'onboard.1.welcome_message';
   static const onboard_1_onboardingDesc1 = 'onboard.1.onboardingDesc1';
   static const onboard_1 = 'onboard.1';
@@ -56,6 +58,48 @@ abstract class  LocaleKeys {
   static const Home_start_journey = 'Home.start_journey';
   static const Home_post_load_action = 'Home.post_load_action';
   static const Home = 'Home';
+  static const Loads_my_loads = 'Loads.my_loads';
+  static const Loads_total_loads = 'Loads.total_loads';
+  static const Loads_new_bids = 'Loads.new_bids';
+  static const Loads_active = 'Loads.active';
+  static const Loads_no_loads_found = 'Loads.no_loads_found';
+  static const Loads_start_posting_first_load = 'Loads.start_posting_first_load';
+  static const Loads = 'Loads';
+  static const Add_Load_posting = 'Add_Load.posting';
+  static const Add_Load_getCompetitiveBids = 'Add_Load.getCompetitiveBids';
+  static const Add_Load_basicInformation = 'Add_Load.basicInformation';
+  static const Add_Load_loadTitle = 'Add_Load.loadTitle';
+  static const Add_Load_loadTitleHint = 'Add_Load.loadTitleHint';
+  static const Add_Load_description = 'Add_Load.description';
+  static const Add_Load_descriptionHint = 'Add_Load.descriptionHint';
+  static const Add_Load_loadDetails = 'Add_Load.loadDetails';
+  static const Add_Load_materialType = 'Add_Load.materialType';
+  static const Add_Load_materialTypeHint = 'Add_Load.materialTypeHint';
+  static const Add_Load_weight = 'Add_Load.weight';
+  static const Add_Load_kilogram = 'Add_Load.kilogram';
+  static const Add_Load_dimensions = 'Add_Load.dimensions';
+  static const Add_Load_dimensionsHint = 'Add_Load.dimensionsHint';
+  static const Add_Load_vehicleType = 'Add_Load.vehicleType';
+  static const Add_Load_bike = 'Add_Load.bike';
+  static const Add_Load_auto = 'Add_Load.auto';
+  static const Add_Load_pickup = 'Add_Load.pickup';
+  static const Add_Load_truck = 'Add_Load.truck';
+  static const Add_Load_bikeCapacity = 'Add_Load.bikeCapacity';
+  static const Add_Load_autoCapacity = 'Add_Load.autoCapacity';
+  static const Add_Load_pickupCapacity = 'Add_Load.pickupCapacity';
+  static const Add_Load_truckCapacity = 'Add_Load.truckCapacity';
+  static const Add_Load_pickupAndDelivery = 'Add_Load.pickupAndDelivery';
+  static const Add_Load_pickupLocation = 'Add_Load.pickupLocation';
+  static const Add_Load_deliveryLocation = 'Add_Load.deliveryLocation';
+  static const Add_Load_tapToSelectLocation = 'Add_Load.tapToSelectLocation';
+  static const Add_Load_kilometer = 'Add_Load.kilometer';
+  static const Add_Load_budget = 'Add_Load.budget';
+  static const Add_Load = 'Add_Load';
+  static const Notifications_title = 'Notifications.title';
+  static const Notifications_no_notifications = 'Notifications.no_notifications';
+  static const Notifications_no_messages_yet = 'Notifications.no_messages_yet';
+  static const Notifications_view_details = 'Notifications.view_details';
+  static const Notifications = 'Notifications';
   static const Profile_total_loads = 'Profile.total_loads';
   static const Profile_completed = 'Profile.completed';
   static const Profile_account_settings = 'Profile.account_settings';
@@ -74,7 +118,5 @@ abstract class  LocaleKeys {
   static const Profile_Cancel = 'Profile.Cancel';
   static const Profile_delete_account = 'Profile.delete_account';
   static const Profile = 'Profile';
-  static const Splash_loading = 'Splash.loading';
-  static const Splash = 'Splash';
 
 }

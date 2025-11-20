@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:user_app_iraq/config/routes/app_router.dart';
   import 'package:user_app_iraq/generated/locale_keys.g.dart';
 
 import '../../../../../core/utils/app_colors.dart';
@@ -29,11 +30,7 @@ class _MobileHeaderState extends State<MobileHeader>
     with SingleTickerProviderStateMixin {
 
 
-  // إنشاء أنيميشن Fade
 
-  //==============================================================
-  // Build UI
-  //==============================================================
   @override
   Widget build(BuildContext context) {
     final double width = widget.width;
@@ -81,7 +78,11 @@ class _MobileHeaderState extends State<MobileHeader>
               const Spacer(),
 
               // Welcome Animation
-              BuildIcon(iconData: Icons.notifications),
+              InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(context, AppRoutes.notification);
+                  },
+                  child: BuildIcon(iconData: Icons.notifications)),
             ],
           ),
           SizedBox(height: AppConstants.h * 0.02),
