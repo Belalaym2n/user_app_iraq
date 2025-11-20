@@ -15,6 +15,9 @@ class CodegenLoader extends AssetLoader{
   }
 
   static const Map<String,dynamic> _ar = {
+  "Splash": {
+    "loading": "جارٍ التحميل..."
+  },
   "onboard": {
     "1": {
       "welcome_message": "مرحبًا بك في تطبيقنا",
@@ -75,6 +78,51 @@ class CodegenLoader extends AssetLoader{
     "start_journey": "ابدأ بإنشاء أول حمولة لك لبدء رحلتك",
     "post_load_action": "نشر حمولة"
   },
+  "Loads": {
+    "my_loads": "حمولاتي",
+    "total_loads": "إجمالي الحمولات",
+    "new_bids": "العطاءات الجديدة",
+    "active": "النشطة",
+    "no_loads_found": "لا توجد أي حمولات",
+    "start_posting_first_load": "ابدأ بنشر أول حمولة لك"
+  },
+  "Add_Load": {
+    "posting": "جار النشر...",
+    "getCompetitiveBids": "احصل على عروض تنافسية من الناقلين المعتمدين",
+    "basicInformation": "المعلومات الأساسية",
+    "loadTitle": "عنوان الشحنة",
+    "loadTitleHint": "مثال: شحن إلكترونيات، نقل أثاث",
+    "description": "الوصف",
+    "descriptionHint": "وصف موجز للشحنة",
+    "loadDetails": "تفاصيل الشحنة",
+    "materialType": "نوع المواد",
+    "materialTypeHint": "مثال: إلكترونيات، أثاث، مواد غذائية",
+    "weight": "الوزن",
+    "kilogram": "كجم",
+    "dimensions": "الأبعاد",
+    "dimensionsHint": "الطول × العرض × الارتفاع (م)",
+    "vehicleType": "نوع المركبة",
+    "bike": "دراجة نارية",
+    "auto": "توك توك",
+    "pickup": "بيك آب",
+    "truck": "شاحنة",
+    "bikeCapacity": "حتى 20 كجم",
+    "autoCapacity": "حتى 200 كجم",
+    "pickupCapacity": "حتى 1000 كجم",
+    "truckCapacity": "حتى 5000 كجم",
+    "pickupAndDelivery": "الاستلام والتسليم",
+    "pickupLocation": "موقع الاستلام",
+    "deliveryLocation": "موقع التسليم",
+    "tapToSelectLocation": "اضغط لتحديد الموقع",
+    "kilometer": "كم",
+    "budget": "الميزانية"
+  },
+  "Notifications": {
+    "title": "الإشعارات",
+    "no_notifications": "لا توجد إشعارات حالياً",
+    "no_messages_yet": "في الوقت الحالي لا توجد رسائل جديدة.\nسنقوم بإعلامك فور وصول أي إشعار جديد.",
+    "view_details": "عرض التفاصيل"
+  },
   "Profile": {
     "total_loads": "إجمالي التحميلات",
     "completed": "المكتملة",
@@ -93,9 +141,6 @@ class CodegenLoader extends AssetLoader{
     "logout": "تسجيل الخروج",
     "Cancel": "إلغاء",
     "delete_account": "حذف الحساب"
-  },
-  "Splash": {
-    "loading": "جارٍ التحميل..."
   }
 };
 static const Map<String,dynamic> _en = {
@@ -158,6 +203,51 @@ static const Map<String,dynamic> _en = {
     "no_journey_yet": "No journey yet",
     "start_journey": "Start by creating your first load to begin your journey",
     "post_load_action": "Post Load"
+  },
+  "Loads": {
+    "my_loads": "My Loads",
+    "total_loads": "Total Loads",
+    "new_bids": "New Bids",
+    "active": "Active",
+    "no_loads_found": "No loads found",
+    "start_posting_first_load": "Start by posting your first load"
+  },
+  "Add_Load": {
+    "posting": "Posting...",
+    "getCompetitiveBids": "Get competitive bids from verified transporters",
+    "basicInformation": "Basic Information",
+    "loadTitle": "Load Title",
+    "loadTitleHint": "e.g., Electronics Shipment, Furniture Move",
+    "description": "Description",
+    "descriptionHint": "Brief description of your load",
+    "loadDetails": "Load Details",
+    "materialType": "Material Type",
+    "materialTypeHint": "e.g., Electronics, Furniture, Food Items",
+    "weight": "Weight",
+    "kilogram": "kg",
+    "dimensions": "Dimensions",
+    "dimensionsHint": "L x W x H (m)",
+    "vehicleType": "Vehicle Type",
+    "bike": "Bike",
+    "auto": "Auto",
+    "pickup": "Pickup",
+    "truck": "Truck",
+    "bikeCapacity": "Up to 20 kg",
+    "autoCapacity": "Up to 200 kg",
+    "pickupCapacity": "Up to 1000 kg",
+    "truckCapacity": "Up to 5000 kg",
+    "pickupAndDelivery": "Pickup & Delivery",
+    "pickupLocation": "Pickup Location",
+    "deliveryLocation": "Delivery Location",
+    "tapToSelectLocation": "Tap to select location",
+    "kilometer": "km",
+    "budget": "Budget"
+  },
+  "Notifications": {
+    "title": "Notifications",
+    "no_notifications": "No notifications available",
+    "no_messages_yet": "There are currently no new messages.\nWe will notify you as soon as a new alert arrives.",
+    "view_details": "View Details"
   },
   "Profile": {
     "total_loads": "Total Loads",

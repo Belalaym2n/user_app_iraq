@@ -60,7 +60,52 @@
     "post_load_action": "Post Load"
   },
 
+  "Loads": {
+    "my_loads": "My Loads",
+    "total_loads": "Total Loads",
+    "new_bids": "New Bids",
+    "active": "Active",
+    "no_loads_found": "No loads found",
+    "start_posting_first_load": "Start by posting your first load"
+  },
+"Add_Load": {
+  "posting": "Posting...",
+  "getCompetitiveBids": "Get competitive bids from verified transporters",
+  "basicInformation": "Basic Information",
+  "loadTitle": "Load Title",
+  "loadTitleHint": "e.g., Electronics Shipment, Furniture Move",
+  "description": "Description",
+  "descriptionHint": "Brief description of your load",
+  "loadDetails": "Load Details",
+  "materialType": "Material Type",
+  "materialTypeHint": "e.g., Electronics, Furniture, Food Items",
+  "weight": "Weight",
+  "kilogram": "kg",
+  "dimensions": "Dimensions",
+  "dimensionsHint": "L x W x H (m)",
+  "vehicleType": "Vehicle Type",
+  "bike": "Bike",
+  "auto": "Auto",
+  "pickup": "Pickup",
+  "truck": "Truck",
+  "bikeCapacity": "Up to 20 kg",
+  "autoCapacity": "Up to 200 kg",
+  "pickupCapacity": "Up to 1000 kg",
+  "truckCapacity": "Up to 5000 kg",
+  "pickupAndDelivery": "Pickup & Delivery",
+  "pickupLocation": "Pickup Location",
+  "deliveryLocation": "Delivery Location",
+  "tapToSelectLocation": "Tap to select location",
+  "kilometer": "km",
+  "budget": "Budget"
+ },
 
+  "Notifications": {
+    "title": "Notifications",
+    "no_notifications": "No notifications available",
+    "no_messages_yet": "There are currently no new messages.\nWe will notify you as soon as a new alert arrives.",
+    "view_details": "View Details"
+  },
   "Profile": {
     "total_loads": "Total Loads",
     "completed": "Completed",

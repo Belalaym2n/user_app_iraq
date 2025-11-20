@@ -14,8 +14,10 @@ class BuildQuickActions extends StatefulWidget {
 }
 
 class _BuildQuickActionsState extends State<BuildQuickActions> {
+
   @override
   Widget build(BuildContext context) {
+
     return Padding(
       padding:   EdgeInsets.fromLTRB(20, 0, 20, 24),
       child: Column(
@@ -36,7 +38,9 @@ class _BuildQuickActionsState extends State<BuildQuickActions> {
   }
 
  Widget _build_actions(){
-    return  GridView.builder(
+   List<ActionItem> actions = gerActions(context);
+
+   return  GridView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       gridDelegate:
@@ -48,7 +52,7 @@ class _BuildQuickActionsState extends State<BuildQuickActions> {
       ),
       itemCount: actions.length,
       itemBuilder: (context, index) {
-        final action = actions[index];
+        final action=actions[index];
 
         return TweenAnimationBuilder<double>(
           duration: Duration(milliseconds: 400 + (index * 100)),
@@ -64,7 +68,8 @@ class _BuildQuickActionsState extends State<BuildQuickActions> {
 
                   color: action.color,
                   onTap: () {
-
+                    action.navigation();
+                    print("object");
                   }
 
               ),

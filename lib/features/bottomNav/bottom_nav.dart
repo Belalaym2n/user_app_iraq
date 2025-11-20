@@ -1,6 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_nav_bar/google_nav_bar.dart';
+ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:user_app_iraq/features/login/presentation/widgets/login_screen_item.dart';
 import 'package:user_app_iraq/features/profile/presentation/pages/profile_screen.dart';
 
@@ -8,6 +9,7 @@ import '../../core/utils/app_colors.dart';
 import '../../core/utils/app_constants.dart';
 import '../../generated/locale_keys.g.dart';
 import '../home_page/presentation/pages/home_page.dart';
+import '../loads/presentation/pages/loads_screen.dart';
 
 class BottomNav extends StatefulWidget {
   const BottomNav({super.key});
@@ -19,7 +21,7 @@ class BottomNav extends StatefulWidget {
 class _BottomNavState extends State<BottomNav> {
   int currentIndex = 0;
 
-  List<Widget> pages = [HomePage(), ProfileScreen()];
+  List<Widget> pages = [HomePage(),LoadsScreen(), ProfileScreen()];
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +85,7 @@ class _BottomNavState extends State<BottomNav> {
                 vertical: AppConstants.h * 0.02,
               ),
               icon: Icons.home_outlined, // Home icon
-              text: 'Profile',
+              text: 'Home',
               iconColor: Colors.white, // Icon color to match the theme
             ),
 
@@ -93,8 +95,19 @@ class _BottomNavState extends State<BottomNav> {
 
                 vertical: AppConstants.h * 0.02,
               ),
+              icon: Icons.credit_card_outlined, // Notification icon
+              text: LocaleKeys.Loads_my_loads.tr(),
+              iconColor: Colors.white, // Cool tone for notifications
+            ),
+
+            GButton(
+              margin: EdgeInsets.symmetric(
+                horizontal: AppConstants.w * 0.04,
+
+                vertical: AppConstants.h * 0.02,
+              ),
               icon: Icons.notifications, // Notification icon
-              text: "Home",
+              text: "Profile",
               iconColor: Colors.white, // Cool tone for notifications
             ),
           ],
