@@ -57,12 +57,8 @@ dependencies:
   flutter_secure_storage: ^9.2.4
   shared_preferences: ^2.5.3
   get_storage: ^2.1.1
-  #  for video
+  slide_to_act: ^2.0.2
 
-  youtube_player_iframe: ^5.2.2
-  webview_flutter: ^4.7.0
-  webview_flutter_android: ^4.7.0
-  webview_flutter_wkwebview: ^3.7.0
   #  for drawer
   flutter_zoom_drawer: ^3.2.0
   #  for bottomNav

@@ -28,6 +28,14 @@ class _OnBoardScreen extends State<OnBoard> {
     super.dispose();
   }
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print("w ${AppConstants.w}");
+    print("h ${AppConstants.h}");
+  }
+
   /// Anime
   Widget animationDo(int index, int delay, Widget child) {
     if (index == 1) {
@@ -47,67 +55,74 @@ class _OnBoardScreen extends State<OnBoard> {
     screenHeight = MediaQuery.of(context).size.height;
     screenWidth = MediaQuery.of(context).size.width;
     var size = MediaQuery.of(context).size;
-     return Scaffold(
+    return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(elevation: 0, toolbarHeight: 0),
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        toolbarHeight: 0,
+      ),
       body: SizedBox(
         width: size.width,
         height: size.height,
         child: Column(
           children: [
-            Expanded(
-              flex: 3,
-              child: PageView.builder(
-                controller: pageController,
-                itemCount: items.length,
-                onPageChanged: (newIndex) {
-                  setState(() {
-                    currentIndex = newIndex;
-                  });
-                },
-                physics: const BouncingScrollPhysics(),
-                itemBuilder: ((context, index) {
-                  return SizedBox(
-                    width: size.width,
-                    height: size.height,
-                    child: SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SizedBox(height: AppConstants.h * 0.15),
-                          _build_icon(items[index].icon),
-
-
-                          /// TITLE TEXT
-                        _build_headline(index: index),
-
-                          _build_description(index)
-                          /// SUBTITLE TEXT
-
-                        ],
-                      ),
-                    ),
-                  );
-                }),
-              ),
-            ),
+            _build_content(),
 
             BuildSmoothing(
               items: items,
               currentIndex: currentIndex,
 
               pageController: pageController,
-            )
-            /// ---------------------------
+            ),
 
+            /// ---------------------------
           ],
         ),
       ),
     );
   }
 
-  _build_description(int index){
+  _build_content() {
+    return Expanded(
+      flex: 3,
+      child: PageView.builder(
+        controller: pageController,
+        itemCount: items.length,
+        onPageChanged: (newIndex) {
+          setState(() {
+            currentIndex = newIndex;
+          });
+        },
+        physics: const BouncingScrollPhysics(),
+        itemBuilder: ((context, index) {
+          return SizedBox(
+            width: AppConstants.w,
+            height: AppConstants.h,
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(height: AppConstants.h * 0.15),
+                  _build_icon(items[index].icon, index),
+
+                  /// TITLE TEXT
+                  _build_headline(index: index),
+
+                  _build_description(index),
+
+                  /// SUBTITLE TEXT
+                ],
+              ),
+            ),
+          );
+        }),
+      ),
+    );
+  }
+
+  _build_description(int index) {
     return animationDo(
       index,
       500,
@@ -115,11 +130,10 @@ class _OnBoardScreen extends State<OnBoard> {
         child: SizedBox(
           width: AppConstants.w * 0.75,
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding:   EdgeInsets.all(AppConstants.w*0.022),
             child: Text(
               items[index].description,
-              style: Theme.of(context).textTheme.bodySmall
-                  ?.copyWith(
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
                 fontWeight: FontWeight.w400,
                 fontSize: screenWidth * 0.035,
               ),
@@ -130,19 +144,19 @@ class _OnBoardScreen extends State<OnBoard> {
       ),
     );
   }
-  _build_headline({
-    required int index,
-}){
-    return   Padding(
-      padding: const EdgeInsets.only(top: 25, bottom: 15),
-      child: animationDo(
+
+  _build_headline({required int index}) {
+    return Padding(
+      padding: EdgeInsets.only(
+        top: AppConstants.h * 0.032,   // 25 / 776
+        bottom: AppConstants.h * 0.019, // 15 / 776
+      ),      child: animationDo(
         index,
         300,
         Text(
           items[index].headline,
           textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.titleLarge
-              ?.copyWith(
+          style: Theme.of(context).textTheme.titleLarge?.copyWith(
             color: AppColors.primaryColor,
             fontWeight: FontWeight.bold,
             fontSize: screenWidth * 0.076,
@@ -151,15 +165,32 @@ class _OnBoardScreen extends State<OnBoard> {
       ),
     );
   }
-  _build_icon(IconData icon) {
-    return Container(
-      width: AppConstants.w / 1.8,
-      height: AppConstants.w / 1.7,
-      decoration: BoxDecoration(
-        color: Theme.of(context).primaryColor.withOpacity(0.1),
+
+  _build_icon(IconData icon, int index) {
+    return animationDo(
+      index,
+      100,
+      Material(
         borderRadius: BorderRadius.circular(100),
+
+        elevation: 6,
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(100),
+            boxShadow: [
+              BoxShadow(
+                blurRadius: 6,
+                offset: Offset(0, 2), // ظل لفوق
+              ),
+            ],
+          ),
+          width: AppConstants.w / 1.8,
+          height: AppConstants.w / 1.8,
+
+          child: Icon(icon, size: 80, color: AppColors.primaryColor),
+        ),
       ),
-      child: Icon(icon, size: 80, color: AppColors.primaryColor),
     );
   }
 }

@@ -1,19 +1,75 @@
-
 import 'package:flutter/material.dart';
-
-
 import '../../../config/routes/app_router.dart';
 import '../../../core/utils/app_colors.dart';
 
-class GetStartBtn extends StatefulWidget {
-  const GetStartBtn({
+
+class BaseAppButton extends StatelessWidget {
+  final bool isLoading;
+  final String text;
+  final VoidCallback onTap;
+  final bool isOutlined;
+  final double fontSize;
+
+  const BaseAppButton({
     super.key,
-    required this.size,
-    required this.textTheme,
+    required this.text,
+    required this.onTap,
+    this.isLoading = false,
+    this.isOutlined = false,
+    required this.fontSize,
   });
 
-  final Size size;
-  final TextTheme textTheme;
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: isLoading ? null : onTap,
+      child: Container(
+        height: 55,
+        width: MediaQuery.of(context).size.width / 1.5,
+        decoration: BoxDecoration(
+          color: isOutlined ? Colors.transparent : AppColors.primaryColor,
+          borderRadius: BorderRadius.circular(15),
+          border: Border.all(
+            color: AppColors.primaryColor,
+            width: isOutlined ? 2 : 0,
+          ),
+        ),
+        child: Center(
+          child: isLoading
+              ? _buildLoading()
+              : _buildText(text, fontSize, isOutlined),
+        ),
+      ),
+    );
+  }
+
+  /// -------- Loading Indicator --------
+  Widget _buildLoading() {
+    return const SizedBox(
+      height: 28,
+      width: 28,
+      child: CircularProgressIndicator(
+        color: Colors.white,
+        strokeWidth: 3,
+      ),
+    );
+  }
+
+  /// -------- Button Text --------
+  Widget _buildText(String text, double fontSize, bool outlined) {
+    return Text(
+      text,
+      style: TextStyle(
+        fontSize: fontSize,
+        color: outlined ? AppColors.primaryColor : Colors.white,
+        fontFamily: "Nexa Bold 650",
+      ),
+    );
+  }
+}
+
+class GetStartBtn extends StatefulWidget {
+  const GetStartBtn({super.key});
 
   @override
   State<GetStartBtn> createState() => _GetStartBtnState();
@@ -21,96 +77,50 @@ class GetStartBtn extends StatefulWidget {
 
 class _GetStartBtnState extends State<GetStartBtn> {
   bool isLoading = false;
-  double screenWidth = 0;
 
-  loadingHandler() {
-    setState(() {
-      isLoading = true;
-      Future.delayed(const Duration(milliseconds: 700)).then((value) {
-        isLoading = false;
-        Navigator.pushReplacementNamed(context, AppRoutes.login);
-      });
+  void loadingHandler() {
+    setState(() => isLoading = true);
+
+    Future.delayed(const Duration(milliseconds: 700), () {
+      setState(() => isLoading = false);
+      Navigator.pushReplacementNamed(context, AppRoutes.login);
     });
   }
 
-//be@gmail.com 1234567
   @override
   Widget build(BuildContext context) {
-    screenWidth = MediaQuery.of(context).size.width;
-    return GestureDetector(
-      onTap: loadingHandler,
-      child: Container(
-        margin: const EdgeInsets.only(top: 60),
-        width: widget.size.width / 1.5,
-        height: widget.size.height / 13,
-        decoration: BoxDecoration(
-            color: AppColors.primaryColor, borderRadius: BorderRadius.circular(15)),
-        child: Center(
-          child: isLoading
-              ? const Center(
-            child: SizedBox(
-              width: 30,
-              height: 30,
-              child: CircularProgressIndicator(
-                color: Colors.white,
-              ),
-            ),
-          )
-              : Text(
-            "Get Started Now",
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: screenWidth * 0.07,
-              fontFamily: 'Nexa Bold 650',
-            ),
-          ),
-        ),
+    double fontSize = MediaQuery.of(context).size.width * 0.07;
+
+    return Padding(
+      padding: const EdgeInsets.only(top: 60),
+      child: BaseAppButton(
+        text: "Get Started Now",
+        onTap: loadingHandler,
+        isLoading: isLoading,
+        isOutlined: false,
+        fontSize: fontSize,
       ),
     );
   }
 }
 
 class SkipBtn extends StatelessWidget {
-  SkipBtn({
-    super.key,
-    required this.size,
-    required this.textTheme,
-    required this.onTap,
-  });
-
-  final Size size;
-  final TextTheme textTheme;
   final VoidCallback onTap;
-  double width = 0;
+
+  const SkipBtn({super.key, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
-    width = MediaQuery.of(context).size.width;
-    return Container(
-      margin: const EdgeInsets.only(top: 60),
-      width: size.width / 1.5,
-      height: size.height / 13,
-      decoration: BoxDecoration(
-          color: AppColors.primaryColor,
-          border: Border.all(
-            color: AppColors.primaryColor,
-            width: 2,
-          ),
-          borderRadius: BorderRadius.circular(15)),
-      child: InkWell(
-        borderRadius: BorderRadius.circular(15.0),
+    double fontSize = MediaQuery.of(context).size.width * 0.07;
+
+    return Padding(
+      padding: const EdgeInsets.only(top: 60),
+      child: BaseAppButton(
+        text: "Skip",
         onTap: onTap,
-        splashColor: AppColors.secondaryColor,
-        child: Center(
-          child: Text(
-            "Skip",
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: width * 0.07,
-              fontFamily: 'Nexa Bold 650',
-            ),
-          ),
-        ),
+        isOutlined: true,
+        isLoading: false,
+        fontSize: fontSize,
       ),
     );
   }

@@ -1,7 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:get/get.dart'; // لو بتستخدم GetX
-import 'package:user_app_iraq/generated/locale_keys.g.dart';
+import 'package:get/get_core/src/get_main.dart';
+ import 'package:user_app_iraq/generated/locale_keys.g.dart';
 import '../../../../core/utils/app_colors.dart';
 
 
@@ -39,7 +40,7 @@ class _ProfileButtonsState extends State<ProfileButtons> {
         OutlinedButton.icon(
           onPressed: controller.logout,
           icon: Icon(Icons.logout, color: AppColors.textPrimary),
-          label: Text(LocaleKeys.Profile_logout.tr),
+          label: Text(LocaleKeys.Profile_logout.tr()),
          style: ButtonStyle(
 
          ),
@@ -52,7 +53,7 @@ class _ProfileButtonsState extends State<ProfileButtons> {
           onPressed: () => _showDeleteAccountDialog(context),
           icon: Icon(Icons.delete_outline, color: AppColors.errorColor),
           label: Text(
-            LocaleKeys.Profile_delete_account.tr,
+            LocaleKeys.Profile_delete_account.tr(),
             style: TextStyle(color: AppColors.errorColor),
           ),
           style: TextButton.styleFrom(
@@ -63,9 +64,6 @@ class _ProfileButtonsState extends State<ProfileButtons> {
     );
   }
 
-  /// ------------------------------
-  /// DELETE ACCOUNT DIALOG
-  /// ------------------------------
   Future<void> _showDeleteAccountDialog(
       BuildContext context,    ) async {
     return showDialog(
@@ -73,22 +71,21 @@ class _ProfileButtonsState extends State<ProfileButtons> {
       builder: (context) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         title: Text(
-          LocaleKeys.Profile_delete_account.tr,
+          LocaleKeys.Profile_delete_account.tr(),
           style: TextStyle(color: AppColors.errorColor, fontWeight: FontWeight.bold),
         ),
         content: Text("Are your sure to delete acc"),
         actions: [
           TextButton(
-            onPressed: () => Get.back(),
-            child: Text(LocaleKeys.Profile_Cancel.tr),
+            onPressed: () {},
+            child: Text(LocaleKeys.Profile_Cancel.tr()),
           ),
           TextButton(
             onPressed: () {
               controller.deleteAccount();
-              Get.back();
-            },
+             },
             child: Text(
-              LocaleKeys.Profile_delete_account.tr,
+              LocaleKeys.Profile_delete_account.tr(),
               style: TextStyle(color: AppColors.errorColor),
             ),
           ),
@@ -98,9 +95,6 @@ class _ProfileButtonsState extends State<ProfileButtons> {
   }
 }
 
-/// ----------------------------
-/// FAKE CONTROLLER FOR SAMPLE
-/// ----------------------------
 class _FakeController {
   void logout() {
     print("LOGOUT PRESSED");

@@ -5,6 +5,7 @@ import 'package:user_app_iraq/generated/locale_keys.g.dart';
 
 import '../../../../../../core/sharedWidgets/text_styles.dart'
     show AppTextStyles;
+import '../../../../../../core/utils/app_constants.dart';
 
 class ActiveShipmentsSection extends StatefulWidget {
   const ActiveShipmentsSection({Key? key}) : super(key: key);
@@ -17,36 +18,24 @@ class _ActiveShipmentsSectionState extends State<ActiveShipmentsSection>
     with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
-    // FIXED: Return regular widget instead of SliverToBoxAdapter
     return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 0, 20, 24),
+      padding: EdgeInsets.fromLTRB(
+        AppConstants.w * 0.05, // = 20
+        0,
+        0,
+        AppConstants.h * 0.005, // = 4
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Animated section header
-          _build_headline(),
-          _build_description(),
-        ],
+        children: [_build_headline() ],
       ),
     );
   }
 
   Widget _build_headline() {
     return Text(
-      LocaleKeys.Home_active.tr(), // ?? 'Active Shipments',
-      style: TextStyle(
-        fontWeight: FontWeight.w800,
-        color: AppColors.primaryColor,
-        letterSpacing: -0.3,
-      ),
-    );
-  }
-
-  Widget _build_description() {
-    return Text(
-      LocaleKeys.Home_no_active_shipments.tr(),
-
-      style: AppTextStyles.bodyMedium(),
+      LocaleKeys.Home_active.tr(),
+      style: AppTextStyles.displaySmall().copyWith(fontWeight: FontWeight.w800),
     );
   }
 }

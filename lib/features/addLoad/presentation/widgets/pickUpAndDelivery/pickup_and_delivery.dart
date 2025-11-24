@@ -72,26 +72,7 @@ class _PickupAndDeliveryState extends State<PickupAndDelivery> {
           children: [
             build_icon(icon),
             SizedBox(width: AppConstants.w * 0.07),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-
-                children: [
-                  Text(
-                    StringTranslateExtension(title).tr(),
-                    style: AppTextStyles.bodyLarge().copyWith(
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  Text(
-                    StringTranslateExtension(
-                      LocaleKeys.Add_Load_tapToSelectLocation,
-                    ).tr(),
-                    style: AppTextStyles.bodySmall(),
-                  ),
-                ],
-              ),
-            ),
+            _build_texts(title),
             SizedBox(width: AppConstants.w * 0.07),
             Icon(Icons.arrow_forward_ios, color: Colors.grey, size: 22),
           ],
@@ -100,6 +81,28 @@ class _PickupAndDeliveryState extends State<PickupAndDelivery> {
     );
   }
 
+  _build_texts(String title){
+    return     Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+
+        children: [
+          Text(
+            StringTranslateExtension(title).tr(),
+            style: AppTextStyles.bodyLarge().copyWith(
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          Text(
+            StringTranslateExtension(
+              LocaleKeys.Add_Load_tapToSelectLocation,
+            ).tr(),
+            style: AppTextStyles.bodySmall(),
+          ),
+        ],
+      ),
+    );
+  }
   build_icon(IconData icon) {
     return Container(
       padding: const EdgeInsets.all(10),

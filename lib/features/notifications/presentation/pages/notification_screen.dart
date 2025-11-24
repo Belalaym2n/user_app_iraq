@@ -1,7 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:user_app_iraq/core/utils/app_colors.dart';
+import 'package:user_app_iraq/generated/locale_keys.g.dart';
 
 import '../../../../core/sharedWidgets/top_screen_widget.dart';
 import '../../../../core/utils/app_constants.dart';
@@ -63,14 +65,16 @@ class _NotificationScreenState extends State<NotificationScreen> {
       body: Column(
         children: [
           TopScreenWidget(
-            text: " No",
+            screenIcon:
+      Icons.notifications,
+
+
+            text: LocaleKeys.Notifications_title.tr(),
             iconButton: IconButton(
-              onPressed: () {},
-              icon: Icon(
-                Icons.notifications,
-                color: Colors.white,
-                size: AppConstants.w * 0.07,
-              ),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon:Icon(Icons.arrow_back,color: Colors.white,)
             ),
           ),
           ShowAllNotificationScreen(notifications: notifications),

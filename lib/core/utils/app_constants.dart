@@ -3,6 +3,14 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 
 class AppConstants {
+  static late double h;
+
+  static late double w;
+
+  static void initSize(BuildContext context) {
+    h = MediaQuery.of(context).size.height;
+    w = MediaQuery.of(context).size.width;
+  }
   static const String base_url = "https://accept.paymob.com/api";
   static const String auth_taken_enpoint = "/auth/tokens";
   static const String order_id_enpoint = "/ecommerce/orders";
@@ -17,14 +25,7 @@ class AppConstants {
       "os_v2_app_ztwyipvlzvd25nce5fd66m35dknf6qiwsecudqmm63ogb3dfzqbtxbzksnyg6w3qota2nhqqrs6zlrptkyoxr2zhqgun5wkfddfvmwi";
   static const String imageUrl = "assets/images/";
 
-  static late double h;
 
-  static late double w;
-
-  static void initSize(BuildContext context) {
-    h = MediaQuery.of(context).size.height;
-    w = MediaQuery.of(context).size.width;
-  }
 }
 
 class StaticList {

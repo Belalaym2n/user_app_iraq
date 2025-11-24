@@ -38,41 +38,54 @@ class _AddLoadHeadlineState extends State<AddLoadHeadline> {
           ),
         ],
       ),
-      child: Column(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.1),
-              borderRadius: BorderRadius.circular(16),
-            ),
-            child: Icon(
-              Icons.local_shipping_outlined,
-              size: 48,
-              color: Colors.white,
-            ),
-          ),
-          const SizedBox(height: 16),
-          Text(
-            LocaleKeys.Home_post_load.tr() ,
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            LocaleKeys.Add_Load_getCompetitiveBids.tr(),
-            style: TextStyle(
-              color: Colors.white.withOpacity(0.9),
-              fontSize: 16,
-            ),
-            textAlign: TextAlign.center,
-          ),
-        ],
-      ),
+      child: _build_content()
     );
   }
 
+  Widget _build_car_icon(){
+    return       Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Icon(
+        Icons.local_shipping_outlined,
+        size: 48,
+        color: Colors.white,
+      ),
+    );
+  }
+  Widget _build_post_text(){
+    return     Text(
+      LocaleKeys.Home_post_load.tr() ,
+      style: TextStyle(
+        color: Colors.white,
+        fontSize: 24,
+        fontWeight: FontWeight.bold,
+      ),
+    );
+  }
+  Widget _build_description(){
+    return Text(
+      LocaleKeys.Add_Load_getCompetitiveBids.tr(),
+      style: TextStyle(
+        color: Colors.white.withOpacity(0.9),
+        fontSize: 16,
+      ),
+      textAlign: TextAlign.center,
+    );
+  }
+ Widget _build_content(){
+    return Column(
+      children: [
+
+        _build_car_icon(),
+        const SizedBox(height: 16),
+        _build_post_text(),
+        const SizedBox(height: 8),
+        _build_description()
+      ],
+    );
+  }
 }

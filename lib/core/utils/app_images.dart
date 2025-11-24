@@ -5,6 +5,8 @@ import 'package:user_app_iraq/core/utils/app_constants.dart';
 
 class AppImages {
    static const String logo="${AppConstants.imageUrl}logo.png";
+   static const String onBoardBG="${AppConstants.imageUrl}bg_clean__1_-removebg-preview (2)_cleanup.png";
+   static const String onBoardCarImage="${AppConstants.imageUrl}image-removebg-preview.png";
   static const String truck="${AppConstants.imageUrl}vehicles/truck_rem_bg.png";
   static const String pickup="${AppConstants.imageUrl}vehicles/pickup.png";
   static const String feature3="${AppConstants.imageUrl}features-bg-3-removebg-preview.png";
