@@ -1,4 +1,6 @@
+import 'package:device_preview/device_preview.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'config/routes/app_router.dart';
@@ -13,7 +15,11 @@ Future<void> main() async {
       path: 'assets/translations',
       fallbackLocale: const Locale('en'),
       startLocale: Locale("en"),
-      child: MyApp(),
+      child: MyApp()
+
+      // DevicePreview(
+      //   enabled: !kReleaseMode,
+      //   builder: (context) =>  MyApp()),
     ),
   );
 }

@@ -21,7 +21,9 @@ class _LoadsScreenItemState extends State<LoadsScreenItem> {
     return Scaffold(
       body: Column(
         children: [
-          TopScreenWidget(text: LocaleKeys.Loads_my_loads.tr()),
+          TopScreenWidget(
+            showIcons: false,
+                text: LocaleKeys.Loads_my_loads.tr()),
           SizedBox(
             height: AppConstants.h*0.02,
           ),

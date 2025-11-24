@@ -53,9 +53,6 @@ class _BuildBasicInformationState extends State<BuildBasicInformation> {
     );
   }
 
-  // -----------------------------
-  // LOAD DETAILS CARD
-  // -----------------------------
   Widget _buildLoadDetailsCard() {
     return buildCard(
       title: LocaleKeys.Add_Load_loadDetails.tr(),
@@ -72,7 +69,7 @@ class _BuildBasicInformationState extends State<BuildBasicInformation> {
         CustomTextField(
           label:
           '${LocaleKeys.Add_Load_weight.tr()} (${LocaleKeys.Add_Load_kilogram.tr()}) *',
-          hint: '0',
+          hint: '20',
           keyboardType: TextInputType.number,
           controller: TextEditingController(),
           prefixIcon:

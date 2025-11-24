@@ -24,13 +24,18 @@ class _LoadsItemState extends State<LoadsItem> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(backgroundColor: AppColors.primaryColor, toolbarHeight: 0),
+      appBar: AppBar(backgroundColor: AppColors.primaryColor,
+          toolbarHeight: 0),
       body: SingleChildScrollView(
         child: Column(
           children: [
             TopScreenWidget(
+              screenIcon: Icons.local_shipping_outlined,
+
               iconButton: IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pop(context);
+                },
                 icon: Icon(
                   Icons.arrow_back,
                   color: Colors.white,
@@ -43,7 +48,6 @@ class _LoadsItemState extends State<LoadsItem> {
               padding: const EdgeInsets.all(16.0),
               child: Column(
                 children: [
-
                   SizedBox(height: AppConstants.h * 0.02),
                   AddLoadHeadline(),
                   SizedBox(height: AppConstants.h * 0.02),
@@ -62,15 +66,16 @@ class _LoadsItemState extends State<LoadsItem> {
 
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: large_button(onPressed: (){}, buttonName:LocaleKeys.Home_post_load.tr()),
-                  )
-               ,   SizedBox(height: AppConstants.h * 0.02),
+                    child: large_button(
+                      onPressed: () {},
+                      buttonName: LocaleKeys.Home_post_load.tr(),
+                    ),
+                  ),
                   SizedBox(height: AppConstants.h * 0.02),
-
-
+                  SizedBox(height: AppConstants.h * 0.02),
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),

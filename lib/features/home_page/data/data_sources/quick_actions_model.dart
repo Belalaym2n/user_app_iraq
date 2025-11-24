@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:user_app_iraq/config/routes/app_router.dart';
 import 'package:user_app_iraq/core/utils/app_colors.dart';
+import 'package:user_app_iraq/features/bottomNav/bottom_nav.dart';
 
 import '../../../../generated/locale_keys.g.dart';
 class ActionItem {
@@ -37,7 +38,10 @@ List<ActionItem> gerActions(BuildContext context) {
     ),
     ActionItem(
       navigation: () {
-       },
+Navigator.push(context, MaterialPageRoute(
+    builder: (_) => BottomNav(initialIndex: 1),
+        ));
+      },
       icon: Icons.track_changes_rounded,
       title: LocaleKeys.Home_track.tr(),
       subtitle: LocaleKeys.Home_active_shipments_info.tr(),
@@ -46,6 +50,7 @@ List<ActionItem> gerActions(BuildContext context) {
     ),
     ActionItem(
       navigation: () {
+
       },
       icon: Icons.gavel_rounded,
       title: LocaleKeys.Home_bidding.tr(),
@@ -55,11 +60,13 @@ List<ActionItem> gerActions(BuildContext context) {
     ),
     ActionItem(
       navigation: () {
+        Navigator.pushNamed(context, AppRoutes.supportCallWidget);
+
       },
       icon: Icons.support_agent_rounded,
       title: LocaleKeys.Home_support.tr(),
       subtitle: LocaleKeys.Home_assist_247.tr(),
-      action: 'support',
+      action: LocaleKeys.Support_supportAndHelp.tr(),
       color: AppColors.primaryColor,
     ),
   ];

@@ -1,31 +1,37 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:user_app_iraq/features/sendProblem/presentation/pages/addProblemPage.dart';
 
 import '../../features/addLoad/presentation/pages/add_load_screen.dart'
     show AddLoadScreen;
 import '../../features/bottomNav/bottom_nav.dart';
-import '../../features/login/presentation/widgets/login_screen_item.dart';
+import '../../features/login/presentation/widgets/screensItem/forget_password.dart';
+import '../../features/login/presentation/widgets/screensItem/login_screen_item.dart';
 import '../../features/notifications/presentation/pages/notification_screen.dart';
 import '../../features/profile/presentation/pages/profile_screen.dart';
 import '../../features/signUp/presentation/pages/sign_up_screen.dart';
 import '../../features/splash/onBoard/on_board_item.dart';
-import '../../features/splash/splash/splash_screen.dart';
+ import '../../features/splash/splash/splash_screen.dart';
+import '../../features/support/presentation/widgets/supportScreenItem/support_screen_item.dart';
 //
 
 class AppRoutes {
   // codia Admin
   static const String homePage = "HomePage/";
-  static const String bottomNav = "/dsf";
+  static const String bottomNav = "sdf/";
   static const String profile = "profile/";
   static const String signUp = "signUp/";
+  static const String add_load = "add_load/";
   static const String login = "/sdfsdfsdfsdf";
   static const String onBoard = "sf/";
+  static const String problems = "problems/";
+  static const String forgetPassword = "ForgetPasswordItem/";
   static const String notification = "notification/";
   static const String autoLogin = "autoLogin/";
   static const String splash = "/";
   static const String lectures = "sfsf/";
+  static const String supportCallWidget = "supportCallWidget/";
   static const String AddLoadScreen = "AddLoadScreen/";
-
   // security
 }
 
@@ -35,6 +41,19 @@ class Routes {
       case AppRoutes.splash:
         return MaterialPageRoute(builder: (context) => SplashScreen());
       //
+
+      case AppRoutes.add_load:
+        return MaterialPageRoute(builder: (context) => AddLoadScreen());
+    //
+      case AppRoutes.forgetPassword:
+        return MaterialPageRoute(builder: (context) => ForgetPasswordItem());
+    //
+      case AppRoutes.problems:
+        return MaterialPageRoute(builder: (context) => AddProblemScreen());
+    //
+      case AppRoutes.supportCallWidget:
+        return MaterialPageRoute(builder: (context) => SupportScreenItem());
+    //
       case AppRoutes.AddLoadScreen:
         return MaterialPageRoute(builder: (context) => AddLoadScreen());
       //

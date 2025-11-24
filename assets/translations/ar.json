@@ -17,19 +17,24 @@
     }
   },
   "Login": {
-    "welcome": "مرحبًا" ,
+    "welcome": "مرحبًا",
     "continue_to_login": "متابعة إلى تسجيل الدخول",
     "password": "كلمة المرور",
     "email": "البريد الإلكتروني",
     "enter_email": "أدخل بريدك الإلكتروني",
     "enter_password": "أدخل كلمة المرور",
-
     "forget_password": "هل نسيت كلمة المرور؟",
     "dont_have_account": "ليس لديك حساب؟",
     "sign_up": "إنشاء حساب",
     "login": "تسجيل الدخول",
     "email_required": "البريد الإلكتروني مطلوب",
     "password_required": "كلمة المرور مطلوبة"
+  },
+  "forgetPassword": {
+    "title": "نسيت كلمة المرور؟",
+    "subtitle": "أدخل بريدك الإلكتروني لإرسال رابط إعادة تعيين كلمة المرور.",
+    "resetButton": "إعادة تعيين كلمة المرور",
+    "backToLogin": "العودة لتسجيل الدخول"
   },
   "register": {
     "create_account": "إنشاء حساب",
@@ -46,7 +51,7 @@
     "already_have_account": "لديك حساب بالفعل؟",
     "login": "تسجيل الدخول"
   },
-  "Home":{
+  "Home": {
     "welcome": "مرحباً",
     "manage_freight": "قم بإدارة الشحن الخاص بك بسهولة",
     "post_load": "نشر حمولة",
@@ -63,8 +68,6 @@
     "start_journey": "ابدأ بإنشاء أول حمولة لك لبدء رحلتك",
     "post_load_action": "نشر حمولة"
   },
-
-
   "Loads": {
     "my_loads": "حمولاتي",
     "total_loads": "إجمالي الحمولات",
@@ -73,8 +76,19 @@
     "no_loads_found": "لا توجد أي حمولات",
     "start_posting_first_load": "ابدأ بنشر أول حمولة لك"
   },
-
+  "Notifications": {
+    "title": "الإشعارات",
+    "no_notifications": "لا توجد إشعارات حالياً",
+    "no_messages_yet": "في الوقت الحالي لا توجد رسائل جديدة.\nسنقوم بإعلامك فور وصول أي إشعار جديد.",
+    "view_details": "عرض التفاصيل"
+  },
   "Add_Load": {
+    "tapToSelect": "اضغط لاختيار التاريخ والوقت",
+    "pickupDate": "تاريخ الاستلام *",
+    "deliveryDate": "تاريخ التسليم (اختياري)",
+    "estimatedDuration": "المدة المتوقعة",
+    "hours": "ساعات",
+    "minutes": "دقائق",
     "posting": "جار النشر...",
     "getCompetitiveBids": "احصل على عروض تنافسية من الناقلين المعتمدين",
     "basicInformation": "المعلومات الأساسية",
@@ -105,12 +119,76 @@
     "kilometer": "كم",
     "budget": "الميزانية"
   },
-
-  "Notifications": {
-    "title": "الإشعارات",
-    "no_notifications": "لا توجد إشعارات حالياً",
-    "no_messages_yet": "في الوقت الحالي لا توجد رسائل جديدة.\nسنقوم بإعلامك فور وصول أي إشعار جديد.",
-    "view_details": "عرض التفاصيل"
+  "Support": {
+    "supportAndHelp": "الدعم والمساعدة",
+    "emergencySupport": "دعم الطوارئ",
+    "emergencyHelpDescription": "للمشاكل الطارئة المتعلقة بالسلامة أثناء النقل",
+    "callNow": "اتصل الآن",
+    "quickActions": "إجراءات سريعة",
+    "trackShipment": "تتبع الشحنة",
+    "paymentHelp": "مساعدة الدفع",
+    "reportIssue": "الإبلاغ عن مشكلة",
+    "liveChat": "دردشة مباشرة",
+    "reportShipmentIssue": "الإبلاغ عن مشكلة في الشحنة",
+    "issueTypeQuestion": "ما نوع المشكلة التي تواجهها؟",
+    "shipment": "الشحنة",
+    "status": "الحالة",
+    "delay": "تأخير",
+    "damage": "تلف",
+    "wrongLocation": "موقع خاطئ",
+    "driverIssue": "مشكلة مع السائق",
+    "payment": "الدفع",
+    "other": "أخرى",
+    "quickHelp": "مساعدة سريعة",
+    "howToTrackShipment": "كيف أتتبع شحنتي؟",
+    "trackingHelpDescription": "تعرف على كيفية متابعة شحنتك في الوقت الفعلي",
+    "paymentAndBilling": "الدفع والفواتير",
+    "paymentHelpDescription": "فهم عملية الدفع ودورات الفوترة",
+    "cancellationPolicy": "سياسة الإلغاء",
+    "cancellationHelpDescription": "تعرف على قواعد الإلغاء وسياسات الاسترداد",
+    "contactDriver": "الاتصال بالسائق",
+    "driverContactHelpDescription": "كيفية التواصل مع السائق المخصص لك",
+    "appTroubleshooting": "استكشاف أخطاء التطبيق",
+    "troubleshootingHelpDescription": "إصلاح المشكلات الشائعة ومشاكل الاتصال",
+    "contactSupport": "التواصل مع الدعم",
+    "callSupport": "الاتصال بالدعم",
+    "callSupportDescription": "تحدث مباشرة مع فريقنا",
+    "liveChatDescription": "الدردشة مع موظف الدعم",
+    "emailSupport": "دعم البريد الإلكتروني",
+    "emailSupportDescription": "أرسل لنا رسالة مفصلة",
+    "requestCallback": "طلب معاودة الاتصال",
+    "callbackDescription": "سوف نقوم بالاتصال بك لاحقاً",
+    "offline": "غير متصل",
+    "supportHours": "ساعات الدعم",
+    "supportHoursDescription": "الاثنين - الجمعة: 9:00 ص - 10:00 م\nالسبت - الأحد: 10:00 ص - 6:00 م",
+    "frequentlyAskedQuestions": "الأسئلة الشائعة",
+    "viewAll": "عرض الكل",
+    "recentSupportTickets": "تذاكر الدعم الأخيرة",
+    "ticket": "تذكرة",
+    "recentloads": "الطلبات الأخيرة",
+    "open": "مفتوح",
+    "inProgress": "قيد التنفيذ",
+    "resolved": "تم الحل",
+    "closed": "مغلق",
+    "loadingShipment": "جاري تحميل الشحنة...",
+    "shipmentId": "الشحنة رقم {id}",
+    "amount": "المبلغ: {amount}",
+    "liveLocation": "الموقع المباشر",
+    "call": "اتصال",
+    "chat": "دردشة",
+    "online": "متصل",
+    "availableNow": "متاح الآن",
+    "response24h": "استجابة خلال 24 ساعة",
+    "selfHelp": "مساعدة ذاتية",
+    "faq": "الأسئلة الشائعة",
+    "appGuide": "دليل التطبيق",
+    "accountIssue": "مشكلة في الحساب"
+  },
+  "Problems": {
+    "submitIssue": "إرسال المشكلة",
+    "problem": "المشكلة",
+    "writeProblemDetails": "اكتب تفاصيل مشكلتك:",
+    "enterProblem": "أدخل مشكلتك"
   },
   "Profile": {
     "total_loads": "إجمالي التحميلات",
@@ -129,8 +207,8 @@
     "share_app": "مشاركة التطبيق",
     "logout": "تسجيل الخروج",
     "Cancel": "إلغاء",
-
     "delete_account": "حذف الحساب"
-  }}
+  }
+}
 
 

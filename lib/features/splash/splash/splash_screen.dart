@@ -1,10 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:user_app_iraq/core/utils/app_colors.dart';
-import 'package:user_app_iraq/core/utils/app_images.dart';
-
+ import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:lottie/lottie.dart';
+import 'package:user_app_iraq/features/splash/onBoard/on_board_item.dart';
 import '../../../config/routes/app_router.dart';
-import '../../../core/sharedWidgets/custom_loading.dart';
+import '../../../core/utils/app_constants.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -13,71 +12,95 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashScreenState extends State<SplashScreen>
+    with TickerProviderStateMixin {
+  late final AnimationController _logoController;
+  late final AnimationController _fadeOutController;
+  bool _showWhiteScreen = false;
 
   @override
   void initState() {
     super.initState();
 
+    _logoController = AnimationController(vsync: this);
+    _fadeOutController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 700),
+    );
+  }
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Future.delayed(const Duration(seconds: 3), () {
-        print("navigation");
-        Navigator.pushNamedAndRemoveUntil(
-          context,
-          AppRoutes.onBoard,
-              (route) => false,
-        );
-      });
-    });
+  Future<void> _startSequence() async {
+    // 1️⃣ تشغيل اللوتي بالمدة الصحيحة
+    await _logoController.forward();
+
+    // 2️⃣ بدء الفيد آوت بعد انتهاء اللوتي
+    await _fadeOutController.forward();
+
+    // 3️⃣ شاشة بيضاء بسيطة بعد الاختفاء
+    setState(() => _showWhiteScreen = true);
+    await Future.delayed(const Duration(milliseconds: 500));
+
+     // 4️⃣ الانتقال إلى شاشة OnBoarding
+    if (mounted) {
+      Navigator.of(context).pushReplacement(PageRouteBuilder(
+        transitionDuration: const Duration(milliseconds: 850),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          final fade =
+          CurvedAnimation(parent: animation, curve: Curves.easeInOut);
+          final scale = Tween<double>(begin: 0.95, end: 1.0).animate(fade);
+          return FadeTransition(
+            opacity: fade,
+            child: ScaleTransition(scale: scale, child: child),
+          );
+        },
+        pageBuilder: (context, animation, secondaryAnimation) =>
+        const OnBoard(),
+      ));
+    }
+  }
+
+  @override
+  void dispose() {
+    _logoController.dispose();
+    _fadeOutController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final double w = AppConstants.w;
+
     return Scaffold(
-      backgroundColor:AppColors.primaryColor,
+      appBar: AppBar(
+          backgroundColor: Colors.white,
+          elevation: 0, toolbarHeight: 0),
+      backgroundColor: Colors.white,
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // App Logo
-
-            _build_logo(),
-            const SizedBox(height: 60),
-
-            const LoadingWidget(
-              color: Colors.white,
-              message: 'Loading...',
+        child: _showWhiteScreen
+            ? const SizedBox.shrink()
+            : FadeTransition(
+          opacity: Tween<double>(begin: 1, end: 0).animate(
+            CurvedAnimation(
+              parent: _fadeOutController,
+              curve: Curves.easeOut,
             ),
-          ],
+          ),
+          child: _build_lottie_file()
         ),
       ),
     );
   }
-  _build_logo(){
-    return  Container(
-      width: 140,
-      height: 140,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(70),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            blurRadius: 10,
-            offset: const Offset(0, 5),
-          ),
-        ],
-      ),
-      padding: const EdgeInsets.all(20), // Add padding to prevent clipping
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(50),
-        child: Image.asset(
-         AppImages.logo,
-          width: 100,
-          height: 100,
-          fit: BoxFit.contain, // Changed to contain to preserve aspect ratio
-        ),
+  _build_lottie_file(){
+    return SizedBox(
+      width: AppConstants.w * 0.8,
+      child: Lottie.asset(
+        'assets/images/Loading_car.json',
+        controller: _logoController,
+        onLoaded: (composition) async {
+          _logoController.duration = composition.duration;
+          await _startSequence();
+        },
+        fit: BoxFit.contain,
       ),
     );
   }

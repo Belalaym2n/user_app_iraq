@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:user_app_iraq/config/routes/app_router.dart';
 import 'package:user_app_iraq/core/utils/app_colors.dart';
 import 'package:user_app_iraq/generated/locale_keys.g.dart';
 
@@ -24,6 +25,7 @@ class _EnhancedFloatingActionButtonState
   Widget build(BuildContext context) {
     return  FloatingActionButton.extended(
             onPressed: () {
+              Navigator.pushNamed(context, AppRoutes.add_load);
             },
             backgroundColor: AppColors.primaryColor,
             icon: const Icon(Icons.add_rounded, color: Colors.white),
