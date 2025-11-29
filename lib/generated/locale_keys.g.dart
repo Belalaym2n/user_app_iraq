@@ -33,6 +33,12 @@ abstract class  LocaleKeys {
   static const forgetPassword_resetButton = 'forgetPassword.resetButton';
   static const forgetPassword_backToLogin = 'forgetPassword.backToLogin';
   static const forgetPassword = 'forgetPassword';
+  static const register_phone = 'register.phone';
+  static const register_enterYourPhone = 'register.enterYourPhone';
+  static const register_account_created_success = 'register.account_created_success';
+  static const register_passwords_do_not_match = 'register.passwords_do_not_match';
+  static const register_Auth_iraq_phone_required = 'register.Auth_iraq_phone_required';
+  static const register_Auth_iraq_phone_invalid = 'register.Auth_iraq_phone_invalid';
   static const register_create_account = 'register.create_account';
   static const register_enter_details = 'register.enter_details';
   static const register_full_name = 'register.full_name';
@@ -197,5 +203,13 @@ abstract class  LocaleKeys {
   static const Profile_Cancel = 'Profile.Cancel';
   static const Profile_delete_account = 'Profile.delete_account';
   static const Profile = 'Profile';
+  static const Validations_Passwords_do_not_match = 'Validations.Passwords_do_not_match';
+  static const Validations_Auth_email_required = 'Validations.Auth_email_required';
+  static const Validations_Auth_email_invalid = 'Validations.Auth_email_invalid';
+  static const Validations_Auth_password_invalid = 'Validations.Auth_password_invalid';
+  static const Validations_Auth_field_required = 'Validations.Auth_field_required';
+  static const Validations_Auth_phone_required = 'Validations.Auth_phone_required';
+  static const Validations_Auth_phone_invalid = 'Validations.Auth_phone_invalid';
+  static const Validations = 'Validations';
 
 }

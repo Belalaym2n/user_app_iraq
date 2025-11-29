@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:user_app_iraq/core/sharedWidgets/text_styles.dart';
 import 'package:user_app_iraq/core/utils/app_colors.dart';
+import 'package:user_app_iraq/features/profile/data/models/profile_model.dart';
 
-Widget buildProfileHeader() {
+Widget buildProfileHeader({
+  required UserProfileModel user
+}) {
   return Container(
     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
     decoration: BoxDecoration(
@@ -19,9 +22,9 @@ Widget buildProfileHeader() {
       children: [
         _buildProfileAvatar(),
         const SizedBox(height: 14),
-        _buildUserName(),
+        _buildUserName(user.name.toString()),
         const SizedBox(height: 4),
-        _buildEmail(),
+        _buildEmail(user.email),
         const SizedBox(height: 14),
         _buildStatusTag(),
       ],
@@ -83,9 +86,9 @@ Widget _buildCameraButton() {
   );
 }
 
-Widget _buildUserName() {
+Widget _buildUserName(String name) {
   return Text(
-    "Belal Ayman",
+    name,
     style: AppTextStyles.headlineMedium().copyWith(
       fontWeight: FontWeight.w900,
       color: AppColors.textPrimary,
@@ -96,9 +99,9 @@ Widget _buildUserName() {
 /// -----------------------------------------------------------
 /// 🔵 Email
 /// -----------------------------------------------------------
-Widget _buildEmail() {
+Widget _buildEmail(String email) {
   return Text(
-    "Belalscg@gmail.com",
+email,
     style: AppTextStyles.bodyMedium().copyWith(color: AppColors.textSecondary),
   );
 }

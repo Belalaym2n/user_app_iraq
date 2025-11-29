@@ -72,7 +72,11 @@ dependencies:
 
   #  for testing
   device_preview: ^1.3.1
-  #  for firebase
+  # for call Api's
+  dio: ^5.9.0
+  cookie_jar: ^4.0.8
+  dio_cookie_manager: ^3.0.0
+   #  for firebase
   firebase_core: ^4.2.1
   cloud_firestore: ^6.1.0
   firebase_auth: ^6.1.2

@@ -1,110 +1,138 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dio/dio.dart';
+
 import 'app_exception.dart';
-import 'failures.dart';
 import 'error_model.dart';
+import 'failures.dart';
 
-/// ✅ ExceptionHandler
-/// هذا الكلاس مسؤول عن:
-///  - استقبال جميع الأخطاء (من Firebase أو أي نوع آخر)
-///  - تحويلها إلى AppException مناسبة
-///  - ثم تحويل AppException إلى Failure لتتعامل معها في الـ UI
 class ExceptionHandler {
-   static AppException handle(dynamic error) {
-    // 👇 أخطاء Firebase Auth
-    if (error is FirebaseAuthException) {
-      return FirebaseAuthExceptionHandler(
-        message: _getFirebaseAuthErrorMessage(error),
-        code: error.code,
-        originalError: error,
-      );
-    }
+  /// Handle DioException and convert to appropriate exception
+  ///
+  /// معالجة DioException وتحويلها إلى AppException مناسبة
+  /// يدعم أنواع الأخطاء التالية:
+  /// - connectionTimeout: انتهاء مهلة الاتصال
+  /// - sendTimeout: انتهاء مهلة الإرسال
+  /// - receiveTimeout: انتهاء مهلة الاستقبال
+  /// - connectionError: خطأ في الاتصال
+  /// - cancel: إلغاء الطلب
+  /// - badCertificate: خطأ في الشهادة
+  /// - badResponse: خطأ في الاستجابة (4xx, 5xx)
+  /// - unknown: خطأ غير معروف
+  static AppException handleDioException(DioException e) {
+    switch (e.type) {
+      case DioExceptionType.connectionTimeout:
+      case DioExceptionType.sendTimeout:
+      case DioExceptionType.receiveTimeout:
+        return NetworkException(
+          message: 'Connection timeout. Please check your internet connection.',
+          code: 'TIMEOUT',
+          originalError: e,
+        );
 
-    // 👇 أخطاء Firestore
-    else if (error is FirebaseException &&
-        error.plugin == 'cloud_firestore') {
-      return FirestoreExceptionHandler(
-        message: error.message ?? 'حدث خطأ أثناء التعامل مع قاعدة البيانات',
-        code: error.code,
-        originalError: error,
-      );
-    }
+      case DioExceptionType.connectionError:
+        return NetworkException(
+          message:
+          'No internet connection. Please check your network settings.',
+          code: 'NO_CONNECTION',
+          originalError: e,
+        );
 
-    // 👇 أخطاء الشبكة
-    else if (error.toString().contains('network') ||
-        error.toString().contains('socket') ||
-        error.toString().contains('timeout')) {
-      return NetworkException(
-        message: 'تحقق من اتصالك بالإنترنت',
-        code: 'NETWORK_ERROR',
-        originalError: error,
-      );
-    }
+      case DioExceptionType.cancel:
+        return NetworkException(
+          message: 'Request was cancelled',
+          code: 'CANCELLED',
+          originalError: e,
+        );
 
-    // 👇 أي خطأ آخر
-    else {
-      return UnknownException(
-        message: error.toString(),
-        code: 'UNKNOWN',
-        originalError: error,
-      );
-    }
-  }
+      case DioExceptionType.badCertificate:
+        return NetworkException(
+          message: 'Security certificate error',
+          code: 'BAD_CERTIFICATE',
+          originalError: e,
+        );
 
-  /// 🧠 تحويل AppException إلى Failure
-  static Failure exceptionToFailure(AppException exception) {
-    if (exception is FirebaseAuthExceptionHandler) {
-      return FirebaseAuthFailure(
-        message: exception.message,
-        code: exception.code,
-        originalError: exception.originalError,
-      );
-    } else if (exception is FirestoreExceptionHandler) {
-      return FirestoreFailure(
-        message: exception.message,
-        code: exception.code,
-        originalError: exception.originalError,
-      );
-    } else if (exception is NetworkException) {
-      return NetworkFailure(
-        message: exception.message,
-        code: exception.code,
-        originalError: exception.originalError,
-      );
-    } else {
-      return UnknownFailure(
-        message: exception.message,
-        code: exception.code,
-        originalError: exception.originalError,
-      );
+      case DioExceptionType.badResponse:
+        return _handleBadResponse(e);
+
+      case DioExceptionType.unknown:
+        return NetworkException(
+          message: 'An unexpected error occurred: ${e.message}',
+          code: 'UNKNOWN',
+          originalError: e,
+        );
     }
   }
 
-  /// 🔎 دالة خاصة لترجمة أكواد Firebase Auth إلى رسائل مفهومة
-  static String _getFirebaseAuthErrorMessage(FirebaseAuthException e) {
-    switch (e.code) {
-      case 'invalid-email':
-        return 'البريد الإلكتروني غير صالح';
-      case 'user-disabled':
-        return 'تم تعطيل هذا المستخدم';
-      case 'user-not-found':
-        return 'لم يتم العثور على المستخدم';
-      case 'wrong-password':
-        return 'كلمة المرور غير صحيحة';
-      case 'email-already-in-use':
-        return 'هذا البريد مستخدم من قبل';
-      case 'weak-password':
-        return 'كلمة المرور ضعيفة جداً';
-      case 'invalid-credential':
-        return 'بيانات تسجيل الدخول غير صحيحة، حاول مرة أخرى';
+  /// Handle bad response errors
+  static AppException _handleBadResponse(DioException e) {
+    final response = e.response;
+    final statusCode = response?.statusCode;
 
-      case 'network-request-failed':
-        return 'تحقق من اتصالك بالإنترنت';
-      case 'too-many-requests':
-        return 'عدد محاولات تسجيل الدخول كبير جداً. حاول لاحقاً';
+    // Try to extract error from response data
+    ErrorModel errorModel;
+    try {
+      errorModel = ErrorModel.fromJson(response?.data ?? {});
+    } catch (_) {
+      errorModel = ErrorModel(
+        message: _getDefaultErrorMessage(statusCode),
+        status: statusCode?.toString(),
+      );
+    }
 
+    return ServerException(
+      errorModel: errorModel,
+      code: statusCode?.toString(),
+      originalError: e,
+    );
+  }
+
+  /// Get default error message based on status code
+  static String _getDefaultErrorMessage(int? statusCode) {
+    switch (statusCode) {
+      case 400:
+        return 'Bad request. Please check your input.';
+      case 401:
+        return 'Unauthorized. Please login again.';
+      case 403:
+        return 'Forbidden. You don\'t have permission to access this resource.';
+      case 404:
+        return 'Resource not found.';
+      case 422:
+        return 'Validation error. Please check your input.';
+      case 500:
+        return 'Internal server error. Please try again later.';
+      case 502:
+        return 'Bad gateway. Please try again later.';
+      case 503:
+        return 'Service unavailable. Please try again later.';
       default:
-        return e.message ?? 'حدث خطأ في عملية المصادقة';
+        return 'Server error ($statusCode). Please try again later.';
     }
   }
+
+  /// Convert exception to failure
+  static Failure exceptionToFailure(AppException exception) {
+    if (exception is ServerException) {
+      return ServerFailure(
+        message: exception.errorModel?.userMessage ?? exception.message,
+        errorModel: exception.errorModel,
+        code: exception.code,
+        originalError: exception.originalError,
+      );
+    }
+    else if (exception is NetworkException) {
+      return NetworkFailure(message: exception.message);
+    } else if (exception is CacheException) {
+      return CacheFailure(message: exception.message);
+    } else if (exception is ValidationException) {
+      return ValidationFailure(message: exception.message);
+    } else {
+      return UnknownFailure(message: exception.message);
+    }
+  }
+}
+
+/// Legacy function for backward compatibility
+@Deprecated('Use ExceptionHandler.handleDioException instead')
+void handelDioException(DioException e) {
+  throw ExceptionHandler.handleDioException(e);
 }

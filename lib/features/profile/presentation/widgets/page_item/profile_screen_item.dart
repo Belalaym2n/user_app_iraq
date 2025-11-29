@@ -4,17 +4,19 @@ import 'package:user_app_iraq/core/sharedWidgets/text_styles.dart';
 import 'package:user_app_iraq/core/sharedWidgets/top_screen_widget.dart';
 import 'package:user_app_iraq/core/utils/app_colors.dart';
 import 'package:user_app_iraq/core/utils/app_constants.dart';
+import 'package:user_app_iraq/features/profile/data/models/profile_model.dart';
 import 'package:user_app_iraq/features/profile/presentation/widgets/profile_buttons.dart';
 import 'package:user_app_iraq/features/profile/presentation/widgets/quick_actions.dart';
 import 'package:user_app_iraq/generated/locale_keys.g.dart';
 
-import 'build_main_menue.dart';
-import 'build_profile_header.dart';
-import 'build_state_card.dart';
+import '../build_main_menue.dart';
+import '../pageWidgets/build_profile_header.dart';
+import '../build_state_card.dart';
 
 class ProfileScreenItem extends StatefulWidget {
-  const ProfileScreenItem({super.key});
+    ProfileScreenItem({super.key,required this.profileModel});
 
+    UserProfileModel profileModel;
   @override
   State<ProfileScreenItem> createState() => _ProfileScreenItemState();
 }
@@ -34,9 +36,7 @@ class _ProfileScreenItemState extends State<ProfileScreenItem> {
 
       body: CustomScrollView(
         slivers: [
-          /// -------------------------------
-          /// HEADER WITH COLLAPSE TITLE
-          /// -------------------------------
+
           SliverAppBar(
             expandedHeight: AppConstants.h * 0.32,
             pinned: true,
@@ -63,7 +63,9 @@ class _ProfileScreenItemState extends State<ProfileScreenItem> {
                   )
                       : null,
 
-                  background: buildProfileHeader(),
+                  background: buildProfileHeader(
+
+                      user: widget.profileModel),
                 );
               },
             ),

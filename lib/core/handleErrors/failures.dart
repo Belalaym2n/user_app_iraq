@@ -1,4 +1,6 @@
-/// قاعدة أساسية لكل أنواع الأخطاء في النظام
+import 'error_model.dart';
+
+/// Base failure class for all application failures
 abstract class Failure {
   final String message;
   final String? code;
@@ -17,40 +19,41 @@ abstract class Failure {
   }
 
   @override
-  int get hashCode => message.hashCode ^ (code?.hashCode ?? 0);
+  int get hashCode => message.hashCode ^ code.hashCode;
 
   @override
-  String toString() => '$runtimeType: $message';
+  String toString() => 'Failure: $message';
 }
 
-/// 🔐 فشل في المصادقة (Firebase Auth)
-class FirebaseAuthFailure extends Failure {
-  const FirebaseAuthFailure({
-    super.message = 'فشل في عملية تسجيل الدخول أو إنشاء الحساب',
-    super.code = 'AUTH_ERROR',
+/// Server-related failures
+class ServerFailure extends Failure {
+  final ErrorModel? errorModel;
+
+  const ServerFailure({
+    super.message = 'حدث خطأ في الخادم',
+    this.errorModel,
+    super.code = 'SERVER_ERROR',
+    super.originalError,
+  });
+}
+
+
+/// Cache-related failures
+class CacheFailure extends Failure {
+  const CacheFailure({
+    super.message = 'حدث خطأ في التخزين المؤقت',
+    super.code = 'CACHE_ERROR',
     super.originalError,
   });
 
   @override
-  String toString() => 'FirebaseAuthFailure: $message';
+  String toString() => 'CacheFailure: $message';
 }
 
-/// 🗄️ فشل في قاعدة البيانات (Firestore)
-class FirestoreFailure extends Failure {
-  const FirestoreFailure({
-    super.message = 'حدث خطأ أثناء التعامل مع قاعدة البيانات',
-    super.code = 'FIRESTORE_ERROR',
-    super.originalError,
-  });
-
-  @override
-  String toString() => 'FirestoreFailure: $message';
-}
-
-/// 🌐 فشل في الاتصال بالشبكة
+/// Network-related failures
 class NetworkFailure extends Failure {
   const NetworkFailure({
-    super.message = 'تحقق من اتصالك بالإنترنت',
+    super.message = 'حدث خطأ في الاتصال بالإنترنت',
     super.code = 'NETWORK_ERROR',
     super.originalError,
   });
@@ -59,19 +62,19 @@ class NetworkFailure extends Failure {
   String toString() => 'NetworkFailure: $message';
 }
 
-/// ⏳ انتهاء مهلة الاتصال
-class TimeoutFailure extends Failure {
-  const TimeoutFailure({
-    super.message = 'انتهت مهلة الاتصال، حاول مرة أخرى',
-    super.code = 'TIMEOUT_ERROR',
+/// Validation-related failures
+class ValidationFailure extends Failure {
+  const ValidationFailure({
+    required super.message,
+    super.code = 'VALIDATION_ERROR',
     super.originalError,
   });
 
   @override
-  String toString() => 'TimeoutFailure: $message';
+  String toString() => 'ValidationFailure: $message';
 }
 
-/// ⚠️ خطأ غير معروف
+/// Unknown failures
 class UnknownFailure extends Failure {
   const UnknownFailure({
     super.message = 'حدث خطأ غير معروف',
@@ -83,11 +86,59 @@ class UnknownFailure extends Failure {
   String toString() => 'UnknownFailure: $message';
 }
 
-/// 🔑 فشل في الصلاحيات
+/// No internet connection failure
+class NoInternetFailure extends Failure {
+  const NoInternetFailure({
+    super.message = 'لا يوجد اتصال بالانترنت',
+    super.code = 'NO_INTERNET',
+    super.originalError,
+  });
+
+  @override
+  String toString() => 'NoInternetFailure: $message';
+}
+
+/// No connection failure
+class NoConnectionFailure extends Failure {
+  const NoConnectionFailure({
+    super.message = 'لا يوجد اتصال بالانترنت',
+    super.code = 'NO_CONNECTION',
+    super.originalError,
+  });
+
+  @override
+  String toString() => 'NoConnectionFailure: $message';
+}
+
+/// No data available failure
+class NoDataFailure extends Failure {
+  const NoDataFailure({
+    super.message = 'لا يوجد بيانات',
+    super.code = 'NO_DATA',
+    super.originalError,
+  });
+
+  @override
+  String toString() => 'NoDataFailure: $message';
+}
+
+/// Authentication failure
+class AuthFailure extends Failure {
+  const AuthFailure({
+    super.message = 'فشل في المصادقة',
+    super.code = 'AUTH_ERROR',
+    super.originalError,
+  });
+
+  @override
+  String toString() => 'AuthFailure: $message';
+}
+
+/// Permission failure
 class PermissionFailure extends Failure {
   const PermissionFailure({
-    super.message = 'ليس لديك صلاحية لتنفيذ هذا الإجراء',
-    super.code = 'PERMISSION_DENIED',
+    super.message = 'ليس لديك صلاحية للوصول',
+    super.code = 'PERMISSION_ERROR',
     super.originalError,
   });
 
@@ -95,43 +146,47 @@ class PermissionFailure extends Failure {
   String toString() => 'PermissionFailure: $message';
 }
 
-/// 📱 فشل في الربط بالخدمة (Cloud Function أو أي خدمة أخرى)
-class ServiceFailure extends Failure {
-  const ServiceFailure({
-    super.message = 'حدث خطأ في الخدمة، حاول مرة أخرى لاحقاً',
-    super.code = 'SERVICE_ERROR',
+/// Timeout failure
+class TimeoutFailure extends Failure {
+  const TimeoutFailure({
+    super.message = 'انتهت مهلة الاتصال',
+    super.code = 'TIMEOUT_ERROR',
     super.originalError,
   });
 
   @override
-  String toString() => 'ServiceFailure: $message';
+  String toString() => 'TimeoutFailure: $message';
 }
 
-/// 🧠 امتدادات لتسهيل التعامل مع الأخطاء
+/// Extension methods for Failure
 extension FailureExtensions on Failure {
-  /// هل الخطأ ناتج عن الشبكة؟
+  /// Check if failure is network related
   bool get isNetworkError =>
-      this is NetworkFailure || this is TimeoutFailure;
+      this is NetworkFailure ||
+          this is NoInternetFailure ||
+          this is NoConnectionFailure ||
+          this is TimeoutFailure;
 
-  /// هل الخطأ من Firebase Auth؟
-  bool get isAuthError => this is FirebaseAuthFailure;
+  /// Check if failure is server related
+  bool get isServerError => this is ServerFailure;
 
-  /// هل الخطأ من Firestore؟
-  bool get isFirestoreError => this is FirestoreFailure;
+  /// Check if failure is cache related
+  bool get isCacheError => this is CacheFailure;
 
-  /// هل الخطأ في الصلاحيات؟
-  bool get isPermissionError => this is PermissionFailure;
+  /// Check if failure is validation related
+  bool get isValidationError => this is ValidationFailure;
 
-  /// رسالة ودّية للمستخدم
+  /// Check if failure is authentication related
+  bool get isAuthError => this is AuthFailure || this is PermissionFailure;
+
+  /// Get user-friendly error message
   String get userMessage {
     if (isNetworkError) {
-      return 'تحقق من اتصالك بالإنترنت.';
+      return 'تحقق من اتصالك بالإنترنت';
+    } else if (isServerError) {
+      return 'حدث خطأ في الخادم، حاول مرة أخرى';
     } else if (isAuthError) {
-      return 'حدث خطأ أثناء تسجيل الدخول، حاول مرة أخرى.';
-    } else if (isFirestoreError) {
-      return 'حدث خطأ أثناء تحميل البيانات.';
-    } else if (isPermissionError) {
-      return 'ليس لديك صلاحية كافية لتنفيذ هذا الإجراء.';
+      return 'يرجى تسجيل الدخول مرة أخرى';
     } else {
       return message;
     }

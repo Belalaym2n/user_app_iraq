@@ -4,11 +4,15 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'config/routes/app_router.dart';
+import 'core/apiManager/dio_client.dart';
+import 'core/intialization/init_di.dart';
 import 'core/utils/app_constants.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
+  initDI();
+  DioClient.init();
   runApp(
     EasyLocalization(
       supportedLocales: const [Locale('en'), Locale('ar') ],

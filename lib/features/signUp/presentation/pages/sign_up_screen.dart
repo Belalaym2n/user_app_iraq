@@ -1,5 +1,15 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../config/routes/app_router.dart';
+import '../../../../core/intialization/init_di.dart';
+import '../../../../core/sharedWidgets/app_snack_bar.dart';
+import '../../../../core/sharedWidgets/custom_loading.dart';
+import '../../../../core/sharedWidgets/main_wrapper.dart';
+import '../../domain/use_cases/signUpCall.dart';
+import '../bloc/bloc.dart';
+import '../bloc/signUpStates.dart';
 import '../widgets/sign_up_item.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -10,8 +20,51 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  final signUpItemKey = GlobalKey<SignUpItemState>();
+
   @override
   Widget build(BuildContext context) {
-    return SignUpItem();
+    return BlocProvider(
+      create: (_) => SignUpBloc(signUpUseCase: getIt<SignUpUseCase>()),
+      child: BlocConsumer<SignUpBloc, SignUpState>(
+        listener: (context, state) async {
+          if (state is SignUpLoading) {
+            showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (context) => const Dialog(
+                backgroundColor: Colors.transparent,
+                child: CustomLoadingWidget(),
+              ),
+            );
+          } else if (state is SignUpSuccess) {
+            Navigator.pop(context); //  تغلق اللودينج
+
+            AppSnackBar.showSuccess(context, state.message);
+            await Future.delayed(Duration(milliseconds: 2000), () {
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                AppRoutes.login,
+                (route) => false,
+              );
+            });
+            signUpItemKey.currentState?.clearForm();
+          } else if (state is SignUpFailure) {
+            Navigator.pop(context); // تغلق اللودينج
+
+            AppSnackBar.showError(context, state.error);
+          }
+        },
+
+        builder: (context, state) {
+          return MainWrapper(
+            childWidget: AbsorbPointer(
+              absorbing: state is SignUpLoading,
+              child: SignUpItem(),
+            ),
+          );
+        },
+      ),
+    );
   }
 }

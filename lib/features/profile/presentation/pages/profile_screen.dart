@@ -1,5 +1,16 @@
 import 'package:flutter/cupertino.dart';
-import 'package:user_app_iraq/features/profile/presentation/widgets/profile_screen_item.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:skeletonizer/skeletonizer.dart';
+import 'package:user_app_iraq/core/sharedWidgets/app_snack_bar.dart';
+import 'package:user_app_iraq/features/profile/presentation/widgets/page_item/profile_screen_item.dart';
+
+import '../../../../core/intialization/init_di.dart';
+import '../../../../core/sharedWidgets/custom_loading.dart';
+import '../../data/models/profile_model.dart';
+import '../bloc/profile_bloc.dart';
+import '../bloc/profile_event.dart';
+import '../bloc/profile_states.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -11,6 +22,75 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
-    return   ProfileScreenItem();
+    return BlocProvider(
+      create: (_) => getIt<ProfileBloc>()..add(GetProfileEvent()),
+
+      child: BlocConsumer<ProfileBloc, ProfileState>(
+        listener: (context, state) async {
+          if (state is ProfileError) {
+            return AppSnackBar.showError(context, state.message);
+          }
+          if (state is LogoutLoading) {
+            showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (context) => const Dialog(
+                backgroundColor: Colors.transparent,
+                child: CustomLoadingWidget(),
+              ),
+            );
+          }
+          if (state is LogoutFailure) {
+            Navigator.pop(context); // تغلق اللودينج
+
+            return AppSnackBar.showError(context, state.message);
+          }
+          if (state is LogoutSuccess) {
+            Navigator.pop(context); // تغلق اللودينج
+
+            return AppSnackBar.showSuccess(context, "state.message");
+          }
+        },
+
+        builder: (context, state) {
+          if (state is ProfileLoading) {
+            return profile_loading();
+          }
+          if (state is ProfileLoaded) {
+            print("USER NAME = ${state.user.name}");
+            print("USER EMAIL = ${state.user.email}");
+
+            return ProfileScreenItem(profileModel: state.user);
+          }
+          return SizedBox();
+        },
+      ),
+    );
+  }
+
+  final fakeUserProfile = UserProfileModel(
+    id: 999,
+    name: "Fake User",
+    email: "fake.user@example.com",
+    phone: "07501234567",
+    photoUrl: "https://example.com/avatar.png",
+    dateOfBirth: "1999-01-01",
+
+    city: "Baghdad",
+    state: "Baghdad State",
+    postalCode: "10011",
+    country: "Iraq",
+
+    emailVerifiedAt: DateTime.now(),
+    twoFactorEnabled: false,
+
+    createdAt: DateTime.now().toIso8601String(),
+    updatedAt: DateTime.now().toIso8601String(),
+  );
+
+  Widget profile_loading() {
+    return Skeletonizer(
+      child: ProfileScreenItem(profileModel: fakeUserProfile),
+    );
   }
 }

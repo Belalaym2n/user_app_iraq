@@ -1,10 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:user_app_iraq/features/login/presentation/pages/auto_login.dart';
 import 'package:user_app_iraq/features/sendProblem/presentation/pages/addProblemPage.dart';
 
 import '../../features/addLoad/presentation/pages/add_load_screen.dart'
     show AddLoadScreen;
 import '../../features/bottomNav/bottom_nav.dart';
+import '../../features/login/presentation/pages/forget_pass_screen.dart';
+import '../../features/login/presentation/pages/login_screen.dart';
 import '../../features/login/presentation/widgets/screensItem/forget_password.dart';
 import '../../features/login/presentation/widgets/screensItem/login_screen_item.dart';
 import '../../features/notifications/presentation/pages/notification_screen.dart';
@@ -27,7 +30,7 @@ class AppRoutes {
   static const String problems = "problems/";
   static const String forgetPassword = "ForgetPasswordItem/";
   static const String notification = "notification/";
-  static const String autoLogin = "autoLogin/";
+  static const String autoLogin = "AUTOLogin/";
   static const String splash = "/";
   static const String lectures = "sfsf/";
   static const String supportCallWidget = "supportCallWidget/";
@@ -42,11 +45,15 @@ class Routes {
         return MaterialPageRoute(builder: (context) => SplashScreen());
       //
 
+      case AppRoutes.autoLogin:
+        return MaterialPageRoute(builder: (context) => AutoLogin());
+    //
+
       case AppRoutes.add_load:
         return MaterialPageRoute(builder: (context) => AddLoadScreen());
     //
       case AppRoutes.forgetPassword:
-        return MaterialPageRoute(builder: (context) => ForgetPasswordItem());
+        return MaterialPageRoute(builder: (context) => ForgetPassScreen());
     //
       case AppRoutes.problems:
         return MaterialPageRoute(builder: (context) => AddProblemScreen());
@@ -63,7 +70,7 @@ class Routes {
         return MaterialPageRoute(builder: (context) => SignUpScreen());
       //
       case AppRoutes.login:
-        return MaterialPageRoute(builder: (context) => LoginScreenItem());
+        return MaterialPageRoute(builder: (context) => LoginScreen());
       //
         case AppRoutes.notification:
           return MaterialPageRoute(

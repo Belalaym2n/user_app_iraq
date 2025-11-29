@@ -1,9 +1,7 @@
- import 'package:flutter/material.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:lottie/lottie.dart';
-import 'package:user_app_iraq/features/splash/onBoard/on_board_item.dart';
-import '../../../config/routes/app_router.dart';
-import '../../../core/utils/app_constants.dart';
+import 'package:flutter/material.dart';
+ import 'package:lottie/lottie.dart';
+import 'package:user_app_iraq/features/login/presentation/pages/auto_login.dart';
+  import '../../../core/utils/app_constants.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -40,22 +38,26 @@ class _SplashScreenState extends State<SplashScreen>
     setState(() => _showWhiteScreen = true);
     await Future.delayed(const Duration(milliseconds: 500));
 
-     // 4️⃣ الانتقال إلى شاشة OnBoarding
+    // 4️⃣ الانتقال إلى شاشة OnBoarding
     if (mounted) {
-      Navigator.of(context).pushReplacement(PageRouteBuilder(
-        transitionDuration: const Duration(milliseconds: 850),
-        transitionsBuilder: (context, animation, secondaryAnimation, child) {
-          final fade =
-          CurvedAnimation(parent: animation, curve: Curves.easeInOut);
-          final scale = Tween<double>(begin: 0.95, end: 1.0).animate(fade);
-          return FadeTransition(
-            opacity: fade,
-            child: ScaleTransition(scale: scale, child: child),
-          );
-        },
-        pageBuilder: (context, animation, secondaryAnimation) =>
-        const OnBoard(),
-      ));
+      Navigator.of(context).pushReplacement(
+        PageRouteBuilder(
+          transitionDuration: const Duration(milliseconds: 850),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            final fade = CurvedAnimation(
+              parent: animation,
+              curve: Curves.easeInOut,
+            );
+            final scale = Tween<double>(begin: 0.95, end: 1.0).animate(fade);
+            return FadeTransition(
+              opacity: fade,
+              child: ScaleTransition(scale: scale, child: child),
+            );
+          },
+          pageBuilder: (context, animation, secondaryAnimation) =>
+              const AutoLogin(),
+        ),
+      );
     }
   }
 
@@ -72,25 +74,28 @@ class _SplashScreenState extends State<SplashScreen>
 
     return Scaffold(
       appBar: AppBar(
-          backgroundColor: Colors.white,
-          elevation: 0, toolbarHeight: 0),
+        backgroundColor: Colors.white,
+        elevation: 0,
+        toolbarHeight: 0,
+      ),
       backgroundColor: Colors.white,
       body: Center(
         child: _showWhiteScreen
             ? const SizedBox.shrink()
             : FadeTransition(
-          opacity: Tween<double>(begin: 1, end: 0).animate(
-            CurvedAnimation(
-              parent: _fadeOutController,
-              curve: Curves.easeOut,
-            ),
-          ),
-          child: _build_lottie_file()
-        ),
+                opacity: Tween<double>(begin: 1, end: 0).animate(
+                  CurvedAnimation(
+                    parent: _fadeOutController,
+                    curve: Curves.easeOut,
+                  ),
+                ),
+                child: _build_lottie_file(),
+              ),
       ),
     );
   }
-  _build_lottie_file(){
+
+  _build_lottie_file() {
     return SizedBox(
       width: AppConstants.w * 0.8,
       child: Lottie.asset(

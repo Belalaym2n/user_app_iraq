@@ -39,8 +39,8 @@ class _CustomTextFormFieldState extends State<CustomTextFormField>
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(
-        horizontal: AppConstants.w * 0.0 ,
-        vertical: AppConstants.h * 0  ,
+        horizontal: AppConstants.w * 0.0,
+        vertical: AppConstants.h * 0,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -50,7 +50,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField>
               setState(() => _isFocused = focus);
             },
             child: AnimatedContainer(
-               duration: const Duration(milliseconds: 300),
+              duration: const Duration(milliseconds: 300),
               curve: Curves.easeOutCubic,
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -59,8 +59,8 @@ class _CustomTextFormFieldState extends State<CustomTextFormField>
                   color: _isFocused
                       ? AppColors.primaryColor.withOpacity(0.8)
                       : (_errorText != null
-                      ? Colors.redAccent
-                      : Colors.grey.shade300),
+                            ? Colors.redAccent
+                            : Colors.grey.shade300),
                   width: 1.6,
                 ),
                 boxShadow: [
@@ -75,11 +75,20 @@ class _CustomTextFormFieldState extends State<CustomTextFormField>
               ),
               child: TextFormField(
 
+                validator: (value) {
+                  final result = widget.validator?.call(value);
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    if (mounted) {
+                      setState(() => _errorText = result);
+                    }
+                  });
+                  return result; // ← مهم جدًا
+                },
+                  // ← أضف هذا السطر
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 controller: widget.controller,
                 keyboardType: widget.keyboardType,
                 obscureText: widget.isPassword && _obscure,
-
                 onChanged: (value) {
                   final result = widget.validator?.call(value);
                   WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -88,12 +97,22 @@ class _CustomTextFormFieldState extends State<CustomTextFormField>
                     }
                   });
                 },
+
+                errorBuilder: null,
+
                 style: TextStyle(
                   color: AppColors.textPrimary,
                   fontWeight: FontWeight.w600,
                   fontSize: AppConstants.w * 0.04,
                 ),
                 decoration: InputDecoration(
+                  errorText: null,
+
+                  error: null,
+                  errorStyle: TextStyle(
+                    fontSize: 0
+                  ),
+
                   border: InputBorder.none,
                   labelText: widget.label,
                   labelStyle: TextStyle(
@@ -110,37 +129,37 @@ class _CustomTextFormFieldState extends State<CustomTextFormField>
                   ),
                   prefixIcon: widget.prefixIcon != null
                       ? AnimatedContainer(
-                    duration: const Duration(milliseconds: 300),
-                    margin: const EdgeInsets.symmetric(horizontal: 10),
-                    decoration: BoxDecoration(
-                      color: _isFocused
-                          ? AppColors.primaryColor.withOpacity(0.1)
-                          : Colors.grey.shade100,
-                      shape: BoxShape.circle,
-                    ),
-                    child: Icon(
-                      widget.prefixIcon,
-                      color: _isFocused
-                          ? AppColors.primaryColor
-                          : Colors.grey[600],
-                      size: 23,
-                    ),
-                  )
+                          duration: const Duration(milliseconds: 300),
+                          margin: const EdgeInsets.symmetric(horizontal: 10),
+                          decoration: BoxDecoration(
+                            color: _isFocused
+                                ? AppColors.primaryColor.withOpacity(0.1)
+                                : Colors.grey.shade100,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Icon(
+                            widget.prefixIcon,
+                            color: _isFocused
+                                ? AppColors.primaryColor
+                                : Colors.grey[600],
+                            size: 23,
+                          ),
+                        )
                       : null,
                   suffixIcon: widget.isPassword
                       ? GestureDetector(
-                    onTap: () {
-                      setState(() => _obscure = !_obscure);
-                    },
-                    child: Icon(
-                      _obscure
-                          ? Icons.visibility_off_rounded
-                          : Icons.visibility_rounded,
-                      color: _isFocused
-                          ? AppColors.primaryColor
-                          : Colors.grey[500],
-                    ),
-                  )
+                          onTap: () {
+                            setState(() => _obscure = !_obscure);
+                          },
+                          child: Icon(
+                            _obscure
+                                ? Icons.visibility_off_rounded
+                                : Icons.visibility_rounded,
+                            color: _isFocused
+                                ? AppColors.primaryColor
+                                : Colors.grey[500],
+                          ),
+                        )
                       : null,
                   contentPadding: EdgeInsets.symmetric(
                     vertical: AppConstants.h * 0.02,
@@ -156,35 +175,39 @@ class _CustomTextFormFieldState extends State<CustomTextFormField>
             duration: const Duration(milliseconds: 250),
             switchInCurve: Curves.easeOutBack,
             switchOutCurve: Curves.easeIn,
-            child: _errorText == null
-                ? SizedBox(height: AppConstants.h * 0.01)
-                : Padding(
-              padding: EdgeInsets.only(top: AppConstants.h * 0.008),
-              child: Container(
-                key: ValueKey(_errorText),
-                padding: EdgeInsets.symmetric(
-                  horizontal: AppConstants.w * 0.04,
-                  vertical: AppConstants.h * 0.008,
-                ),
-                decoration: BoxDecoration(
-                  color: Colors.redAccent.withOpacity(0.12),
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: Colors.redAccent, width: 1),
-                ),
-                child: Text(
-                  _errorText!,
-                  style: TextStyle(
-                    color: Colors.redAccent,
-                    fontWeight: FontWeight.w600,
-                    fontSize: AppConstants.w * 0.032,
-                  ),
-                ),
-              ),
+            child: _errorText == null ?
+            SizedBox(height: AppConstants.h * 0.01)
+                : _build_error_widget(_errorText
             ),
           ),
         ],
       ),
     );
   }
-}
 
+  Widget _build_error_widget(String ?error) {
+    return Padding(
+      padding: EdgeInsets.only(top: AppConstants.h * 0.008),
+      child: Container(
+        key: ValueKey(_errorText ?? error??""),
+        padding: EdgeInsets.symmetric(
+          horizontal: AppConstants.w * 0.04,
+          vertical: AppConstants.h * 0.008,
+        ),
+        decoration: BoxDecoration(
+          color: Colors.redAccent.withOpacity(0.12),
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: Colors.redAccent, width: 1),
+        ),
+        child: Text(
+          _errorText ?? error??"",
+          style: TextStyle(
+            color: Colors.redAccent,
+            fontWeight: FontWeight.w600,
+            fontSize: AppConstants.w * 0.032,
+          ),
+        ),
+      ),
+    );
+  }
+}

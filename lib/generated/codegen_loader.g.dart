@@ -53,6 +53,12 @@ class CodegenLoader extends AssetLoader{
     "backToLogin": "العودة لتسجيل الدخول"
   },
   "register": {
+    "phone": "رقم الهاتف",
+    "enterYourPhone": "أدخل رقم هاتفك",
+    "account_created_success": "تم إنشاء حسابك… أهلاً بك معنا!",
+    "passwords_do_not_match": "كلمتا المرور غير متطابقتين",
+    "Auth_iraq_phone_required": "رقم الهاتف مطلوب",
+    "Auth_iraq_phone_invalid": "رقم الهاتف العراقي غير صحيح",
     "create_account": "إنشاء حساب",
     "enter_details": "أدخل بياناتك لإنشاء حساب جديد",
     "full_name": "الاسم الكامل",
@@ -224,6 +230,15 @@ class CodegenLoader extends AssetLoader{
     "logout": "تسجيل الخروج",
     "Cancel": "إلغاء",
     "delete_account": "حذف الحساب"
+  },
+  "Validations": {
+    "Passwords_do_not_match": "كلمتا المرور غير متطابقتين",
+    "Auth_email_required": "البريد الإلكتروني مطلوب",
+    "Auth_email_invalid": "صيغة البريد الإلكتروني غير صحيحة",
+    "Auth_password_invalid": "يجب أن تكون كلمة المرور 8 أحرف على الأقل",
+    "Auth_field_required": "هذا الحقل لا يجب أن يكون فارغًا",
+    "Auth_phone_required": "رقم الهاتف مطلوب",
+    "Auth_phone_invalid": "رقم الهاتف غير صحيح"
   }
 };
 static const Map<String,dynamic> _en = {
@@ -262,6 +277,12 @@ static const Map<String,dynamic> _en = {
     "backToLogin": "Back to Login"
   },
   "register": {
+    "phone": "Phone",
+    "enterYourPhone": "Enter your phone",
+    "account_created_success": "Your account has been created… Welcome aboard!",
+    "passwords_do_not_match": "Passwords do not match",
+    "Auth_iraq_phone_required": "Phone number is required",
+    "Auth_iraq_phone_invalid": "Invalid Iraqi phone number",
     "create_account": "Create Account",
     "enter_details": "Enter your details to create a new account",
     "full_name": "Full Name",
@@ -436,6 +457,15 @@ static const Map<String,dynamic> _en = {
   },
   "Splash": {
     "loading": "Loading..."
+  },
+  "Validations": {
+    "Passwords_do_not_match": "Passwords do not match",
+    "Auth_email_required": "Email is required",
+    "Auth_email_invalid": "Invalid email format",
+    "Auth_password_invalid": "Password must be at least 8 characters",
+    "Auth_field_required": "This field cannot be empty",
+    "Auth_phone_required": "Phone number is required",
+    "Auth_phone_invalid": "Invalid phone number"
   }
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"ar": _ar, "en": _en};

@@ -1,10 +1,12 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get_core/src/get_main.dart';
- import 'package:user_app_iraq/generated/locale_keys.g.dart';
+import 'package:user_app_iraq/features/profile/presentation/bloc/profile_bloc.dart';
+import 'package:user_app_iraq/features/profile/presentation/bloc/profile_event.dart';
+import 'package:user_app_iraq/generated/locale_keys.g.dart';
 import '../../../../core/utils/app_colors.dart';
-
 
 class ProfileButtons extends StatefulWidget {
   const ProfileButtons({super.key});
@@ -19,31 +21,28 @@ class _ProfileButtonsState extends State<ProfileButtons> {
 
   @override
   Widget build(BuildContext context) {
-
     return Padding(
       padding: const EdgeInsets.all(16.0),
-      child: _buildAccountActions(context,      ),
+      child: _buildAccountActions(context),
     );
   }
 
   /// ------------------------------
   /// ACCOUNT ACTIONS UI
   /// ------------------------------
-  Widget _buildAccountActions(
-      BuildContext context,
-
-      ) {
+  Widget _buildAccountActions(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         /// LOGOUT BUTTON
         OutlinedButton.icon(
-          onPressed: controller.logout,
+          onPressed: (){
+            context.read<ProfileBloc>().add(LogoutEvent());
+
+          },
           icon: Icon(Icons.logout, color: AppColors.textPrimary),
           label: Text(LocaleKeys.Profile_logout.tr()),
-         style: ButtonStyle(
-
-         ),
+          style: ButtonStyle(),
         ),
 
         const SizedBox(height: 12),
@@ -64,26 +63,29 @@ class _ProfileButtonsState extends State<ProfileButtons> {
     );
   }
 
-  Future<void> _showDeleteAccountDialog(
-      BuildContext context,    ) async {
+  Future<void> _showDeleteAccountDialog(BuildContext context) async {
     return showDialog(
       context: context,
       builder: (context) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         title: Text(
           LocaleKeys.Profile_delete_account.tr(),
-          style: TextStyle(color: AppColors.errorColor, fontWeight: FontWeight.bold),
+          style: TextStyle(
+            color: AppColors.errorColor,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         content: Text("Are your sure to delete acc"),
         actions: [
           TextButton(
-            onPressed: () {},
+            onPressed: () {
+            },
             child: Text(LocaleKeys.Profile_Cancel.tr()),
           ),
           TextButton(
             onPressed: () {
               controller.deleteAccount();
-             },
+            },
             child: Text(
               LocaleKeys.Profile_delete_account.tr(),
               style: TextStyle(color: AppColors.errorColor),

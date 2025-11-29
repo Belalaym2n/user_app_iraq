@@ -1,5 +1,9 @@
 import 'package:get_it/get_it.dart';
 
+import '../../features/login/di/login_di.dart';
+import '../../features/profile/di/sign_up_di.dart';
+import '../../features/signUp/di/signUpDi.dart';
+
 // import '../../features/dashboard/addLecture/di/init_add_lectures_di.dart';
 // import '../../features/dashboard/addLecture/di/init_play_list_di.dart';
 // import '../../features/lectures/lectures_di/get_lectures_di.dart';
@@ -11,8 +15,9 @@ import 'package:get_it/get_it.dart';
 final getIt = GetIt.instance;
 
 Future<void> initDI() async {
-
-  // signUpDI(getIt);
+  initialLoginDI(getIt);
+  signUpDI(getIt);
+  profileDI(getIt);
   // userNotificationInitDi(getIt);
   // addLectureDI(getIt);
   // initialLoginDI(getIt);
