@@ -1,13 +1,15 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:user_app_iraq/core/validations/auth_validation.dart';
 
 import '../../../../../core/sharedWidgets/buttons.dart';
 import '../../../../../core/sharedWidgets/customField.dart';
-import '../../../../../core/sharedWidgets/custom_form_field.dart';
-import '../../../../../core/utils/app_colors.dart';
+
 import '../../../../../core/utils/app_constants.dart';
 import '../../../../../generated/locale_keys.g.dart';
+import '../../bloc/bloc.dart';
+import '../../bloc/loginEvents.dart';
 import '../screensWidgets/build_forget_app_bar.dart';
 import '../screensWidgets/build_forget_password_text.dart';
 
@@ -15,15 +17,16 @@ class ForgetPasswordItem extends StatefulWidget {
   const ForgetPasswordItem({super.key});
 
   @override
-  State<ForgetPasswordItem> createState() => _ForgetPasswordItemState();
+  State<ForgetPasswordItem> createState() =>  ForgetPasswordItemState();
 }
 
-class _ForgetPasswordItemState extends State<ForgetPasswordItem>
+class ForgetPasswordItemState extends State<ForgetPasswordItem>
     with SingleTickerProviderStateMixin {
   final _formKey = GlobalKey<FormState>();
   late AnimationController _animationController;
   late Animation<double> _fadeAnim;
   late Animation<double> _scaleAnim;
+  final _emailController = TextEditingController();
 
   @override
   void initState() {
@@ -52,9 +55,13 @@ class _ForgetPasswordItemState extends State<ForgetPasswordItem>
   @override
   void dispose() {
     _animationController.dispose();
+    _emailController.dispose();
     super.dispose();
   }
 
+  clear(){
+    _emailController.clear();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -85,11 +92,12 @@ class _ForgetPasswordItemState extends State<ForgetPasswordItem>
           SizedBox(height: AppConstants.h * 0.05),
 
           CustomTextFormField(
+            validator: AuthValidator.validateEmail,
             label: LocaleKeys.Login_email.tr(),
             hint: StringTranslateExtension(
               LocaleKeys.Login_email_required,
             ).tr(),
-            controller: TextEditingController(),
+            controller: _emailController,
 
             keyboardType: TextInputType.emailAddress,
 
@@ -100,7 +108,11 @@ class _ForgetPasswordItemState extends State<ForgetPasswordItem>
 
           large_button(
             onPressed: () {
-              if (_formKey.currentState!.validate()) {}
+              if (_formKey.currentState!.validate()) {
+                context.read<LoginBloc>().add(
+                  ForgetPasswordPressed(_emailController.text),
+                );
+              }
             },
             buttonName: LocaleKeys.forgetPassword_resetButton.tr(),
           ),
@@ -122,10 +134,10 @@ class _ForgetPasswordItemState extends State<ForgetPasswordItem>
       ),
     );
   }
+
   TextStyle get _backTextStyle => TextStyle(
     fontSize: AppConstants.w * 0.04,
     color: Colors.black87,
     fontWeight: FontWeight.w500,
   );
-
 }

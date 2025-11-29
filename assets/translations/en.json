@@ -34,6 +34,12 @@
     "backToLogin": "Back to Login"
   },
   "register": {
+    "phone": "Phone",
+    "enterYourPhone": "Enter your phone",
+    "account_created_success": "Your account has been created… Welcome aboard!",
+    "passwords_do_not_match": "Passwords do not match",
+    "Auth_iraq_phone_required": "Phone number is required",
+    "Auth_iraq_phone_invalid": "Invalid Iraqi phone number",
     "create_account": "Create Account",
     "enter_details": "Enter your details to create a new account",
     "full_name": "Full Name",
@@ -191,6 +197,8 @@
     "no_messages_yet": "There are currently no new messages.\nWe will notify you as soon as a new alert arrives.",
     "view_details": "View Details"
   },
+
+
   "Profile": {
     "total_loads": "Total Loads",
     "completed": "Completed",
@@ -212,5 +220,17 @@
   },
   "Splash": {
     "loading": "Loading..."
+  },
+
+  "Validations": {
+    "Passwords_do_not_match": "Passwords do not match",
+
+    "Auth_email_required": "Email is required",
+    "Auth_email_invalid": "Invalid email format",
+    "Auth_password_invalid": "Password must be at least 8 characters",
+    "Auth_field_required": "This field cannot be empty",
+    "Auth_phone_required": "Phone number is required",
+    "Auth_phone_invalid": "Invalid phone number"
   }
+
 }
