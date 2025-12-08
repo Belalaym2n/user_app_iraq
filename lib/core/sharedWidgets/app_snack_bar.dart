@@ -53,7 +53,7 @@ class AppSnackBar {
 
   static void showSuccess(BuildContext context, String message) {
     show(
-      duration: Duration(seconds: 4),
+      duration: Duration(seconds: 3),
       context: context,
       message: message,
       backgroundColor: Colors.green.shade600,

@@ -1,50 +1,28 @@
+import 'package:easy_localization/easy_localization.dart';
+import 'package:user_app_iraq/generated/locale_keys.g.dart';
+
 class Validators {
   /// التحقق إن النص مش فاضي
-  static String? requiredField(String? value, {String message = 'مطلوب'}) {
+  static String? requiredField(String? value, {String? message}) {
     if (value == null || value.trim().isEmpty) {
-      return message;
+      return message ?? LocaleKeys.Validations_Auth_field_required.tr();
     }
     return null;
   }
 
-  /// التحقق إن القيمة URL صالح
-  static String? validUrl(String? value, {String message = 'رابط غير صالح'}) {
+  static String? description(String? value) {
     if (value == null || value.trim().isEmpty) {
-      return 'مطلوب';
+      return LocaleKeys.Validations_Validations_description_min_length.tr();
     }
 
-    final trimmed = value.trim();
-    final uri = Uri.tryParse(trimmed);
-
-    if (uri == null || !(uri.isScheme("http") || uri.isScheme("https"))) {
-      return message;
-    }
-    return null;
-  }
-
-  /// التحقق إن الرابط يوتيوب فقط
-  static String? youtubeUrl(String? value,
-      {String message = 'يجب إدخال رابط فيديو من يوتيوب'}) {
-
-    final error = validUrl(value);
-    if (error != null) return error;
-
-    final v = value!.trim();
-    if (!v.contains("youtube.com") && !v.contains("youtu.be")) {
-      return message;
+    if (value.trim().length < 5) {
+      return LocaleKeys.Validations_Validations_description_min_length.tr();
     }
 
     return null;
   }
 
-  /// التحقق إن الكود لو موجود يبقى صحيح
-  static String? optionalCode(String? value) {
-    if (value == null || value.trim().isEmpty) return null; // اختياري
 
-    if (value.length < 4) {
-      return "الكود يجب أن يكون 4 أحرف على الأقل";
-    }
 
-    return null;
-  }
+
 }

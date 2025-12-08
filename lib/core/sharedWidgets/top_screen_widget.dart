@@ -9,11 +9,13 @@ class TopScreenWidget extends StatelessWidget {
   IconButton? iconButton;
   IconData? screenIcon;
   bool showIcons;
+  bool isLoading;
 
   TopScreenWidget({
     super.key,
     this.iconButton,
     this.showIcons = true,
+    this.isLoading = false,
     this.screenIcon,
     required this.text,
   });
@@ -27,7 +29,7 @@ class TopScreenWidget extends StatelessWidget {
         vertical: AppConstants.h * 0.02,
       ),
       decoration: BoxDecoration(
-        color: AppColors.primaryColor,
+        color:isLoading?Colors.white: AppColors.primaryColor,
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(AppConstants.w * 0.08),
           bottomRight: Radius.circular(AppConstants.w * 0.08),

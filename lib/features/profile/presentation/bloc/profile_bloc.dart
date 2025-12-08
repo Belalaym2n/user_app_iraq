@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:user_app_iraq/features/profile/data/models/profile_model.dart';
 import 'package:user_app_iraq/features/profile/presentation/bloc/profile_event.dart';
 import '../../domain/use_cases/get_profile_use_case.dart';
 import '../../domain/use_cases/logout_use_case.dart';
@@ -8,6 +9,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   final GetProfileUseCase getProfile;
   final LogoutUseCase logoutUseCase;
 
+  UserProfileModel ? userProfileModel;
   ProfileBloc({required this.getProfile, required this.logoutUseCase})
     : super(ProfileInitial()) {
     on<GetProfileEvent>(_onGetProfile);
@@ -34,6 +36,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     final result = await getProfile();
 
     if (result.isSuccess) {
+      userProfileModel=result.data;
       emit(ProfileLoaded(result.data));
     } else {
       emit(ProfileError(result.error.toString()));

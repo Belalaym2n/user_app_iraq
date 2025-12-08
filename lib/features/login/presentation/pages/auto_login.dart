@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:user_app_iraq/core/sharedWidgets/main_wrapper.dart';
+import 'package:user_app_iraq/core/utils/app_colors.dart';
 
 import '../../../../core/apiManager/api_manager.dart';
 import '../../../../core/apiManager/dio_client.dart';
@@ -59,13 +61,14 @@ class _AutoLoginState extends State<AutoLogin> {
 
   @override
   Widget build(BuildContext context) {
-    if (isLoading) {
-      return Scaffold(
+    return MainWrapper(childWidget:
+       isLoading?
+       Scaffold(
         backgroundColor: Colors.white,
-        body: const Center(child: CupertinoActivityIndicator()),
-      );
+        body: const Center(child: CupertinoActivityIndicator(color: AppColors.primaryColor,)),
+      ):isLoggedIn ? BottomNav() : OnBoard());
     }
 
-    return isLoggedIn ? BottomNav() : OnBoard();
-  }
+
+
 }

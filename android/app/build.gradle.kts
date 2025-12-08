@@ -6,15 +6,16 @@ plugins {
 }
 
 android {
+//    compileSdk = 35
+ compileSdk = flutter.compileSdkVersion
+
     namespace = "com.example.user_app_iraq"
-    compileSdk = flutter.compileSdkVersion
-    ndkVersion = flutter.ndkVersion
+     ndkVersion = flutter.ndkVersion
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
-
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_11.toString()
     }

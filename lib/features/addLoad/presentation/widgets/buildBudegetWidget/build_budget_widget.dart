@@ -2,14 +2,15 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:user_app_iraq/core/utils/app_colors.dart';
+import 'package:user_app_iraq/core/utils/app_validator.dart';
 import 'package:user_app_iraq/generated/locale_keys.g.dart';
 
 import '../../../../../core/sharedWidgets/custom_form_field.dart';
 import '../build_card_info.dart';
 
 class BuildBudgetWidget extends StatefulWidget {
-  const BuildBudgetWidget({super.key});
-
+    BuildBudgetWidget({super.key,required this.budget});
+TextEditingController budget;
   @override
   State<BuildBudgetWidget> createState() => _BuildBudgetWidgetState();
 }
@@ -26,9 +27,10 @@ class _BuildBudgetWidgetState extends State<BuildBudgetWidget> {
       icon: Icons.currency_exchange,
       children: [
         CustomTextField(
+          validator: Validators.requiredField,
           label: LocaleKeys.Add_Load_budget.tr(),
           hint: '5000',
-          controller: TextEditingController(),
+          controller: widget.budget,
           keyboardType: TextInputType.number,
           prefixIcon: Icon(
             Icons.currency_exchange,

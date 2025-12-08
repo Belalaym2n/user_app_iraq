@@ -1,118 +1,163 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:user_app_iraq/core/utils/app_constants.dart';
 
 import '../../../../../core/sharedWidgets/text_styles.dart';
 import '../../../../../core/utils/app_colors.dart';
 import '../../../../../generated/locale_keys.g.dart';
+import '../../../data/models/location_model.dart';
+import '../../bloc/add_load_bloc.dart';
+import '../../bloc/add_load_event.dart';
+import '../../bloc/add_load_states.dart';
 import '../build_card_info.dart';
+import 'google_maps.dart';
 
-class PickupAndDelivery extends StatefulWidget {
-  const PickupAndDelivery({super.key});
+class PickupAndDelivery extends StatelessWidget {
+  PickupAndDelivery({super.key});
 
-  @override
-  State<PickupAndDelivery> createState() => _PickupAndDeliveryState();
-}
-
-class _PickupAndDeliveryState extends State<PickupAndDelivery> {
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return _buildLocationsCard(theme);
-  }
+    return  BlocListener<AddLoadBloc, AddLoadState>(
+      listener: (context, state) {
+        if (state is AddLoadLocationSuccess) {
+          final pos = state.location as Position;
 
-  Widget _buildLocationsCard(ThemeData theme) {
-    return buildCard(
-      title: StringTranslateExtension(
-        LocaleKeys.Add_Load_pickupAndDelivery,
-      ).tr(),
-      icon: Icons.location_on_outlined,
+          _openMapScreen(
+            context,
+            state.address,
+            pos.latitude,
+            pos.longitude,
+            state.isPickup,   // هنا
+          );
+        }
+      },
 
-      children: [
-        _buildLocationTile(
-          title:
-              "${StringTranslateExtension(LocaleKeys.Add_Load_pickupLocation).tr()} *",
-          onTap: () => _selectLocation(true),
-          theme: theme,
-          icon: Icons.upload_outlined,
-          color: AppColors.secondaryColor,
-        ),
-        const SizedBox(height: 12),
-        _buildLocationTile(
-          title:
-              "${StringTranslateExtension(LocaleKeys.Add_Load_deliveryLocation).tr()} *",
-          onTap: () => _selectLocation(false),
-          theme: theme,
-          icon: Icons.download_outlined,
-          color: AppColors.primaryLight,
-        ),
-        const SizedBox(height: 12),
-      ],
-    );
-  }
-
-  Widget _buildLocationTile({
-    required String title,
-    required VoidCallback onTap,
-    required ThemeData theme,
-    required IconData icon,
-    required Color color,
-  }) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.all(14),
-        decoration: BoxDecoration(
-          color: AppColors.neutralGray,
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: AppColors.borderColor),
-        ),
-        child: Row(
-          children: [
-            build_icon(icon),
-            SizedBox(width: AppConstants.w * 0.07),
-            _build_texts(title),
-            SizedBox(width: AppConstants.w * 0.07),
-            Icon(Icons.arrow_forward_ios, color: Colors.grey, size: 22),
-          ],
-        ),
-      ),
-    );
-  }
-
-  _build_texts(String title){
-    return     Expanded(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-
+      child: buildCard(
+        title: "Pickup & Delivery",
+        icon: Icons.location_on_outlined,
         children: [
-          Text(
-            StringTranslateExtension(title).tr(),
-            style: AppTextStyles.bodyLarge().copyWith(
-              fontWeight: FontWeight.w600,
-            ),
+          _buildItem(
+            context,
+            title: "Pickup Location",
+            color: Colors.orange,
+            icon: Icons.upload_outlined,
+            isPickup: true,
           ),
-          Text(
-            StringTranslateExtension(
-              LocaleKeys.Add_Load_tapToSelectLocation,
-            ).tr(),
-            style: AppTextStyles.bodySmall(),
+          const SizedBox(height: 12),
+          _buildItem(
+            context,
+            title: "Delivery Location",
+            color: Colors.blueGrey,
+            icon: Icons.download_outlined,
+            isPickup: false,
           ),
         ],
       ),
     );
   }
-  build_icon(IconData icon) {
+
+  Widget _buildItem(
+      BuildContext context, {
+        required String title,
+        required IconData icon,
+        required Color color,
+        required bool isPickup,
+      }) {
+    return BlocBuilder<AddLoadBloc, AddLoadState>(
+      builder: (context, state) {
+        LoadLocationModel? location =
+        isPickup ? state.pickupLocation : state.deliveryLocation;
+
+        return GestureDetector(
+          onTap: () {
+            context
+                .read<AddLoadBloc>()
+                .add(GetCurrentLocationEvent(isPickup: isPickup));
+          },
+          child: Container(
+            padding: const EdgeInsets.all(14),
+            decoration: BoxDecoration(
+              color: Colors.grey[200],
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: Colors.grey.shade400),
+            ),
+            child: Row(
+              children: [
+                _buildIcon(icon),
+                const SizedBox(width: 12),
+                Expanded(child: _buildTexts(title, location)),
+                const Icon(Icons.arrow_forward_ios,
+                    color: Colors.grey, size: 20),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildTexts(String title, LoadLocationModel? location) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(title, style: AppTextStyles.bodyLarge()),
+        Text(
+          location?.address ?? "Tap to select location",
+          style: AppTextStyles.bodySmall().copyWith(
+            color: location != null ? Colors.green : Colors.grey,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildIcon(IconData icon) {
     return Container(
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: Colors.grey[400]!,
+        color: Colors.grey[400],
         borderRadius: BorderRadius.circular(12),
       ),
       child: Icon(icon, color: Colors.white, size: 20),
     );
   }
 
-  void _selectLocation(bool isPickup) async {}
+  // ------------------------------
+  // NEW CORRECT MAP OPENING LOGIC
+  // ------------------------------
+  Future<void> _openMapScreen(
+      BuildContext context,
+      String address,
+      double lat,
+      double lng,
+      bool isPickup,
+      ) async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => BlocProvider.value(
+          value: context.read<AddLoadBloc>(),   // ← الحل هنا
+          child: GoogleMapScreen(
+            address: address,
+            lat: lat,
+            lng: lng,
+          ),
+        ),
+      ),
+    );
+
+    if (result != null) {
+      context.read<AddLoadBloc>().add(
+        isPickup
+            ? SavePickupLocationEvent(
+            result["lat"], result["lng"], result["address"])
+            : SaveDeliveryLocationEvent(
+            result["lat"], result["lng"], result["address"]),
+      );
+    }
+  }
+
+
 }

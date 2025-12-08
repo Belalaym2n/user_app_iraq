@@ -22,6 +22,7 @@ class _BuildLoadsStatesState extends State<BuildLoadsStates> {
 
   Widget _buildStatsSection() {
     return Container(
+
       margin: EdgeInsets.fromLTRB(
         AppConstants.w * 0.0444, // بدل 16
         AppConstants.h * 0.01,   // بدل 8

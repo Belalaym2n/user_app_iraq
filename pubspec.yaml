@@ -58,7 +58,14 @@ dependencies:
   shared_preferences: ^2.5.3
   get_storage: ^2.1.1
   slide_to_act: ^2.0.2
-
+# for location
+  geolocator: ^14.0.2
+  geocoding: ^4.0.0
+  permission_handler: ^12.0.1
+  url_launcher: ^6.3.2
+  google_maps_flutter: ^2.13.1
+# For drop down
+  dropdown_button2: ^2.3.9
   #  for drawer
   flutter_zoom_drawer: ^3.2.0
   #  for bottomNav

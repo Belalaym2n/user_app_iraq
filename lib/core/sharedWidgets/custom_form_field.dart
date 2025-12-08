@@ -73,6 +73,7 @@ class CustomTextField extends StatelessWidget {
           const SizedBox(height: 8),
         ],
         TextFormField(
+          autovalidateMode: AutovalidateMode.onUserInteraction,
           controller: controller,
           focusNode: focusNode,
           validator: validator,

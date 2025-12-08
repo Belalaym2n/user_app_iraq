@@ -35,7 +35,7 @@ class _HomeScreenItemState extends State<HomeScreenItem> {
 
     return Scaffold(
 
-
+backgroundColor: Colors.white,
          body: CustomScrollView(
 
         slivers: [

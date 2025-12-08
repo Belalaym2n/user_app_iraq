@@ -3,6 +3,7 @@ import 'package:user_app_iraq/features/profile/data/models/profile_model.dart';
 
 import '../../../../../core/apiManager/api_manager.dart';
 import '../../../../../core/apiManager/end_points.dart';
+import '../../../../../core/cahsing/secure_storage.dart';
 import '../../../../../core/handleErrors/result_pattern.dart';
 import 'profile_ds.dart';
 
@@ -42,6 +43,7 @@ class ProfileRemoteDSImp implements ProfileRemoteDS {
     if (response is Result) {
       return response; // Result.failure
     }
+    await SecureStorageHelper.clear();
 
     return Result.success(response);
    }

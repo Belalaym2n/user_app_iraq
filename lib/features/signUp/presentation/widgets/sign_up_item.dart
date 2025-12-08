@@ -182,7 +182,7 @@ class SignUpItemState extends State<SignUpItem> {
         if (_formKey.currentState!.validate()) {
           final user = UserModel(
             userID: 0,
-            phone: _phoneController.text,
+            phone: _phoneController.text.trim(),
             confirmPassword: _confirmPassController.text.trim(),
             name: _nameController.text.trim(),
             gmail: _emailController.text.trim(),

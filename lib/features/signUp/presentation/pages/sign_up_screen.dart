@@ -41,7 +41,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             Navigator.pop(context); //  تغلق اللودينج
 
             AppSnackBar.showSuccess(context, state.message);
-            await Future.delayed(Duration(milliseconds: 2000), () {
+            await Future.delayed(Duration(seconds: 3), () {
               Navigator.pushNamedAndRemoveUntil(
                 context,
                 AppRoutes.login,
