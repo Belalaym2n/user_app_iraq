@@ -8,12 +8,13 @@ import '../../../../core/utils/app_constants.dart';
 Widget  buildCard({
   required String title,
   required IconData icon,
+    bool isLoading=false  ,
   required List<Widget> children,
 }) {
   return Container(
     padding: const EdgeInsets.all(16),
     decoration: BoxDecoration(
-      color: AppColors.cardColor,
+      color:AppColors.cardColor,
       borderRadius: BorderRadius.circular(12),
       border: Border.all(color: AppColors.borderColor),
     ),
@@ -26,7 +27,7 @@ Widget  buildCard({
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [AppColors.primaryColor, AppColors.primaryLight],
+                  colors: [isLoading?Colors.white: AppColors.primaryColor,isLoading?Colors.white:  AppColors.primaryLight],
                 ),
                 borderRadius: BorderRadius.circular(12),
               ),

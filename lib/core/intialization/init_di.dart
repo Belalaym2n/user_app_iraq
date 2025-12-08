@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
 
+import '../../features/addLoad/loadDi/load_di.dart';
 import '../../features/login/di/login_di.dart';
 import '../../features/profile/di/sign_up_di.dart';
 import '../../features/signUp/di/signUpDi.dart';
@@ -18,6 +19,7 @@ Future<void> initDI() async {
   initialLoginDI(getIt);
   signUpDI(getIt);
   profileDI(getIt);
+  locationDI(getIt);
   // userNotificationInitDi(getIt);
   // addLectureDI(getIt);
   // initialLoginDI(getIt);

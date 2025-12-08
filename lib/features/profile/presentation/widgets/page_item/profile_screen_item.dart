@@ -5,7 +5,7 @@ import 'package:user_app_iraq/core/sharedWidgets/top_screen_widget.dart';
 import 'package:user_app_iraq/core/utils/app_colors.dart';
 import 'package:user_app_iraq/core/utils/app_constants.dart';
 import 'package:user_app_iraq/features/profile/data/models/profile_model.dart';
-import 'package:user_app_iraq/features/profile/presentation/widgets/profile_buttons.dart';
+import 'package:user_app_iraq/features/profile/presentation/widgets/profileButtons/profile_buttons.dart';
 import 'package:user_app_iraq/features/profile/presentation/widgets/quick_actions.dart';
 import 'package:user_app_iraq/generated/locale_keys.g.dart';
 

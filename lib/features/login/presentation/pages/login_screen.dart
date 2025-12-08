@@ -44,8 +44,7 @@ class _LoginScreenState extends State<LoginScreen> {
           } else if (state is LoginSuccess) {
             Navigator.pop(context); // تغلق اللودينج
 
-            AppSnackBar.showSuccess(context,
-                "Done");
+
             Navigator.pushNamedAndRemoveUntil(
               context,
               AppRoutes.bottomNav,
@@ -54,8 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
             loginScreen.currentState?.clearForm();
           } else if (state is LoginFailure) {
-            print("object");
-            Navigator.pop(context); // تغلق اللودينج
+             Navigator.pop(context); // تغلق اللودينج
 
             return AppSnackBar.showError(context, state.error);
           }

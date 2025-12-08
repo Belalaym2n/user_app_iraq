@@ -14,16 +14,14 @@ import '../models/user_model.dart';
 class SignUpDSImp implements SignUpDS {
   @override
   Future<Result> createAcc(UserModel userModel) async {
-    try {
+
       if (userModel.confirmPassword != userModel.password) {
-        return Result.failure(LocaleKeys
-            .register_passwords_do_not_match.tr());
+        return Result.failure(LocaleKeys.register_passwords_do_not_match.tr());
       }
 
       final response = await ApiService.request(
         endpoint: AppEndPoints.register,
         method: "POST",
-
         queryParameters: {"locale": "en"},
         data: userModel.toJson(),
       );
@@ -31,10 +29,6 @@ class SignUpDSImp implements SignUpDS {
       if (response is Result) return response;
 
       return Result.success(response);
-    }on DioException   catch (e) {
-      final exception = ExceptionHandler.handleDioException(e);
-      final failure = ExceptionHandler.exceptionToFailure(exception);
-      return Result.failure(failure.message.toString());
-    }
+
   }
 }

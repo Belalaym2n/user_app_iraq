@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:user_app_iraq/generated/locale_keys.g.dart';
 
 class AddLoadHeadline extends StatefulWidget {
-  const AddLoadHeadline({super.key});
-
+    AddLoadHeadline({super.key,this.isLoading=false});
+bool isLoading;
   @override
   State<AddLoadHeadline> createState() => _AddLoadHeadlineState();
 }
@@ -25,8 +25,8 @@ class _AddLoadHeadlineState extends State<AddLoadHeadline> {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            AppColors.primaryColor,
-            AppColors.primaryVariant,
+          widget.  isLoading?Colors.white  :AppColors.primaryColor,
+            widget.  isLoading?Colors.white  :  AppColors.primaryVariant,
           ],
         ),
         borderRadius: BorderRadius.circular(20),

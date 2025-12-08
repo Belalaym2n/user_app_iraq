@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:user_app_iraq/features/loads/presentation/pages/load_detsils_screen.dart';
 import 'package:user_app_iraq/features/login/presentation/pages/auto_login.dart';
 import 'package:user_app_iraq/features/sendProblem/presentation/pages/addProblemPage.dart';
 
@@ -35,6 +36,7 @@ class AppRoutes {
   static const String lectures = "sfsf/";
   static const String supportCallWidget = "supportCallWidget/";
   static const String AddLoadScreen = "AddLoadScreen/";
+  static const String loadDetailsScreen = "LoadDetailsScreen/";
   // security
 }
 
@@ -44,6 +46,9 @@ class Routes {
       case AppRoutes.splash:
         return MaterialPageRoute(builder: (context) => SplashScreen());
       //
+      case AppRoutes.loadDetailsScreen:
+        return MaterialPageRoute(builder: (context) => LoadDetailsScreen());
+    //
 
       case AppRoutes.autoLogin:
         return MaterialPageRoute(builder: (context) => AutoLogin());

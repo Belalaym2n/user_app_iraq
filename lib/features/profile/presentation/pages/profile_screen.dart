@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:skeletonizer/skeletonizer.dart';
+import 'package:user_app_iraq/config/routes/app_router.dart';
+import 'package:user_app_iraq/core/cahsing/secure_storage.dart';
 import 'package:user_app_iraq/core/sharedWidgets/app_snack_bar.dart';
 import 'package:user_app_iraq/features/profile/presentation/widgets/page_item/profile_screen_item.dart';
 
@@ -30,37 +33,37 @@ class _ProfileScreenState extends State<ProfileScreen> {
           if (state is ProfileError) {
             return AppSnackBar.showError(context, state.message);
           }
-          if (state is LogoutLoading) {
-            showDialog(
-              context: context,
-              barrierDismissible: false,
-              builder: (context) => const Dialog(
-                backgroundColor: Colors.transparent,
-                child: CustomLoadingWidget(),
-              ),
-            );
-          }
+
           if (state is LogoutFailure) {
-            Navigator.pop(context); // تغلق اللودينج
 
             return AppSnackBar.showError(context, state.message);
           }
           if (state is LogoutSuccess) {
-            Navigator.pop(context); // تغلق اللودينج
 
-            return AppSnackBar.showSuccess(context, "state.message");
+
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              AppRoutes.login,
+              (route) => false,
+            );
           }
         },
 
-        builder: (context, state) {
+         builder: (context, state) {
           if (state is ProfileLoading) {
             return profile_loading();
           }
           if (state is ProfileLoaded) {
-            print("USER NAME = ${state.user.name}");
-            print("USER EMAIL = ${state.user.email}");
-
             return ProfileScreenItem(profileModel: state.user);
+          } else if (state is LogoutLoading) {
+          return  Stack(
+              children: [
+                ProfileScreenItem(
+                  profileModel: context.watch<ProfileBloc>().userProfileModel!,
+                ),
+                CustomLoadingWidget(),
+              ],
+            );
           }
           return SizedBox();
         },

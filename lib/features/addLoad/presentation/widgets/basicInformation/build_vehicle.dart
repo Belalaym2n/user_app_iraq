@@ -1,3 +1,4 @@
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:user_app_iraq/core/utils/app_colors.dart';
@@ -34,36 +35,24 @@ class _VehicleSelectionWidgetState extends State<VehicleSelectionWidget> {
 
         Row(
           children: [
-            Expanded(
-              child: _buildVehicleChip(
-                vehicleType: VehicleType.pickup,
-              ),
-            ),
+            Expanded(child: _buildVehicleChip(vehicleType: VehicleType.pickup)),
             const SizedBox(width: 12),
-            Expanded(
-              child: _buildVehicleChip(
-                vehicleType: VehicleType.truck,
-              ),
-            ),
+            Expanded(child: _buildVehicleChip(vehicleType: VehicleType.truck)),
           ],
         ),
-        SizedBox(
-          height: AppConstants.h*0.01,
-        )
+        SizedBox(height: AppConstants.h * 0.01),
       ],
     );
   }
 
   // ------------------ SINGLE CHIP ------------------
-  Widget _buildVehicleChip({
-    required VehicleType vehicleType,
-  }) {
+  Widget _buildVehicleChip({required VehicleType vehicleType}) {
     final bool isSelected = selectedVehicleType == vehicleType;
 
     return GestureDetector(
       onTap: () {
         setState(() {
-          selectedVehicleType = vehicleType;   // ✔ التحديد شغال
+          selectedVehicleType = vehicleType; // ✔ التحديد شغال
         });
       },
       child: AnimatedContainer(
@@ -73,10 +62,7 @@ class _VehicleSelectionWidgetState extends State<VehicleSelectionWidget> {
           gradient: const LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [
-              Colors.white,
-              Colors.white,
-            ],
+            colors: [Colors.white, Colors.white],
           ),
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
@@ -148,7 +134,54 @@ class _VehicleSelectionWidgetState extends State<VehicleSelectionWidget> {
   }
 }
 
-enum VehicleType {
-  truck,
-  pickup,
+enum VehicleType { truck, pickup }
+
+class DefaultDropdown<T> extends StatelessWidget {
+  final String hintText;
+  final List<DropdownMenuItem<T>> items;
+  final void Function(T?)? onChanged;
+  final String? Function(T?)? validator;
+  final T? value;
+
+  const DefaultDropdown({
+    Key? key,
+    required this.hintText,
+    required this.items,
+    required this.onChanged,
+    this.validator,
+    this.value,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return DropdownButtonFormField2<T>(
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: AppColors.primaryColor,
+            width: 2,
+          ),
+          borderRadius: BorderRadius.circular(12),
+        ),
+      ),
+      isExpanded: true,
+
+      items: items,  // ✔ THIS IS ENOUGH — NO MAPPING
+
+      value: value,
+      validator: validator,
+      onChanged: onChanged,
+      hint: Text(hintText, style: AppTextStyles.bodySmall()),
+
+      iconStyleData: const IconStyleData(
+        icon: Icon(Icons.keyboard_arrow_down),
+        openMenuIcon: Icon(Icons.keyboard_arrow_up),
+      ),
+      dropdownStyleData: DropdownStyleData(
+        maxHeight: AppConstants.h * 0.3,
+        offset: const Offset(0, -10),
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
+      ),
+    );
+  }
 }
