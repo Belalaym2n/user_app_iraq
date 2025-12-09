@@ -2,11 +2,13 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:user_app_iraq/core/utils/app_colors.dart';
 import 'package:user_app_iraq/core/utils/app_constants.dart';
 
-import '../../bloc/add_load_bloc.dart';
-import '../../bloc/add_load_event.dart';
-import '../../bloc/add_load_states.dart';
+import '../../../../../../core/sharedWidgets/main_wrapper.dart';
+import '../../../bloc/add_load_bloc.dart';
+import '../../../bloc/add_load_event.dart';
+import '../../../bloc/add_load_states.dart';
 
 class GoogleMapScreen extends StatefulWidget {
   final double lat;
@@ -41,7 +43,8 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return MainWrapper(
+        childWidget:Scaffold(
       body: BlocListener<AddLoadBloc, AddLoadState>(
         listener: (context, state) async {
           if (state is AddLoadAddressUpdated) {
@@ -54,7 +57,7 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
         },
         child: Stack(
           children: [
-            _buildMap(),
+            buildMap(),
             _buildSearchBar(),
             _buildSuggestionsList(),
             _buildConfirmButton(context),
@@ -62,12 +65,18 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
           ],
         ),
       ),
-    );
+    ));
   }
 
   // ---------------- MAP ----------------
-  Widget _buildMap() {
+
+
+  Widget buildMap() {
     return BlocBuilder<AddLoadBloc, AddLoadState>(
+      buildWhen: (previous, current) {
+        return current is AddLoadMapInitialized ||
+            current is AddLoadLocationSelected;
+      },
       builder: (context, state) {
         double lat = widget.lat;
         double lng = widget.lng;
@@ -108,7 +117,6 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
       },
     );
   }
-
   // ---------------- SUGGESTIONS ----------------
   Widget _buildSuggestionsList() {
     return Positioned(
@@ -201,7 +209,7 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
         height: 55,
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.orange.shade600,
+            backgroundColor: AppColors.primaryColor,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15),
             ),
@@ -224,7 +232,9 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
             });
           },
 
-          child: const Text("Confirm Location"),
+          child: const Text("Confirm Location",style: TextStyle(
+            color: Colors.white
+          ),),
         ),
       ),
     );

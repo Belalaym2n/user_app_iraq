@@ -123,7 +123,7 @@ class _BuildBasicInformationState extends State<BuildBasicInformation> {
               .map(
                 (v) => DropdownMenuItem<VehicleModel>(
                   value: v,
-                  child: Text(v.name),
+                  child: Text(v.vehicleType),
                 ),
               )
               .toList(),

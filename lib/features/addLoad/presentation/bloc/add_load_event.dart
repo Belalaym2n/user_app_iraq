@@ -72,7 +72,7 @@ class SelectVehicleEvent extends AddLoadEvent {
 }
 
 class SubmitLoadEvent extends AddLoadEvent {
-  final AddLoadModel load;
+  final TripModel load;
 
   SubmitLoadEvent(this.load);
 }

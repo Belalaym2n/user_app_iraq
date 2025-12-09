@@ -6,19 +6,13 @@ import 'package:user_app_iraq/core/apiManager/api_manager.dart';
 import 'package:user_app_iraq/core/apiManager/end_points.dart';
 import 'package:user_app_iraq/core/handleErrors/result_pattern.dart';
 
-import '../../models/load_model.dart';
+ import '../../models/load_model.dart';
 import '../../models/location_search_result.dart';
 import '../../models/vehicle_model.dart';
 import 'add_post_remote_ds.dart';
 
 class AddLoadRemoteDSIMP implements AddLoadRemoteDS {
   static final Dio _dio = Dio();
-  final List<VehicleModel> fakeVehicles = [
-    VehicleModel(id: "1", name: "Toyota Hilux"),
-    VehicleModel(id: "2", name: "Nissan Patrol"),
-    VehicleModel(id: "3", name: "Mitsubishi L200"),
-    VehicleModel(id: "4", name: "Ford Ranger"),
-  ];
 
   // TODO: implement getCurrentLocation
   @override
@@ -32,8 +26,7 @@ class AddLoadRemoteDSIMP implements AddLoadRemoteDS {
       final pos = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high,
       );
-      print("Pos $pos");
-      return Result.success(pos);
+       return Result.success(pos);
     } catch (e) {
       return Result.failure("Failed to get location: $e");
     }
@@ -43,9 +36,7 @@ class AddLoadRemoteDSIMP implements AddLoadRemoteDS {
   Future<Result> permissionCheck() async {
     LocationPermission permission = await Geolocator.checkPermission();
 
-    print("permision is ${permission}");
-    // لو مفيش إذن → نطلبه
-    if (permission == LocationPermission.denied) {
+     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
 
       if (permission == LocationPermission.denied) {
@@ -76,9 +67,6 @@ class AddLoadRemoteDSIMP implements AddLoadRemoteDS {
 
   Future<bool> gbsCheck() async {
     bool enabled = await Geolocator.isLocationServiceEnabled();
-
-    print("gps is $enabled");
-
     if (!enabled) {
       await Geolocator.openLocationSettings();
       return false;
@@ -136,49 +124,51 @@ class AddLoadRemoteDSIMP implements AddLoadRemoteDS {
 
   @override
   Future<Result> getVehicles() async {
-    try {
-      await Future.delayed(Duration(seconds: 2));
-      return Result.success(fakeVehicles);
-    } catch (e) {
-      return Result.failure(e.toString());
+    final response = await ApiService.request(
+      endpoint: AppEndPoints.vehicles,
+      method: "Get",
+      queryParameters: {"locale": "en"},
+    );
+
+    if (response is Result) {
+      return response; // Result.failure
     }
+    final List data = response["data"];
+    final vehicles = data
+        .map((item) => VehicleModel.fromJson(item))
+        .toList();
+
+    return Result.success(vehicles);
   }
 
   @override
-  Future<Result> addLoad(AddLoadModel load) async {
-    if (load.vehicleType.isEmpty) {
-      return Result.failure("Vehicle type is required.");
-    }
+  Future<Result> addLoad(TripModel load) async {
+    final response = await ApiService.request(
+      endpoint: AppEndPoints.addTrip,
+      method: "POST",
+      queryParameters: {"locale": "en"},
+      data: load.toJson(),
+    );
 
-    if (load.pickupLocation.isEmpty) {
-      return Result.failure("Pickup location must not be empty.");
-    }
+    if (response is Result) return response;
 
-    if (load.deliveryLocation.isEmpty) {
-      return Result.failure("Delivery location must not be empty.");
-    }
-
-    if (load.pickupDate.isEmpty) {
-      return Result.failure("Pickup date is required.");
-    }
-
-    if (load.deliveryDate.isEmpty) {
-      return Result.failure("Delivery date is required.");
-    }
-
-    if (load.pickupTime.isEmpty) {
-      return Result.failure("Pickup time is required.");
-    }
-
-    if (load.deliveryTime.isEmpty) {
-      return Result.failure("Delivery time is required.");
-    }
-
-    try {
-      await Future.delayed(Duration(seconds: 2));
-      return Result.success("Load added successfully.");
-    } catch (e) {
-      return Result.failure(e.toString());
-    }
+    return Result.success(response);
   }
+
+  String? validateLoad(TripModel load) {
+    if (load.vehicleType.isEmpty) {
+      return "Vehicle type is required.";
+    }
+    if (load.pickupAddress.isEmpty) {
+      return "Pickup location must not be empty.";
+    }
+    if (load.destinationAddress.isEmpty) {
+      return "Delivery location must not be empty.";
+    }
+    if (load.scheduledAt.toString().isEmpty|| load.scheduledAt==null) {
+      return "Pickup date is required.";
+    }
+    return null; // VALID!
+  }
+
 }

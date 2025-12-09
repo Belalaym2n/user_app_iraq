@@ -14,7 +14,8 @@ abstract class AddLoadRemoteDS {
   Future<Result> reverseGeocode(double lat, double lng);
 
   Future<Result> searchPlaces(String query);
-  Future<Result> addLoad(AddLoadModel load);
+  Future<Result> addLoad(TripModel load);
+  String? validateLoad(TripModel load);
 
   Future<Result> getLatLngFromPlaceId(String placeId);
 }

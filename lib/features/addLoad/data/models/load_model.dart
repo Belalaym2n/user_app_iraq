@@ -1,100 +1,121 @@
-class AddLoadModel {
-  final String id;
-  final String loadTitle;
-  final String description;
-  final String materialType;
-  final double weight;
-  final String vehicleType;
+class TripModel {
+  final int? id;
+  final String? status;
 
-  final String pickupLocation;
+  final String pickupAddress;
   final double pickupLat;
   final double pickupLng;
 
-  final String deliveryLocation;
-  final double deliveryLat;
-  final double deliveryLng;
+  final String destinationAddress;
+  final double destinationLat;
+  final double destinationLng;
 
-  final String pickupDate;
-  final String deliveryDate;
-  final String pickupTime;
-  final String deliveryTime;
+  final String vehicleType;
+  final double basePrice;
 
-  final double budget;
+  final DateTime? scheduledAt;
 
-  AddLoadModel({
-    required this.id,
-    required this.loadTitle,
-    required this.description,
-    required this.materialType,
-    required this.weight,
-    required this.vehicleType,
-    required this.pickupLocation,
+  final String? description;
+  final String? notes;
+
+
+  final List<dynamic>? offers;
+  final DateTime? acceptedAt;
+  final DateTime? startedAt;
+  final DateTime? completedAt;
+  final DateTime? cancelledAt;
+
+  final String? cancellationReason;
+
+  final DateTime ?createdAt;
+  final DateTime? updatedAt;
+
+  TripModel({
+      this.id,
+      this.status,
+    required this.pickupAddress,
     required this.pickupLat,
     required this.pickupLng,
-    required this.deliveryLocation,
-    required this.deliveryLat,
-    required this.deliveryLng,
-    required this.pickupDate,
-    required this.deliveryDate,
-    required this.pickupTime,
-    required this.deliveryTime,
-    required this.budget,
+    required this.destinationAddress,
+    required this.destinationLat,
+    required this.destinationLng,
+    required this.vehicleType,
+    required this.basePrice,
+    required this.scheduledAt,
+    required this.description,
+      this.notes,
+       this.offers,
+      this.acceptedAt,
+      this.startedAt,
+      this.completedAt,
+      this.cancelledAt,
+      this.cancellationReason,
+      this.createdAt,
+      this.updatedAt,
   });
 
   // -----------------------------
   // FROM JSON
   // -----------------------------
-  factory AddLoadModel.fromJson(Map<String, dynamic> json) {
-    return AddLoadModel(
-      id: json['id'] ?? "",
-      loadTitle: json['loadTitle'] ?? "",
-      description: json['description'] ?? "",
-      materialType: json['materialType'] ?? "",
-      weight: (json['weight'] ?? 0).toDouble(),
-      vehicleType: json['vehicleType'] ?? "",
+  factory TripModel.fromJson(Map<String, dynamic> json) {
+    return TripModel(
+      id: json['id'],
+      status: json['status'],
 
-      pickupLocation: json['pickupLocation'] ?? "",
-      pickupLat: (json['pickupLat'] ?? 0).toDouble(),
-      pickupLng: (json['pickupLng'] ?? 0).toDouble(),
+      pickupAddress: json['pickup_address'] ?? "",
+      pickupLat: double.parse(json['pickup_lat'].toString()),
+      pickupLng: double.parse(json['pickup_lng'].toString()),
 
-      deliveryLocation: json['deliveryLocation'] ?? "",
-      deliveryLat: (json['deliveryLat'] ?? 0).toDouble(),
-      deliveryLng: (json['deliveryLng'] ?? 0).toDouble(),
+      destinationAddress: json['destination_address'] ?? "",
+      destinationLat: double.parse(json['destination_lat'].toString()),
+      destinationLng: double.parse(json['destination_lng'].toString()),
 
-      pickupDate: json['pickupDate'] ?? "",
-      deliveryDate: json['deliveryDate'] ?? "",
-      pickupTime: json['pickupTime'] ?? "",
-      deliveryTime: json['deliveryTime'] ?? "",
-      budget: (json['budget'] ?? 0).toDouble(),
+      vehicleType: json['vehicle_type'] ?? "",
+      basePrice: double.parse(json['base_price'].toString()),
+
+      scheduledAt: json['scheduled_at'] != null
+          ? DateTime.parse(json['scheduled_at'])
+          : null,
+
+      description: json['description'],
+      notes: json['notes'],
+
+
+      offers: json['offers'] ?? [],
+
+      acceptedAt: json['accepted_at'] != null
+          ? DateTime.parse(json['accepted_at'])
+          : null,
+      startedAt: json['started_at'] != null
+          ? DateTime.parse(json['started_at'])
+          : null,
+      completedAt: json['completed_at'] != null
+          ? DateTime.parse(json['completed_at'])
+          : null,
+      cancelledAt: json['cancelled_at'] != null
+          ? DateTime.parse(json['cancelled_at'])
+          : null,
+
+      cancellationReason: json['cancellation_reason'],
+
+      createdAt: DateTime.parse(json['created_at']),
+      updatedAt: DateTime.parse(json['updated_at']),
     );
   }
 
-  // -----------------------------
-  // TO JSON
-  // -----------------------------
   Map<String, dynamic> toJson() {
     return {
-      "id": id,
-      "loadTitle": loadTitle,
+      "pickup_address": pickupAddress,
+      "pickup_lat": pickupLat,
+      "pickup_lng": pickupLng,
+      "destination_address": destinationAddress,
+      "destination_lat": destinationLat,
+      "destination_lng": destinationLng,
+      "vehicle_type": vehicleType,
+      "base_price": basePrice,
+      "scheduled_at": scheduledAt?.toIso8601String(),
       "description": description,
-      "materialType": materialType,
-      "weight": weight,
-      "vehicleType": vehicleType,
-
-      "pickupLocation": pickupLocation,
-      "pickupLat": pickupLat,
-      "pickupLng": pickupLng,
-
-      "deliveryLocation": deliveryLocation,
-      "deliveryLat": deliveryLat,
-      "deliveryLng": deliveryLng,
-
-      "pickupDate": pickupDate,
-      "deliveryDate": deliveryDate,
-      "pickupTime": pickupTime,
-      "deliveryTime": deliveryTime,
-
-      "budget": budget,
+      "notes": notes,
     };
   }
 }
