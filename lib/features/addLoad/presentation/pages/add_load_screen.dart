@@ -38,19 +38,27 @@ class AddLoadView extends StatelessWidget {
             builder: (_) => Center(child: CustomLoadingWidget()),
           );
         }
+        if (state is GetVehiclesFailure) {
+          AppSnackBar.showError(context, state.message);
+          await Future.delayed(Duration(seconds: 2));
+          Navigator.pop(context); // close loading dialog
+        }
+        if (state is AddLoadFailureWithoutLoading) {
+          AppSnackBar.showError(context, state.message);
+        }
+
         if (state is AddLoadSubmitSuccess) {
           Navigator.pop(context); // close loading dialog
 
-         AppSnackBar.showSuccess(context, "Success");
+          AppSnackBar.showSuccess(context, state.message);
         }
 
-        if (state is AddLoadFailure) {
+        if (state is AddLoadLocationFailure) {
           if (state.message == "denied") {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text("Location permission is required")),
             );
           }
-
 
           if (state.message == "deniedForever") {
             await showLocationPermissionDialog(context);

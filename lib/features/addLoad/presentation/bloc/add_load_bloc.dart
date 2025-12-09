@@ -18,7 +18,6 @@ class AddLoadBloc extends Bloc<AddLoadEvent, AddLoadState> {
     required this.addLoadUseCase,
     required this.vehicleUseCase,
   }) : super(AddLoadInitial()) {
-
     // VEHICLES
     on<LoadVehiclesEvent>(_onLoadVehicles);
     on<SelectVehicleEvent>(_onSelectVehicle);
@@ -32,24 +31,27 @@ class AddLoadBloc extends Bloc<AddLoadEvent, AddLoadState> {
     on<SubmitLoadEvent>(_onSubmitLoad);
 
     on<SavePickupLocationEvent>((event, emit) {
-      emit(state.copyWith(
-        pickupLocation: LoadLocationModel(
-          lat: event.lat,
-          lng: event.lng,
-          address: event.address,
+      emit(
+        state.copyWith(
+          pickupLocation: LoadLocationModel(
+            lat: event.lat,
+            lng: event.lng,
+            address: event.address,
+          ),
         ),
-      ));
+      );
     });
 
-
     on<SaveDeliveryLocationEvent>((event, emit) {
-      emit(state.copyWith(
-        deliveryLocation: LoadLocationModel(
-          lat: event.lat,
-          lng: event.lng,
-          address: event.address,
+      emit(
+        state.copyWith(
+          deliveryLocation: LoadLocationModel(
+            lat: event.lat,
+            lng: event.lng,
+            address: event.address,
+          ),
         ),
-      ));
+      );
     });
 
     // ------------- NEW DATE EVENTS ----------------
@@ -65,7 +67,9 @@ class AddLoadBloc extends Bloc<AddLoadEvent, AddLoadState> {
   // ---------------- VEHICLES ----------------
 
   Future<void> _onLoadVehicles(
-      LoadVehiclesEvent event, Emitter<AddLoadState> emit) async {
+    LoadVehiclesEvent event,
+    Emitter<AddLoadState> emit,
+  ) async {
     emit(
       VehiclesLoading(
         pickupLocation: state.pickupLocation,
@@ -91,34 +95,47 @@ class AddLoadBloc extends Bloc<AddLoadEvent, AddLoadState> {
         ),
       );
     } else {
-      emit(
-        AddLoadFailure(
-          result.error.toString(),
+       emit(
+        GetVehiclesFailure(
+          message: result.error.toString(),
           pickupLocation: state.pickupLocation,
           deliveryLocation: state.deliveryLocation,
           pickupDate: state.pickupDate,
           deliveryDate: state.deliveryDate,
-          vehicles: state.vehicles,
           selectedVehicle: state.selectedVehicle,
         ),
       );
     }
   }
 
-  void _onSelectVehicle(
-      SelectVehicleEvent event, Emitter<AddLoadState> emit) {
+  void _onSelectVehicle(SelectVehicleEvent event, Emitter<AddLoadState> emit) {
     emit(state.copyWith(selectedVehicle: event.vehicle));
   }
 
   // ---------------- CURRENT LOCATION ----------------
 
   Future<void> _onGetCurrentLocation(
-      GetCurrentLocationEvent event, Emitter<AddLoadState> emit) async {
-    emit(state.copyWith(isLoading: true));
+    GetCurrentLocationEvent event,
+    Emitter<AddLoadState> emit,
+  ) async {
+    emit(
+        AddLoadGetLocationLoading(
+
+          pickupLocation: state.pickupLocation,
+          deliveryLocation: state.deliveryLocation,
+          pickupDate: state.pickupDate,
+          deliveryDate: state.deliveryDate,
+          vehicles: state.vehicles,
+          selectedVehicle: state.selectedVehicle,
+
+        ));
+
 
     final result = await locationUseCase.getCurrentLocation();
     final address = await locationUseCase.reverseGeocode(
-        result.data.latitude, result.data.longitude);
+      result.data.latitude,
+      result.data.longitude,
+    );
 
     if (result.isSuccess && address.isSuccess) {
       emit(
@@ -136,7 +153,7 @@ class AddLoadBloc extends Bloc<AddLoadEvent, AddLoadState> {
       );
     } else {
       emit(
-        AddLoadFailure(
+        AddLoadLocationFailure(
           result.error.toString(),
           pickupLocation: state.pickupLocation,
           deliveryLocation: state.deliveryLocation,
@@ -150,49 +167,73 @@ class AddLoadBloc extends Bloc<AddLoadEvent, AddLoadState> {
   }
 
   Future<void> _onSubmitLoad(
-      SubmitLoadEvent event,
-      Emitter<AddLoadState> emit,
-      ) async {
+    SubmitLoadEvent event,
+    Emitter<AddLoadState> emit,
+  ) async {
+    final validationError=addLoadUseCase.validateLoad(event.load);
+    if (validationError != null) {
+      emit(
+        AddLoadFailureWithoutLoading(
+          validationError,
+          pickupLocation: state.pickupLocation,
+          deliveryLocation: state.deliveryLocation,
+          pickupDate: state.pickupDate,
+          deliveryDate: state.deliveryDate,
+          vehicles: state.vehicles,
+          selectedVehicle: state.selectedVehicle,
+        ),
+      );
+      return;
+    }
     print("load");
-    emit(AddLoadSubmitting(
-      pickupLocation: state.pickupLocation,
-      deliveryLocation: state.deliveryLocation,
-      pickupDate: state.pickupDate,
-      deliveryDate: state.deliveryDate,
-      vehicles: state.vehicles,
-      selectedVehicle: state.selectedVehicle,
-    ));
+    emit(
+      AddLoadSubmitting(
+        pickupLocation: state.pickupLocation,
+        deliveryLocation: state.deliveryLocation,
+        pickupDate: state.pickupDate,
+        deliveryDate: state.deliveryDate,
+        vehicles: state.vehicles,
+        selectedVehicle: state.selectedVehicle,
+      ),
+    );
 
     final result = await addLoadUseCase.addLoad(event.load);
     print(result.data);
 
     if (result.isSuccess) {
-      emit(AddLoadSubmitSuccess(
-        pickupLocation: state.pickupLocation,
-        deliveryLocation: state.deliveryLocation,
-        pickupDate: state.pickupDate,
-        deliveryDate: state.deliveryDate,
-        vehicles: state.vehicles,
-        selectedVehicle: state.selectedVehicle,
-      ));
+      emit(
+        AddLoadSubmitSuccess(
+
+          message: "Your trip has been created sucssufully",
+          pickupLocation: state.pickupLocation,
+          deliveryLocation: state.deliveryLocation,
+          pickupDate: state.pickupDate,
+          deliveryDate: state.deliveryDate,
+          vehicles: state.vehicles,
+          selectedVehicle: state.selectedVehicle,
+        ),
+      );
     } else {
-      emit(AddLoadSubmitFailure(
-        result.error.toString(),
-        pickupLocation: state.pickupLocation,
-        deliveryLocation: state.deliveryLocation,
-        pickupDate: state.pickupDate,
-        deliveryDate: state.deliveryDate,
-        vehicles: state.vehicles,
-        selectedVehicle: state.selectedVehicle,
-      ));
+      emit(
+        AddLoadSubmitFailure(
+          result.error.toString(),
+          pickupLocation: state.pickupLocation,
+          deliveryLocation: state.deliveryLocation,
+          pickupDate: state.pickupDate,
+          deliveryDate: state.deliveryDate,
+          vehicles: state.vehicles,
+          selectedVehicle: state.selectedVehicle,
+        ),
+      );
     }
   }
-
 
   // ---------------- MAP ----------------
 
   Future<void> _onInitMap(
-      InitMapEvent event, Emitter<AddLoadState> emit) async {
+    InitMapEvent event,
+    Emitter<AddLoadState> emit,
+  ) async {
     emit(
       AddLoadMapInitialized(
         event.lat,
@@ -208,7 +249,9 @@ class AddLoadBloc extends Bloc<AddLoadEvent, AddLoadState> {
   }
 
   Future<void> _onSelectLocationOnMap(
-      SelectLocationOnMapEvent event, Emitter<AddLoadState> emit) async {
+    SelectLocationOnMapEvent event,
+    Emitter<AddLoadState> emit,
+  ) async {
     emit(
       AddLoadLocationSelected(
         event.lat,
@@ -222,8 +265,7 @@ class AddLoadBloc extends Bloc<AddLoadEvent, AddLoadState> {
       ),
     );
 
-    final result =
-    await locationUseCase.reverseGeocode(event.lat, event.lng);
+    final result = await locationUseCase.reverseGeocode(event.lat, event.lng);
 
     if (result.isSuccess) {
       emit(
@@ -243,7 +285,9 @@ class AddLoadBloc extends Bloc<AddLoadEvent, AddLoadState> {
   // ---------------- SEARCH ----------------
 
   Future<void> _onSearchPlace(
-      SearchPlaceEvent event, Emitter<AddLoadState> emit) async {
+    SearchPlaceEvent event,
+    Emitter<AddLoadState> emit,
+  ) async {
     final result = await locationUseCase.searchPlaces(event.query);
 
     if (result.isSuccess) {
@@ -262,9 +306,10 @@ class AddLoadBloc extends Bloc<AddLoadEvent, AddLoadState> {
   }
 
   Future<void> _onPickPrediction(
-      PickPredictionEvent event, Emitter<AddLoadState> emit) async {
-    final result =
-    await locationUseCase.getLatLngFromPlaceId(event.placeId);
+    PickPredictionEvent event,
+    Emitter<AddLoadState> emit,
+  ) async {
+    final result = await locationUseCase.getLatLngFromPlaceId(event.placeId);
 
     if (result.isSuccess) {
       final lat = result.data["lat"];

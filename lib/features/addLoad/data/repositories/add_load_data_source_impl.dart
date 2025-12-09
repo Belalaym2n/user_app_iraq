@@ -29,6 +29,9 @@ class AddLoadRepoImpl implements AddLoadRepo {
       ds.getLatLngFromPlaceId(placeId);
 
   @override
-  Future<Result> addLoad(AddLoadModel load) =>ds.addLoad(load);
+  Future<Result> addLoad(TripModel load) =>ds.addLoad(load);
+
+  @override
+  String? validateLoad(TripModel load)=>ds.validateLoad(load);
 
 }

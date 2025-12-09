@@ -70,7 +70,28 @@ class AddLoadFailure extends AddLoadState {
   );
 }
 
-// -------------------- VEHICLE LOADING --------------------
+class AddLoadFailureWithoutLoading extends AddLoadState {
+  final String message;
+
+  AddLoadFailureWithoutLoading(
+      this.message, {
+        required LoadLocationModel? pickupLocation,
+        required LoadLocationModel? deliveryLocation,
+        required DateTime? pickupDate,
+        required DateTime? deliveryDate,
+        required List<VehicleModel> vehicles,
+        required VehicleModel? selectedVehicle,
+      }) : super(
+    pickupLocation: pickupLocation,
+    deliveryLocation: deliveryLocation,
+    pickupDate: pickupDate,
+    deliveryDate: deliveryDate,
+    vehicles: vehicles,
+    selectedVehicle: selectedVehicle,
+  );
+}
+
+// -------------------- VEHICLE  --------------------
 
 class VehiclesLoading extends AddLoadState {
   VehiclesLoading({
@@ -105,6 +126,27 @@ class AddLoadVehiclesSuccess extends AddLoadState {
     pickupDate: pickupDate,
     deliveryDate: deliveryDate,
     vehicles: vehicles,
+    selectedVehicle: selectedVehicle,
+  );
+}
+
+class GetVehiclesFailure extends AddLoadState{
+  String message;
+  GetVehiclesFailure(
+
+ {
+        required LoadLocationModel? pickupLocation,
+        required LoadLocationModel? deliveryLocation,
+        required DateTime? pickupDate,
+        required this.message,
+        required DateTime? deliveryDate,
+        required VehicleModel? selectedVehicle,
+      }) : super(
+    pickupLocation: pickupLocation,
+    deliveryLocation: deliveryLocation,
+    pickupDate: pickupDate,
+    deliveryDate: deliveryDate,
+
     selectedVehicle: selectedVehicle,
   );
 }
@@ -224,7 +266,30 @@ class AddLoadSearchSuccess extends AddLoadState {
   );
 }
 
+class AddLoadLocationFailure extends AddLoadState {
+  final String message;
 
+  AddLoadLocationFailure(
+      this.message, {
+        required LoadLocationModel? pickupLocation,
+        required LoadLocationModel? deliveryLocation,
+        required DateTime? pickupDate,
+        required DateTime? deliveryDate,
+        required List<VehicleModel> vehicles,
+        required VehicleModel? selectedVehicle,
+      }) : super(
+    pickupLocation: pickupLocation,
+    deliveryLocation: deliveryLocation,
+    pickupDate: pickupDate,
+    deliveryDate: deliveryDate,
+    vehicles: vehicles,
+    selectedVehicle: selectedVehicle,
+    isLoading: false,
+  );
+}
+
+
+// upload trip
 class AddLoadSubmitting extends AddLoadState {
   AddLoadSubmitting({
     required LoadLocationModel? pickupLocation,
@@ -244,8 +309,8 @@ class AddLoadSubmitting extends AddLoadState {
   );
 }
 
-class AddLoadSubmitSuccess extends AddLoadState {
-  AddLoadSubmitSuccess({
+class AddLoadGetLocationLoading extends AddLoadState {
+  AddLoadGetLocationLoading({
     required LoadLocationModel? pickupLocation,
     required LoadLocationModel? deliveryLocation,
     required DateTime? pickupDate,
@@ -257,6 +322,27 @@ class AddLoadSubmitSuccess extends AddLoadState {
     deliveryLocation: deliveryLocation,
     pickupDate: pickupDate,
     deliveryDate: deliveryDate,
+    vehicles: vehicles,
+    selectedVehicle: selectedVehicle,
+    isLoading: true,
+  );
+}
+class AddLoadSubmitSuccess extends AddLoadState {
+  String message;
+  AddLoadSubmitSuccess({
+    required this.message,
+    required LoadLocationModel? pickupLocation,
+    required LoadLocationModel? deliveryLocation,
+    required DateTime? pickupDate,
+    required DateTime? deliveryDate,
+    required List<VehicleModel> vehicles,
+    required VehicleModel? selectedVehicle,
+  }) : super(
+    pickupLocation: pickupLocation,
+    deliveryLocation: deliveryLocation,
+    pickupDate: pickupDate,
+    deliveryDate: deliveryDate,
+
     vehicles: vehicles,
     selectedVehicle: selectedVehicle,
     isLoading: false,
