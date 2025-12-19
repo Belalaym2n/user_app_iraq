@@ -1,12 +1,14 @@
 import 'package:dio/dio.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart'
     show LocationPermission, Geolocator, LocationAccuracy;
 import 'package:user_app_iraq/core/apiManager/api_manager.dart';
 import 'package:user_app_iraq/core/apiManager/end_points.dart';
 import 'package:user_app_iraq/core/handleErrors/result_pattern.dart';
+import 'package:user_app_iraq/generated/locale_keys.g.dart';
 
- import '../../models/load_model.dart';
+import '../../models/load_model.dart';
 import '../../models/location_search_result.dart';
 import '../../models/vehicle_model.dart';
 import 'add_post_remote_ds.dart';
@@ -26,7 +28,7 @@ class AddLoadRemoteDSIMP implements AddLoadRemoteDS {
       final pos = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high,
       );
-       return Result.success(pos);
+      return Result.success(pos);
     } catch (e) {
       return Result.failure("Failed to get location: $e");
     }
@@ -36,7 +38,7 @@ class AddLoadRemoteDSIMP implements AddLoadRemoteDS {
   Future<Result> permissionCheck() async {
     LocationPermission permission = await Geolocator.checkPermission();
 
-     if (permission == LocationPermission.denied) {
+    if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
 
       if (permission == LocationPermission.denied) {
@@ -118,9 +120,7 @@ class AddLoadRemoteDSIMP implements AddLoadRemoteDS {
     }
   }
 
-  static String _generateSessionToken() {
-    return DateTime.now().millisecondsSinceEpoch.toString();
-  }
+
 
   @override
   Future<Result> getVehicles() async {
@@ -134,9 +134,7 @@ class AddLoadRemoteDSIMP implements AddLoadRemoteDS {
       return response; // Result.failure
     }
     final List data = response["data"];
-    final vehicles = data
-        .map((item) => VehicleModel.fromJson(item))
-        .toList();
+    final vehicles = data.map((item) => VehicleModel.fromJson(item)).toList();
 
     return Result.success(vehicles);
   }
@@ -157,18 +155,20 @@ class AddLoadRemoteDSIMP implements AddLoadRemoteDS {
 
   String? validateLoad(TripModel load) {
     if (load.vehicleType.isEmpty) {
-      return "Vehicle type is required.";
+      return LocaleKeys.Add_Load_vehicle_type_required.tr();
     }
     if (load.pickupAddress.isEmpty) {
-      return "Pickup location must not be empty.";
+      return LocaleKeys
+          .Add_Load_pickup_location_required.tr(); //"Pickup location must not be empty.";
     }
     if (load.destinationAddress.isEmpty) {
-      return "Delivery location must not be empty.";
+      return LocaleKeys
+          .Add_Load_delivery_location_required.tr(); // "Delivery location must not be empty.";
     }
-    if (load.scheduledAt.toString().isEmpty|| load.scheduledAt==null) {
-      return "Pickup date is required.";
+    if (load.scheduledAt.toString().isEmpty || load.scheduledAt == null) {
+      return LocaleKeys.Add_Load_pickup_date_required.tr();
+      "Pickup date is required.";
     }
     return null; // VALID!
   }
-
 }

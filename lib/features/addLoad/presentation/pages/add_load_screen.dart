@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
@@ -7,12 +8,14 @@ import 'package:user_app_iraq/core/sharedWidgets/custom_loading.dart';
 import 'package:user_app_iraq/features/addLoad/domain/use_cases/location_use_case.dart';
 import 'package:user_app_iraq/features/addLoad/domain/use_cases/vehicle_use_case.dart';
 import 'package:user_app_iraq/features/addLoad/presentation/bloc/add_load_bloc.dart';
+import 'package:user_app_iraq/generated/locale_keys.g.dart';
 
 import '../../../../core/intialization/init_di.dart';
 import '../../../../core/sharedWidgets/main_wrapper.dart';
 import '../bloc/add_load_event.dart';
 import '../bloc/add_load_states.dart';
 import '../widgets/loads_screens_item/loads_item.dart';
+import '../widgets/successWidget/success_widget.dart';
 
 class AddLoadScreen extends StatelessWidget {
   @override
@@ -50,14 +53,21 @@ class AddLoadView extends StatelessWidget {
         if (state is AddLoadSubmitSuccess) {
           Navigator.pop(context); // close loading dialog
 
-          AppSnackBar.showSuccess(context, state.message);
+          showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (_) => Center(child: showSuccessDialog(context)),
+          );
+        }
+        if (state is AddLoadSubmitFailure) {
+          Navigator.pop(context);
+          AppSnackBar.showError(context, state.message);
         }
 
         if (state is AddLoadLocationFailure) {
           if (state.message == "denied") {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text("Location permission is required")),
-            );
+            await showLocationPermissionDialog(context);
+
           }
 
           if (state.message == "deniedForever") {
@@ -67,7 +77,6 @@ class AddLoadView extends StatelessWidget {
       },
       builder: (context, state) {
         final isLoading = state is VehiclesLoading;
-
         return MainWrapper(
           childWidget: isLoading
               ? Skeletonizer(
@@ -86,17 +95,17 @@ Future<void> showLocationPermissionDialog(BuildContext context) async {
     context: context,
     barrierDismissible: false,
     builder: (_) => AlertDialog(
-      title: const Text("Location Permission Required"),
-      content: const Text(
-        "To use this feature, please allow location permission from settings.",
-      ),
+      title:   Text(LocaleKeys.Add_Load_location_permission_required.tr()),
+      content:   Text(
+        LocaleKeys.Add_Load_location_permission_message.  tr()
+       ),
       actions: [
         TextButton(
-          child: const Text("Cancel"),
+          child:   Text(LocaleKeys.Add_Load_cancel.tr()),
           onPressed: () => Navigator.pop(context),
         ),
         ElevatedButton(
-          child: const Text("Open Settings"),
+          child:   Text(LocaleKeys.Add_Load_open_settings.tr()),
           onPressed: () async {
             Navigator.pop(context);
             await Geolocator.openAppSettings();

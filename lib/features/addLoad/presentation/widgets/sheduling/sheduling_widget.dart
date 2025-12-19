@@ -61,7 +61,7 @@ class SchedulingWidget extends StatelessWidget {
     return BlocBuilder<AddLoadBloc, AddLoadState>(
       builder: (context, state) {
         return buildCard(
-          title: "Scheduling",
+          title: LocaleKeys.Add_Load_scheduling.tr(),
           icon: Icons.schedule_rounded,
           children: [
             buildDateTimeTile(
@@ -100,7 +100,7 @@ class SchedulingWidget extends StatelessWidget {
     final minutes = duration.inMinutes % 60;
 
     return Text(
-      "${LocaleKeys.Add_Load_estimatedDuration.tr()}: $hours hrs $minutes min",
+      "${LocaleKeys.Add_Load_estimatedDuration.tr()}: $hours ${LocaleKeys.Add_Load_hours.tr()} $minutes ${LocaleKeys.Add_Load_minutes.tr()}",
       style: const TextStyle(
         fontSize: 14,
         fontWeight: FontWeight.bold,

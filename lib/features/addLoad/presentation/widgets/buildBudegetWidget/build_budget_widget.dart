@@ -9,8 +9,11 @@ import '../../../../../core/sharedWidgets/custom_form_field.dart';
 import '../build_card_info.dart';
 
 class BuildBudgetWidget extends StatefulWidget {
-    BuildBudgetWidget({super.key,required this.budget});
+    BuildBudgetWidget({super.key,
+      required this.routesController,
+      required this.budget});
 TextEditingController budget;
+TextEditingController routesController;
   @override
   State<BuildBudgetWidget> createState() => _BuildBudgetWidgetState();
 }
@@ -18,7 +21,11 @@ TextEditingController budget;
 class _BuildBudgetWidgetState extends State<BuildBudgetWidget> {
   @override
   Widget build(BuildContext context) {
-    return _buildBudgetCard();
+    return Column(
+      children: [
+        _buildBudgetCard(),
+      ],
+    );
   }
 
   Widget _buildBudgetCard() {
@@ -37,7 +44,19 @@ class _BuildBudgetWidgetState extends State<BuildBudgetWidget> {
             color: AppColors.primaryColor,
           ),
         ),
+
         const SizedBox(height: 12),
+        CustomTextField(
+          validator: Validators.requiredField,
+          label: LocaleKeys.Add_Load_how_many_routes.tr(),
+          hint: "1",
+          controller: widget.routesController,
+          keyboardType: TextInputType.number,
+          prefixIcon: Icon(
+            Icons.currency_exchange,
+            color: AppColors.primaryColor,
+          ),
+        ),
         // _buildEstimatedCost(l10n, theme),
       ],
     );

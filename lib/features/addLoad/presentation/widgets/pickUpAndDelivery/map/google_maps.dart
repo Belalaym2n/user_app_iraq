@@ -1,9 +1,11 @@
 import 'dart:async';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:user_app_iraq/core/utils/app_colors.dart';
 import 'package:user_app_iraq/core/utils/app_constants.dart';
+import 'package:user_app_iraq/generated/locale_keys.g.dart';
 
 import '../../../../../../core/sharedWidgets/main_wrapper.dart';
 import '../../../bloc/add_load_bloc.dart';
@@ -68,7 +70,6 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
     ));
   }
 
-  // ---------------- MAP ----------------
 
 
   Widget buildMap() {
@@ -94,6 +95,7 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
         final target = LatLng(lat, lng);
 
         return GoogleMap(
+
           initialCameraPosition: CameraPosition(target: target, zoom: 16),
           markers: {
             Marker(
@@ -117,8 +119,7 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
       },
     );
   }
-  // ---------------- SUGGESTIONS ----------------
-  Widget _buildSuggestionsList() {
+   Widget _buildSuggestionsList() {
     return Positioned(
       top: 110,
       left: 20,
@@ -155,11 +156,10 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
     );
   }
 
-  // ---------------- SEARCH BAR ----------------
   Widget _buildSearchBar() {
     return Positioned(
       top: 50,
-      left: 20,
+      left: 70, // عشان مش يتعارض مع الـ back button
       right: 20,
       child: Material(
         elevation: 6,
@@ -171,12 +171,24 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
           },
           decoration: InputDecoration(
             hintText: "Search for a place...",
-            prefixIcon: const Icon(Icons.search),
+            hintStyle: TextStyle(
+              color: Colors.grey.shade400,
+              fontSize: 14,
+            ),
+            prefixIcon: Icon(
+              Icons.search,
+              color: Colors.grey.shade600,
+              size: 22,
+            ),
             filled: true,
             fillColor: Colors.white,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15),
               borderSide: BorderSide.none,
+            ),
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 14,
             ),
           ),
         ),
@@ -184,23 +196,31 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
     );
   }
 
-  // ---------------- BACK BUTTON ----------------
-  Widget _buildBackButton(BuildContext context) {
+   Widget _buildBackButton(BuildContext context) {
     return Positioned(
       top: 50,
       left: 20,
-      child: CircleAvatar(
-        backgroundColor: Colors.white,
-        child: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => Navigator.pop(context),
+      child: Material(
+        elevation: 6,
+        shape: const CircleBorder(),
+        color: Colors.white,
+        child: InkWell(
+          customBorder: const CircleBorder(),
+          onTap: () => Navigator.pop(context),
+          child: Container(
+            padding: const EdgeInsets.all(12),
+            child: const Icon(
+              Icons.arrow_back,
+              color: Colors.black,
+              size: 20,
+            ),
+          ),
         ),
       ),
     );
   }
 
-  // ---------------- CONFIRM BUTTON ----------------
-  Widget _buildConfirmButton(BuildContext context) {
+   Widget _buildConfirmButton(BuildContext context) {
     return Positioned(
       bottom: 40,
       left: 20,
@@ -232,7 +252,7 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
             });
           },
 
-          child: const Text("Confirm Location",style: TextStyle(
+          child:   Text(LocaleKeys.Add_Load_confirm_location.tr(),style: TextStyle(
             color: Colors.white
           ),),
         ),
@@ -240,8 +260,7 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
     );
   }
 
-  // ---------------- CAMERA ANIMATION ----------------
-  Future<void> _animateTo(LatLng pos) async {
+   Future<void> _animateTo(LatLng pos) async {
     if (!_controller.isCompleted) return;
 
     final ctrl = await _controller.future;

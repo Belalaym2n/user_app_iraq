@@ -45,8 +45,7 @@ class _VehicleSelectionWidgetState extends State<VehicleSelectionWidget> {
     );
   }
 
-  // ------------------ SINGLE CHIP ------------------
-  Widget _buildVehicleChip({required VehicleType vehicleType}) {
+   Widget _buildVehicleChip({required VehicleType vehicleType}) {
     final bool isSelected = selectedVehicleType == vehicleType;
 
     return GestureDetector(

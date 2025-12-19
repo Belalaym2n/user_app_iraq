@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:user_app_iraq/core/utils/app_constants.dart';
 import '../../../../../core/sharedWidgets/text_styles.dart';
 import '../../../../../core/utils/app_colors.dart';
 
@@ -10,39 +11,90 @@ Widget buildContactOption({
   required bool enabled,
   required VoidCallback? onTap,
 }) {
-  return GestureDetector(
-    onTap: enabled ? onTap : null,
-    child: Container(
-      height: 95,
-      padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(
-        color: enabled ? Colors.white : Colors.grey.withOpacity(0.15),
-        borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: Colors.grey.shade300, width: 1.2),
-      ),
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
+  return Material(
+    color: Colors.transparent,
+    child: InkWell(
+      onTap: enabled ? onTap : null,
+      borderRadius: BorderRadius.circular(16),
+      child: Container(
+        height: AppConstants.h * 0.15,
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+        decoration: BoxDecoration(
+          color: enabled ? Colors.white : Colors.grey.withOpacity(0.05),
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(
+            color: enabled ? Colors.grey.shade200 : Colors.grey.shade300,
+            width: 1,
+          ),
+          boxShadow: enabled
+              ? [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.04),
+              blurRadius: 8,
+              offset: const Offset(0, 2),
+            ),
+          ]
+              : null,
+        ),
+        child: Row(
           children: [
-            Icon(icon, size: 28, color: iconColor),
-            const SizedBox(height: 8),
-            Text(
-              title,
-              style: AppTextStyles.bodyMedium().copyWith(
-                fontWeight: FontWeight.w600,
-                color: AppColors.textPrimary,
+            // Icon Container
+            Container(
+              width: 30,
+              height: 30,
+              decoration: BoxDecoration(
+                color: iconColor.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Icon(
+                icon,
+                size: 14,
+                color: iconColor,
               ),
             ),
-            Text(
-              subtitle,
-              style: AppTextStyles.bodySmall().copyWith(
-                color: AppColors.textPrimary,
+            const SizedBox(width: 16),
+            // Text Content
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: AppTextStyles.bodyMedium().copyWith(
+                      color: AppColors.textPrimary,
+                      fontWeight: FontWeight.w600,
+                    ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    subtitle,
+                    style: AppTextStyles.bodySmall().copyWith(
+                      color: enabled
+                          ? AppColors.textPrimary.withOpacity(0.7)
+                          : AppColors.textPrimary.withOpacity(0.4),
+                      fontSize: 10,
+                      height: 1.3,
+                    ),
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
               ),
             ),
+            // Arrow Icon
+            if (enabled)
+              Icon(
+                Icons.arrow_forward_ios_rounded,
+                size: 12,
+                color: Colors.grey.shade400,
+              ),
           ],
         ),
       ),
     ),
   );
 }
+

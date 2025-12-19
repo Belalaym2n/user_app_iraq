@@ -1,81 +1,116 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:skeletonizer/skeletonizer.dart';
+import 'package:user_app_iraq/core/sharedWidgets/app_snack_bar.dart';
+import 'package:user_app_iraq/features/loads/data/models/last_trip_model.dart';
+import 'package:user_app_iraq/features/loads/data/models/trip_details_model.dart';
+import 'package:user_app_iraq/features/loads/domain/use_cases/get_trip_details.dart';
+import 'package:user_app_iraq/features/loads/presentation/bloc/get_trip_details/get_trip_details_states.dart';
 import 'package:user_app_iraq/features/loads/presentation/widgets/loadDetailedScreens/screens/load_detailed_screen_item.dart';
 
-import '../../../addLoad/presentation/widgets/basicInformation/build_vehicle.dart';
-import '../../data/models/load_model.dart';
-import '../../data/models/load_states.dart';
+import '../../../../core/intialization/init_di.dart';
+import '../../../profile/data/models/profile_model.dart';
+import '../bloc/get_trip_details/get_trip_details_bloc.dart';
+import '../bloc/get_trip_details/get_trip_details_event.dart';
 
-class LoadDetailsScreen extends StatefulWidget {
-  const LoadDetailsScreen({super.key});
+class LoadDetailsScreen extends StatelessWidget {
+  LoadDetailsScreen({super.key, required this.tripModel});
 
-  @override
-  State<LoadDetailsScreen> createState() => _LoadDetailsScreenState();
-}
+  final TripModel tripModel;
 
-class _LoadDetailsScreenState extends State<LoadDetailsScreen> {
   @override
   Widget build(BuildContext context) {
-    final fakeLoad = LoadModel(
-      id: "LOAD123",
-      userId: "USER789",
-      title: "Steel Beams Transport",
-      pickupLocation: "Baghdad, Al-Mansour",
-      deliveryLocation: "Basra, Industrial Area",
-      weight: 12.5,
-      // Tons
-      dimensions: "6m x 1.5m x 1.2m",
-      vehicleType: VehicleType.truck,
-      budget: 350000,
-      // IQD
-      pickupDate: DateTime.now().add(const Duration(days: 1)),
-      deliveryDate: DateTime.now().add(const Duration(days: 2)),
-      status: LoadStatus.posted,
-      createdAt: DateTime.now(),
-      updatedAt: DateTime.now(),
-      bidsCount: 5,
-      description: "Heavy steel beams requiring forklift at loading/unloading.",
-      requirements: [
-        "Forklift Required",
-        "Experienced Driver",
-        "Straps for securing load",
-      ],
-      contactPerson: "Ali Mohammed",
-      contactPhone: "+9647700000000",
-      isUrgent: true,
-      distance: 545.0,
-      // km
-      pickupCoordinates: {"lat": 33.3128, "lng": 44.3615},
-      deliveryCoordinates: {"lat": 30.5080, "lng": 47.7835},
-      minBudget: 300000,
-      maxBudget: 400000,
-      specialInstructions: "Handle carefully, no sharp turns.",
-      images: [
-        "https://dummyimage.com/600x400/cccccc/000000.jpg",
-        "https://dummyimage.com/500x300/bbbbbb/000000.jpg",
-      ],
-      isActive: true,
-      viewCount: 143,
-      assignedDriverId: null,
+    return BlocProvider(
+      create: (_) =>
+          TripDetailsBloc(getIt<GetTripDetailsUseCase>())
+            ..add(LoadTripDetailsEvent(tripId: tripModel.id.toString())),
+      child: BlocConsumer<TripDetailsBloc, TripDetailsState>(
+        listener: (context, state) {
+          if (state is TripDetailsError) {
+            AppSnackBar.showError(context, state.message);
+          }
+        },
+
+        builder: (context, state) {
+          if (state is TripDetailsLoading) {
+            return _buildLoading();
+          }
+
+          if (state is TripDetailsLoaded) {
+            return LoadDetailedScreenItem(
+              load: state.trip, // ✅ REAL DATA
+              getStatusIcon: _getStatusIcon,
+            );
+          }
+
+          if (state is TripDetailsError) {
+            return Center(child: Text(state.message));
+          }
+
+          return const SizedBox.shrink();
+        },
+      ),
     );
+  }
 
-    return LoadDetailedScreenItem(
-      load: fakeLoad,
-        getStatusIcon: (status) {
-      switch (status) {
-        case "pending":
-          return Icons.access_time_filled_rounded;
-        case "in_progress":
-          return Icons.local_shipping_rounded;
-        case "completed":
-          return Icons.check_circle_rounded;
-        default:
-          return Icons.help_outline_rounded;
+  final fakeTrip = TripDetailsModel(
+    id: 101,
+    status: TripStatus.pending,
 
+    pickupAddress: 'Nasr City, Cairo',
+    pickupLat: 30.0561,
+    pickupLng: 31.3300,
+
+    destinationAddress: 'New Cairo',
+    destinationLat: 30.0074,
+    destinationLng: 31.4913,
+
+    vehicleType: 'truck',
+    basePrice: 45000.0,
+
+    scheduledAt: DateTime.now().add(const Duration(days: 1)),
+    description: 'Delivery of construction materials',
+    notes: 'Handle with care',
+
+    user: UserProfileModel(
+      id: 57,
+      name: 'Belal Ahmed',
+      email: 'belal@test.com',
+      phone: '+201000000000',
+      photoUrl: null,
+      createdAt: DateTime.now().subtract(const Duration(days: 90)),
+      type: 'user',
+    ),
+
+    createdAt: DateTime.now().subtract(const Duration(hours: 3)),
+    updatedAt: DateTime.now(),
+  );
+
+  /// 🔄 Loading Skeleton
+  Widget _buildLoading() {
+    return Skeletonizer(
+      enabled: true,
+      child: LoadDetailedScreenItem(
+        load: fakeTrip, // snapshot
+        getStatusIcon: _getStatusIcon,
+      ),
+    );
+  }
+
+  /// 🟢 Status Icon Mapper
+  IconData _getStatusIcon(String status) {
+    switch (status) {
+      case "pending":
+        return Icons.access_time_filled_rounded;
+      case "started":
+        return Icons.local_shipping_rounded;
+      case "completed":
+        return Icons.check_circle_rounded;
+      case "cancelled":
+        return Icons.cancel_rounded;
+      default:
+        return Icons.help_outline_rounded;
     }
-
-  },
-    );
   }
 }

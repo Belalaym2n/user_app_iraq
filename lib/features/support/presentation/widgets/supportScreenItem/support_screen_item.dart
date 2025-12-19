@@ -8,7 +8,8 @@ import 'package:user_app_iraq/generated/locale_keys.g.dart';
 
 import '../call_widget/support_call_widget.dart';
 import '../contactSupport/contact_support.dart';
-import '../quick_help/quick_help.dart';
+import '../quick_help/buildQuickButtons/quick_help.dart';
+import '../youtubeVideo/youtube_video.dart';
 
 class SupportScreenItem extends StatefulWidget {
   const SupportScreenItem({super.key});
@@ -26,31 +27,32 @@ class _SupportScreenItemState extends State<SupportScreenItem> {
         elevation: 0,
         backgroundColor: AppColors.primaryColor,
       ),
-      body:SingleChildScrollView(
-          child: Column(
-        children: [
-          TopScreenWidget(
-            iconButton: IconButton(onPressed: (){
-              Navigator.pop(context);
-            }, icon: Icon(Icons.arrow_back,color: Colors.white,)),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            TopScreenWidget(
+              iconButton: IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: Icon(Icons.arrow_back, color: Colors.white),
+              ),
 
               screenIcon: Icons.support_agent,
-              text: LocaleKeys.Support_supportAndHelp.tr()),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child:  Column(
-                children: [
-                  SupportCallWidget(),
-                  SizedBox(height: AppConstants.h*0.02,),
-                  QuickHelp(),
-                  ContactSupport()
-                ],
-              ),
+              text: LocaleKeys.Support_supportAndHelp.tr(),
             ),
 
+            SizedBox(height: AppConstants.h * 0.02),
 
-        ],
-      ),)
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 0),
+              child: InstructionsVideo(),
+            ),
+
+            Column(children: [QuickHelp(), ContactSupport()]),
+          ],
+        ),
+      ),
     );
   }
 }

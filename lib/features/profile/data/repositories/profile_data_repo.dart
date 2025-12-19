@@ -15,9 +15,8 @@ class ProfileDataRepo implements ProfileDomainRepo {
   }
 
   @override
-  Future<Result> updateProfile(UserProfileModel user) {
-    // TODO: implement updateProfile
-    throw UnimplementedError();
+  Future<Result> updateProfile(int userId, UserProfileModel user) {
+    return profileDS.updateUserProfile(userId, user);
   }
 
   @override

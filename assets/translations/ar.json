@@ -1,8 +1,13 @@
 {
   "Splash": {
+    "select_preferred_language": "اختر لغتك المفضلة",
+
     "loading": "جارٍ التحميل..."
   },
   "onboard": {
+    "get_started_now": "ابدأ الآن",
+    "skip": "تخطي",
+
     "1": {
       "welcome_message": "مرحبًا بك في تطبيقنا",
       "onboardingDesc1": "استمتع بمجموعة قوية من الأدوات المصممة لتسهيل مهامك اليومية، واختبر تجربة استخدام سلسة منذ اللحظة الأولى داخل التطبيق."
@@ -17,6 +22,8 @@
     }
   },
   "Login": {
+    "password_reset_email_sent_": "تم إرسال بريد لإعادة تعيين كلمة المرور. يرجى التحقق من صندوق الوارد.",
+
     "welcome": "مرحبًا",
     "continue_to_login": "متابعة إلى تسجيل الدخول",
     "password": "كلمة المرور",
@@ -58,9 +65,11 @@
     "login": "تسجيل الدخول"
   },
   "Home": {
+    "HomeName": "الرئيسية",
+
     "welcome": "مرحباً",
     "manage_freight": "قم بإدارة الشحن الخاص بك بسهولة",
-    "post_load": "نشر حمولة",
+    "post_load": "طلب سائق",
     "create_new_shipment": "إنشاء شحنة جديدة",
     "track": "تتبع",
     "support": "الدعم",
@@ -69,10 +78,10 @@
     "view_live_auctions": "عرض المزادات المباشرة",
     "assist_247": "مساعدة على مدار 24/7",
     "no_active_shipments": "لا توجد شحنات نشطة",
-    "active_shipments_info": "ستظهر الشحنات النشطة هنا بمجرد تعيين الحمولات",
+    "active_shipments_info": "سيتم عرض الشحنات هنا.",
     "no_journey_yet": "لا توجد رحلة بعد",
     "start_journey": "ابدأ بإنشاء أول حمولة لك لبدء رحلتك",
-    "post_load_action": "نشر حمولة"
+    "post_load_action": "طلب سائق"
   },
   "Loads": {
     "my_loads": "حمولاتي",
@@ -89,6 +98,24 @@
     "view_details": "عرض التفاصيل"
   },
   "Add_Load": {
+    "confirm_location": "تأكيد الموقع",
+    "location_permission_required": "مطلوب إذن الموقع",
+    "location_permission_message": "لاستخدام هذه الميزة، يرجى السماح لإذن الموقع من الإعدادات.",
+    "cancel": "إلغاء",
+    "open_settings": "فتح الإعدادات",
+    "select_vehicle": "اختر المركبة",
+    "vehicle_type_required": "نوع المركبة مطلوب.",
+    "pickup_location_required": "موقع الاستلام لا يجب أن يكون فارغًا.",
+    "delivery_location_required": "موقع التوصيل لا يجب أن يكون فارغًا.",
+    "pickup_date_required": "تاريخ الاستلام مطلوب.",
+    "postAnother": "انشر حمولة أخرى",
+    "viewMyLoads": "عرض حمولاتي",
+    "how_many_routes": "كم درب",
+    "close": "إغلاق",
+    "scheduling": "ضبط الموعد",
+
+    "loadPosted": "تم نشر الحمولة بنجاح",
+     "loadPostedMessage": "تم نشر حمولتك وهي الآن مرئية للسائقين. ستبدأ في استلام العروض قريبًا.",
     "tapToSelect": "اضغط لاختيار التاريخ والوقت",
     "pickupDate": "تاريخ الاستلام *",
     "deliveryDate": "تاريخ التسليم (اختياري)",
@@ -123,9 +150,122 @@
     "deliveryLocation": "موقع التسليم",
     "tapToSelectLocation": "اضغط لتحديد الموقع",
     "kilometer": "كم",
-    "budget": "الميزانية"
+    "budget": " الاجرة المقترحة  "
   },
   "Support": {
+
+
+    "howDoesTheAppWork": "كيف يعمل التطبيق؟",
+    "howDoesTheAppWorkAnswer": "أنشئ طلب توصيل، استقبل عروض السائقين، اختر الأنسب، وتتبع طلبك لحظيًا حتى يصل بأمان.",
+
+    "isServiceAvailable247": "هل الخدمة متاحة على مدار الساعة؟",
+    "isServiceAvailable247Answer": "نعم! منصتنا تعمل على مدار الساعة، لكن قد يختلف توفر السائقين حسب موقعك ووقت اليوم.",
+
+    "whatAreasDoYouCover": "ما المناطق التي تغطونها؟",
+    "whatAreasDoYouCoverAnswer": "نغطي حاليًا جميع المدن الرئيسية في العراق. تحقق من التطبيق لمعرفة توفر الخدمة في منطقتك.",
+
+
+    "howToCreateRequest": "كيف أنشئ طلب توصيل؟",
+    "howToCreateRequestAnswer": "اضغط على \"طلب جديد\"، أدخل الوزن والوصف، اختر مواقع الاستلام والتسليم، اختر التاريخ، ثم أرسل الطلب.",
+
+    "canIEditRequest": "هل يمكنني تعديل طلبي بعد إرساله؟",
+    "canIEditRequestAnswer": "نعم، يمكنك تعديل الطلب قبل قبول أي سائق له. اذهب إلى \"طلباتي\" واختر الطلب المراد تعديله.",
+
+    "whatInfoToInclude": "ما المعلومات التي يجب أن أدرجها؟",
+    "whatInfoToIncludeAnswer": "أدخل وزنًا دقيقًا، وصفًا مفصلاً، عناوين الاستلام والتسليم، أرقام الاتصال، وأي تعليمات خاصة.",
+
+    "canICancelRequest": "هل يمكنني إلغاء الطلب؟",
+    "canICancelRequestAnswer": "نعم، يمكنك الإلغاء قبل قبول السائق. بعد القبول قد تُفرض رسوم حسب التوقيت.",
+
+
+    "howDoOffersWork": "كيف تعمل العروض؟",
+    "howDoOffersWorkAnswer": "بعد إنشاء طلب، يرسل لك السائقون عروض أسعار. يمكنك مقارنة العروض والتحقق من تقييمات السائقين واختيار الأفضل.",
+
+    "whenDoIPay": "متى أدفع؟",
+    "whenDoIPayAnswer": "تتم عملية الدفع بعد قبول عرض السائق. يمكنك الدفع عبر التطبيق باستخدام البطاقة أو التحويل البنكي أو الطرق المتاحة.",
+
+    "areThereHiddenFees": "هل توجد أي رسوم مخفية؟",
+    "areThereHiddenFeesAnswer": "لا توجد رسوم مخفية! السعر الموجود في العرض المقبول هو النهائي. أي رسوم إضافية يجب الاتفاق عليها مسبقًا.",
+
+    "notSatisfiedWhatToDo": "ماذا لو لم أكن راضيًا عن الخدمة؟",
+    "notSatisfiedWhatToDoAnswer": "تواصل مع الدعم فورًا. نحن نتعامل بجدية مع الشكاوى وسنعمل على حل أي مشكلة. يتوفر استرجاع الأموال في الحالات المستحقة.",
+
+
+    "howToTrackDelivery": "كيف يمكنني تتبع عملية التوصيل؟",
+    "howToTrackDeliveryAnswer": "بعد قبول السائق لطلبك، يمكنك تتبع موقعه على الخريطة، رؤية تحديثات الحالة، والتواصل عبر الدردشة داخل التطبيق.",
+
+    "canIContactDriver": "هل يمكنني التواصل مع السائق؟",
+    "canIContactDriverAnswer": "نعم! يمكنك استخدام الدردشة داخل التطبيق أو الاتصال للتواصل مع السائق حول أوقات الاستلام وتعليمات التوصيل.",
+
+    "whatIfDriverIsLate": "ماذا لو تأخر السائق؟",
+    "whatIfDriverIsLateAnswer": "تواصل مع السائق عبر التطبيق لمعرفة الوضع. إذا كان هناك تأخير كبير، يمكنك التواصل مع الدعم للمساعدة.",
+
+    "howToConfirmDelivery": "كيف أقوم بتأكيد التوصيل؟",
+    "howToConfirmDeliveryAnswer": "بعد وصول الطلب بأمان، قم بتأكيد التوصيل في التطبيق. هذا يتيح تحرير الدفع للسائق ويسمح لك بتقييم الخدمة.",
+
+    "invalidUrlError": "رابط يوتيوب غير صالح",
+    "loadingFailedError": "فشل في تحميل الفيديو",
+    "unknownError": "حدث خطأ غير معروف",
+    "General": "عام",
+    "Requests": "الطلبات",
+    "Payments": "الدفع",
+    "Tracking": "التتبع",
+    "loadingText": "جارٍ تحميل الفيديو...",
+    "retryButtonText": "إعادة المحاولة",
+    "errorTitleText": "غير قادر على تحميل الفيديو",
+    "app_guide": "دليل التطبيق",
+    "learn_how_to_use_app": "تعلم كيفية استخدام التطبيق في 4 خطوات بسيطة",
+    "findAnswersToCommonQuestions": "اعثر على إجابات للأسئلة الشائعة",
+
+
+
+
+
+
+
+    "guide_create_request_title": "إنشاء طلبك",
+    "guide_create_request_desc": "ابدأ بإنشاء طلب توصيل جديد مع جميع التفاصيل",
+    "guide_create_request_step1": "اضغط على زر \"طلب سائق\"",
+    "guide_create_request_step2": "أدخل وزن الحمولة والوصف",
+    "guide_create_request_step3": "حدد موقع الاستلام والتسليم",
+    "guide_create_request_step4": "اختر الموعد المناسب لك",
+    "guide_create_request_step5": "أرسل طلبك",
+
+    "guide_receive_offers_title": "استقبال العروض",
+    "guide_receive_offers_desc": "السائقون سيقدمون لك عروضًا تنافسية لطلبك",
+    "guide_receive_offers_step1": "انتظر وصول عروض السائقين",
+    "guide_receive_offers_step2": "قارن الأسعار والتقييمات",
+    "guide_receive_offers_step3": "اطلع على ملفات السائقين",
+    "guide_receive_offers_step4": "اختر أفضل عرض",
+    "guide_receive_offers_step5": "أكد اختيارك",
+
+    "guide_track_delivery_title": "تتبع طلبك",
+    "guide_track_delivery_desc": "راقب شحنتك لحظة بلحظة حتى تصل للوجهة",
+    "guide_track_delivery_step1": "شاهد موقع السائق المباشر",
+    "guide_track_delivery_step2": "استلم تحديثات الحالة",
+    "guide_track_delivery_step3": "تواصل مع السائق",
+    "guide_track_delivery_step4": "تابع تقدم التوصيل",
+    "guide_track_delivery_step5": "أكد وصول الشحنة بسلام",
+    "next": "التالي",
+
+    "guide_rate_review_title": "التقييم والمراجعة",
+    "guide_rate_review_desc": "ساعد الآخرين بمشاركة تجربتك",
+    "guide_rate_review_step1": "قيّم السائق",
+    "guide_rate_review_step2": "اكتب مراجعة",
+    "guide_rate_review_step3": "شارك ملاحظاتك",
+    "guide_rate_review_step4": "ساهم في بناء الثقة داخل المجتمع",
+    "guide_rate_review_step5": "استمتع بخدمة موثوقة",
+    "payment_description": "هل تواجه مشكلة في الدفع؟ اختر طريقة من الأسفل للحصول على مساعدة فورية.",
+    "chat_now": "ابدأ الدردشة",
+    "close": "إغلاق",
+    "credit_card": "بطاقة ائتمان",
+    "cash": "نقدًا",
+    "accepted_payment_methods": "طرق الدفع المقبولة",
+    "payment_help": "مساعدة في الدفع",
+    "we_are_here_to_assist_you": "نحن هنا لمساعدتك",
+    "contact_support": "تواصل مع الدعم",
+    "call_us": "اتصل بنا",
+    "email": "البريد الإلكتروني",
     "supportAndHelp": "الدعم والمساعدة",
     "emergencySupport": "دعم الطوارئ",
     "emergencyHelpDescription": "للمشاكل الطارئة المتعلقة بالسلامة أثناء النقل",
@@ -191,12 +331,34 @@
     "accountIssue": "مشكلة في الحساب"
   },
   "Problems": {
+    "other_reason": "أخرى",
+    "describe_problem_hint": "صف مشكلتك بالتفصيل...\n\nكلما قدمت معلومات أكثر، تمكّنا من مساعدتك بشكل أسرع.",
+    "we_will_get_back_24_hours": "سنعود إليك خلال 24 ساعة",
+    "report_submitted": "تم إرسال البلاغ!",
+    "problem_details": "تفاصيل المشكلة",
+    "quick_tips": "نصائح سريعة",
+    "tip_include_error_messages": "قم بإضافة رسائل الخطأ إن وجدت",
+    "tip_mention_issue_started": "اذكر متى بدأت المشكلة",
+    "tip_add_screenshots": "أضف لقطات شاشة إن أمكن",
+    "payment_issue": "مشكلة في الدفع",
+    "technical_problem": "مشكلة تقنية",
+    "account_issue": "مشكلة في الحساب",
+    "category_required": "الفئة مطلوبة.",
+    "selected_category": "الفئة المختارة",
+    "problem_submitted_successfully": "تم إرسال مشكلتك بنجاح. لا تقلق، سيتم التعامل معها قريبًا.",
+
+    "we_are_here_to_help": "نحن هنا لمساعدتك",
+    "describe_your_issue": "صف مشكلتك وسنعود إليك في أقرب وقت ممكن",
     "submitIssue": "إرسال المشكلة",
     "problem": "المشكلة",
     "writeProblemDetails": "اكتب تفاصيل مشكلتك:",
     "enterProblem": "أدخل مشكلتك"
   },
   "Profile": {
+    "dataUpdatedSuccessfully": "تم تحديث البيانات بنجاح",
+    "ProfileName": "الملف الشخصي",
+    "arabic": "العربية",
+    "english": "الإنجليزية",
     "total_loads": "إجمالي التحميلات",
     "completed": "المكتملة",
     "account_settings": "إعدادات الحساب",
@@ -349,6 +511,22 @@
     "allBids": "جميع العروض",
     "submitComplaint": "تقديم شكوى",
     "bidsCount": "{count} {count, plural, =1{عطاء} other{عطاءات}}"
+  },
+  "dio_Errors": {
+    "error_400": "طلب غير صالح. يرجى التحقق من البيانات.",
+    "error_401": "غير مصرح. يرجى تسجيل الدخول مرة أخرى.",
+    "error_403": "ممنوع. ليست لديك صلاحية للوصول إلى هذا المورد.",
+    "error_404": "المورد غير موجود.",
+    "error_422": "خطأ في التحقق من البيانات. يرجى مراجعة الإدخال.",
+    "error_500": "خطأ في الخادم. يرجى المحاولة لاحقًا.",
+    "error_502": "بوابة غير صالحة. يرجى المحاولة لاحقًا.",
+    "error_503": "الخدمة غير متاحة. يرجى المحاولة لاحقًا.",
+    "error_default": "خطأ في الخادم. يرجى المحاولة لاحقًا.",
+    "connection_timeout": "انتهت مهلة الاتصال. يرجى التحقق من اتصال الإنترنت.",
+    "no_internet_connection": "لا يوجد اتصال بالإنترنت. يرجى التحقق من إعدادات الشبكة.",
+    "request_cancelled": "تم إلغاء الطلب",
+    "bad_certificate": "خطأ في شهادة الأمان",
+    "unexpected_error": "حدث خطأ غير متوقع"
   }
 }
 

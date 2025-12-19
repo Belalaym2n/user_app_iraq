@@ -2,11 +2,12 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:user_app_iraq/core/utils/app_colors.dart';
 import 'package:user_app_iraq/core/utils/app_constants.dart';
+ import 'package:user_app_iraq/features/profile/data/models/profile_model.dart';
 import 'package:user_app_iraq/generated/locale_keys.g.dart';
 
 class BuildStateCard extends StatefulWidget {
-  const BuildStateCard({super.key});
-
+    BuildStateCard({super.key,required this.profileModel});
+UserProfileModel profileModel;
   @override
   State<BuildStateCard> createState() => _BuildStateCardState();
 }
@@ -32,7 +33,7 @@ class _BuildStateCardState extends State<BuildStateCard> {
               height: AppConstants.w * 0.36,  // نفس القيمة الأصلية
               child: _buildStatItemCard(
                 title: LocaleKeys.Profile_total_loads.tr(),
-                value: "10",
+                value: widget.profileModel.tripStatistics?.totalTrips.toString()??'0',
                 icon: Icons.inventory_2_outlined,
                 color: AppColors.primaryColor,
               ),
@@ -47,7 +48,7 @@ class _BuildStateCardState extends State<BuildStateCard> {
               height: AppConstants.w * 0.36,
               child: _buildStatItemCard(
                 title: LocaleKeys.Profile_completed.tr(),
-                value: "3",
+                value:  widget.profileModel.tripStatistics?.completedTrips.toString()??'0',
                 icon: Icons.check_circle_outline,
                 color: Colors.green,
               ),

@@ -46,12 +46,12 @@ class PickupAndDelivery extends StatelessWidget {
       },
 
       child: buildCard(
-        title: "Pickup & Delivery",
+        title: LocaleKeys.Add_Load_pickupAndDelivery.tr(),
         icon: Icons.location_on_outlined,
         children: [
           buildItem(
             context,
-            title: "Pickup Location",
+            title: LocaleKeys.Add_Load_pickupLocation.tr(),
             color: Colors.orange,
             icon: Icons.upload_outlined,
             isPickup: true,
@@ -59,7 +59,7 @@ class PickupAndDelivery extends StatelessWidget {
           const SizedBox(height: 12),
           buildItem(
             context,
-            title: "Delivery Location",
+            title:LocaleKeys.Add_Load_deliveryLocation.tr(),
             color: Colors.blueGrey,
             icon: Icons.download_outlined,
             isPickup: false,

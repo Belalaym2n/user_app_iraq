@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
- import 'package:lottie/lottie.dart';
+import 'package:lottie/lottie.dart';
+import 'package:user_app_iraq/core/cahsing/get_storage_helper.dart';
+import 'package:user_app_iraq/core/cahsing/secure_storage.dart';
 import 'package:user_app_iraq/features/login/presentation/pages/auto_login.dart';
-  import '../../../core/utils/app_constants.dart';
+import '../../../core/utils/app_constants.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -36,8 +38,8 @@ class _SplashScreenState extends State<SplashScreen>
 
     // 3️⃣ شاشة بيضاء بسيطة بعد الاختفاء
     setState(() => _showWhiteScreen = true);
-    await Future.delayed(const Duration(milliseconds: 500));
-
+    //  GetStorageHelper.clear();
+    // SecureStorageHelper.clear();
     // 4️⃣ الانتقال إلى شاشة OnBoarding
     if (mounted) {
       Navigator.of(context).pushReplacement(

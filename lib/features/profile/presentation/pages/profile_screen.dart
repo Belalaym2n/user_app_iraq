@@ -1,11 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:user_app_iraq/config/routes/app_router.dart';
-import 'package:user_app_iraq/core/cahsing/secure_storage.dart';
 import 'package:user_app_iraq/core/sharedWidgets/app_snack_bar.dart';
+import 'package:user_app_iraq/features/profile/domain/use_cases/get_profile_use_case.dart';
+import 'package:user_app_iraq/features/profile/domain/use_cases/logout_use_case.dart';
+import 'package:user_app_iraq/features/profile/domain/use_cases/update_profile_use_case.dart';
 import 'package:user_app_iraq/features/profile/presentation/widgets/page_item/profile_screen_item.dart';
 
 import '../../../../core/intialization/init_di.dart';
@@ -26,21 +27,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => getIt<ProfileBloc>()..add(GetProfileEvent()),
-
+      create: (_) => ProfileBloc(
+        getProfile: getIt<GetProfileUseCase>(),
+        updateProfileUseCase: getIt<UpdateProfileUseCase>(),
+        logoutUseCase: getIt<LogoutUseCase>(),
+      )..add(GetProfileEvent()),
       child: BlocConsumer<ProfileBloc, ProfileState>(
         listener: (context, state) async {
           if (state is ProfileError) {
-            return AppSnackBar.showError(context, state.message);
-          }
-
-          if (state is LogoutFailure) {
-
-            return AppSnackBar.showError(context, state.message);
-          }
-          if (state is LogoutSuccess) {
-
-
+            AppSnackBar.showError(context, state.message);
+          } else if (state is LogoutFailure) {
+            AppSnackBar.showError(context, state.message);
+          } else if (state is LogoutSuccess) {
             Navigator.pushNamedAndRemoveUntil(
               context,
               AppRoutes.login,
@@ -48,15 +46,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
             );
           }
         },
-
-         builder: (context, state) {
+        builder: (context, state) {
           if (state is ProfileLoading) {
-            return profile_loading();
+            return _profileLoading();
           }
+
           if (state is ProfileLoaded) {
             return ProfileScreenItem(profileModel: state.user);
-          } else if (state is LogoutLoading) {
-          return  Stack(
+          }
+
+          if (state is ProfileUpdateSuccess || state is ProfileUpdateError) {
+            // Show updated profile
+            return ProfileScreenItem(
+              profileModel: state is ProfileUpdateSuccess
+                  ? state.user
+                  : context.read<ProfileBloc>().userProfileModel!,
+            );
+          }
+
+          if (state is LogoutLoading) {
+            return Stack(
               children: [
                 ProfileScreenItem(
                   profileModel: context.watch<ProfileBloc>().userProfileModel!,
@@ -65,6 +74,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ],
             );
           }
+
+          if (state is ProfileUpdateLoading) {
+            // Show current profile while updating
+            return ProfileScreenItem(
+              profileModel: context.watch<ProfileBloc>().userProfileModel!,
+            );
+          }
+
           return SizedBox();
         },
       ),
@@ -72,26 +89,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   final fakeUserProfile = UserProfileModel(
+    type: '',
     id: 999,
     name: "Fake User",
     email: "fake.user@example.com",
     phone: "07501234567",
     photoUrl: "https://example.com/avatar.png",
     dateOfBirth: "1999-01-01",
-
     city: "Baghdad",
     state: "Baghdad State",
     postalCode: "10011",
     country: "Iraq",
-
     emailVerifiedAt: DateTime.now(),
     twoFactorEnabled: false,
-
-    createdAt: DateTime.now().toIso8601String(),
-    updatedAt: DateTime.now().toIso8601String(),
+    createdAt: DateTime.now(),
+    updatedAt: DateTime.now(),
   );
 
-  Widget profile_loading() {
+  Widget _profileLoading() {
     return Skeletonizer(
       child: ProfileScreenItem(profileModel: fakeUserProfile),
     );

@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:user_app_iraq/config/routes/app_router.dart';
 import 'package:user_app_iraq/core/utils/app_colors.dart';
 import 'package:user_app_iraq/core/utils/app_constants.dart';
+import 'package:user_app_iraq/features/support/data/models/url_lanch_model.dart';
 import 'package:user_app_iraq/generated/locale_keys.g.dart';
 
 import '../../../../../core/sharedWidgets/text_styles.dart';
 import 'build_contact_widget.dart';
+import 'buildFAQ/build_faq.dart';
 
 class ContactSupport extends StatefulWidget {
   ContactSupport({super.key});
@@ -44,6 +46,8 @@ class _ContactSupportState extends State<ContactSupport> {
               Expanded(child: _buildCallOption()),
               const SizedBox(width: 12),
               Expanded(child: _buildChatOption()),
+
+              // Expanded(child: _buildChatOption()),
             ],
           ),
 
@@ -59,12 +63,6 @@ class _ContactSupportState extends State<ContactSupport> {
           ),
 
           const SizedBox(height: 20),
-          SizedBox(
-            width: AppConstants.w * 0.39,
-
-            child: _buildSendProblemOption(context),
-          ),
-          const SizedBox(height: 20),
 
           // ----------- Support Hours -----------
           _buildSupportHours(),
@@ -74,40 +72,28 @@ class _ContactSupportState extends State<ContactSupport> {
   }
 
   // ---------------------------------------------------------
+
   Widget _buildCallOption() {
     return buildContactOption(
       title: LocaleKeys.Support_callNow.tr(),
       subtitle: LocaleKeys.Support_availableNow.tr(),
       icon: Icons.phone_outlined,
-      iconColor: Colors.green,
+      iconColor: const Color(0xFFEF4444), // Professional red
       enabled: true,
-      onTap: () {},
+      onTap: () {        UrlLaunchModel.makePhoneCall("phoneNumber");
+      },
     );
   }
 
-  // ---------------------------------------------------------
   Widget _buildChatOption() {
     return buildContactOption(
       title: LocaleKeys.Support_chat.tr(),
-      subtitle: LocaleKeys.Support_online.tr(),
-
-      icon: Icons.chat_outlined,
-      iconColor: AppColors.primaryColor,
-      enabled: true,
-      onTap: () {},
-    );
-  }
-
-  Widget _buildSendProblemOption(BuildContext context) {
-    return buildContactOption(
-      title: LocaleKeys.Problems_problem.tr(),
-      subtitle: LocaleKeys.Problems_enterProblem.tr(),
-
-      icon: Icons.report_problem_outlined,
-      iconColor: Colors.red,
+      subtitle: LocaleKeys.Support_liveChatDescription.tr(),
+      icon: Icons.chat_bubble_outline_rounded,
+      iconColor: const Color(0xFF10B981), // Professional green
       enabled: true,
       onTap: () {
-        Navigator.pushNamed(context, AppRoutes.problems);
+        UrlLaunchModel.openWhatsApp("phoneNumber");
       },
     );
   }
@@ -117,9 +103,12 @@ class _ContactSupportState extends State<ContactSupport> {
       title: LocaleKeys.Login_email.tr(),
       subtitle: LocaleKeys.Support_response24h.tr(),
       icon: Icons.email_outlined,
-      iconColor: Colors.orange,
+      iconColor: const Color(0xFFF59E0B), // Professional orange
       enabled: true,
-      onTap: () {},
+      onTap: () {
+        UrlLaunchModel.sendEmail("phoneNumber");
+
+      },
     );
   }
 
@@ -127,33 +116,55 @@ class _ContactSupportState extends State<ContactSupport> {
     return buildContactOption(
       title: LocaleKeys.Support_faq.tr(),
       subtitle: LocaleKeys.Support_selfHelp.tr(),
-      icon: Icons.quiz_outlined,
-      iconColor: Colors.purple,
+      icon: Icons.help_outline_rounded,
+      iconColor: const Color(0xFF8B5CF6), // Professional purple
       enabled: true,
-      onTap: () {},
+      onTap: () {
+        showDialog(
+          context: context,
+          barrierDismissible: true,
+          builder: (context) => const FaqDialog(),
+        );
+      },
     );
   }
 
   Widget _buildSupportHours() {
     return Container(
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.all(16),
+
       decoration: BoxDecoration(
-        color: AppColors.accentColor.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(10),
+         color: AppColors.infoColor.withOpacity(0.06),
+
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: AppColors.primaryColor.withOpacity(0.1),
+          width: 1,
+        ),
       ),
       child: Row(
         children: [
-          Icon(
-            Icons.schedule_outlined,
-            color: AppColors.primaryColor,
-            size: 20,
+          Container(
+            width: 40,
+            height: 40,
+            decoration: BoxDecoration(
+              color: AppColors.primaryColor.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Icon(
+              Icons.access_time_rounded,
+              color: AppColors.primaryColor,
+              size: 22,
+            ),
           ),
-          const SizedBox(width: 10),
+          const SizedBox(width: 12),
           Expanded(
             child: Text(
               LocaleKeys.Support_supportHoursDescription.tr(),
               style: AppTextStyles.bodySmall().copyWith(
                 color: AppColors.textPrimary,
+                fontSize: 13,
+                height: 1.4,
               ),
             ),
           ),

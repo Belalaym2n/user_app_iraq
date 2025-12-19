@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
+import 'package:easy_localization/easy_localization.dart';
 
+import '../../generated/locale_keys.g.dart';
 import 'app_exception.dart';
 import 'error_model.dart';
 import 'failures.dart';
@@ -17,35 +19,35 @@ class ExceptionHandler {
   /// - badCertificate: خطأ في الشهادة
   /// - badResponse: خطأ في الاستجابة (4xx, 5xx)
   /// - unknown: خطأ غير معروف
+
   static AppException handleDioException(DioException e) {
     switch (e.type) {
       case DioExceptionType.connectionTimeout:
       case DioExceptionType.sendTimeout:
       case DioExceptionType.receiveTimeout:
         return NetworkException(
-          message: 'Connection timeout. Please check your internet connection.',
+          message: LocaleKeys.dio_Errors_connection_timeout.tr(),
           code: 'TIMEOUT',
           originalError: e,
         );
 
       case DioExceptionType.connectionError:
         return NetworkException(
-          message:
-          'No internet connection. Please check your network settings.',
+          message: LocaleKeys.dio_Errors_no_internet_connection.tr(),
           code: 'NO_CONNECTION',
           originalError: e,
         );
 
       case DioExceptionType.cancel:
         return NetworkException(
-          message: 'Request was cancelled',
+          message: LocaleKeys.dio_Errors_request_cancelled.tr(),
           code: 'CANCELLED',
           originalError: e,
         );
 
       case DioExceptionType.badCertificate:
         return NetworkException(
-          message: 'Security certificate error',
+          message: LocaleKeys.dio_Errors_bad_certificate.tr(),
           code: 'BAD_CERTIFICATE',
           originalError: e,
         );
@@ -55,19 +57,17 @@ class ExceptionHandler {
 
       case DioExceptionType.unknown:
         return NetworkException(
-          message: 'An unexpected error occurred: ${e.message}',
+          message: LocaleKeys.dio_Errors_unexpected_error.tr(),
           code: 'UNKNOWN',
           originalError: e,
         );
     }
   }
 
-  /// Handle bad response errors
   static AppException _handleBadResponse(DioException e) {
     final response = e.response;
     final statusCode = response?.statusCode;
 
-    // Try to extract error from response data
     ErrorModel errorModel;
     try {
       errorModel = ErrorModel.fromJson(response?.data ?? {});
@@ -85,27 +85,28 @@ class ExceptionHandler {
     );
   }
 
-  /// Get default error message based on status code
   static String _getDefaultErrorMessage(int? statusCode) {
     switch (statusCode) {
       case 400:
-        return 'Bad request. Please check your input.';
+        return LocaleKeys.dio_Errors_error_400.tr();
       case 401:
-        return 'Unauthorized. Please login again.';
+        return LocaleKeys.dio_Errors_error_401.tr();
       case 403:
-        return 'Forbidden. You don\'t have permission to access this resource.';
+        return LocaleKeys.dio_Errors_error_403.tr();
       case 404:
-        return 'Resource not found.';
+        return LocaleKeys.dio_Errors_error_404.tr();
       case 422:
-        return 'Validation error. Please check your input.';
+        return LocaleKeys.dio_Errors_error_422.tr();
       case 500:
-        return 'Internal server error. Please try again later.';
+        return LocaleKeys.dio_Errors_error_500.tr();
       case 502:
-        return 'Bad gateway. Please try again later.';
+        return LocaleKeys.dio_Errors_error_502.tr();
       case 503:
-        return 'Service unavailable. Please try again later.';
+        return LocaleKeys.dio_Errors_error_503.tr();
       default:
-        return 'Server error ($statusCode). Please try again later.';
+        return LocaleKeys.dio_Errors_error_default.tr(
+          args: ['${statusCode ?? ''}'],
+        );
     }
   }
 
@@ -118,8 +119,7 @@ class ExceptionHandler {
         code: exception.code,
         originalError: exception.originalError,
       );
-    }
-    else if (exception is NetworkException) {
+    } else if (exception is NetworkException) {
       return NetworkFailure(message: exception.message);
     } else if (exception is CacheException) {
       return CacheFailure(message: exception.message);

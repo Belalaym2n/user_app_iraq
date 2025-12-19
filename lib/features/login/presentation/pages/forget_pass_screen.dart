@@ -1,7 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:user_app_iraq/features/login/presentation/widgets/screensItem/forget_password.dart';
+import 'package:user_app_iraq/generated/locale_keys.g.dart';
 
 import '../../../../core/intialization/init_di.dart';
 import '../../../../core/sharedWidgets/app_snack_bar.dart';
@@ -44,10 +46,9 @@ class _ForgetPassScreenState extends State<ForgetPassScreen> {
             Navigator.pop(context); // تغلق اللودينج
 
             AppSnackBar.showSuccess(
-
-                context, "Email has been send success");
-
-            forgetScreen.currentState?.clear();
+              context,
+              LocaleKeys.Login_password_reset_email_sent_.tr(),
+            );
           } else if (state is SendEmailFailure) {
             Navigator.pop(context); // تغلق اللودينج
             return AppSnackBar.showError(context, state.error);
@@ -58,9 +59,7 @@ class _ForgetPassScreenState extends State<ForgetPassScreen> {
           return MainWrapper(
             childWidget: AbsorbPointer(
               absorbing: state is LoginLoading,
-              child: ForgetPasswordItem(
-                key: forgetScreen,
-              ),
+              child: ForgetPasswordItem(key: forgetScreen),
             ),
           );
         },

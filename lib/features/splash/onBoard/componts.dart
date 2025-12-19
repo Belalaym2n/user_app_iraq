@@ -1,4 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:user_app_iraq/generated/locale_keys.g.dart';
 import '../../../config/routes/app_router.dart';
 import '../../../core/utils/app_colors.dart';
 
@@ -94,7 +96,7 @@ class _GetStartBtnState extends State<GetStartBtn> {
     return Padding(
       padding: const EdgeInsets.only(top: 60),
       child: BaseAppButton(
-        text: "Get Started Now",
+        text: LocaleKeys.onboard_get_started_now.tr(),
         onTap: loadingHandler,
         isLoading: isLoading,
         isOutlined: false,
@@ -116,7 +118,7 @@ class SkipBtn extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 60),
       child: BaseAppButton(
-        text: "Skip",
+        text: LocaleKeys.onboard_skip.tr(),
         onTap: onTap,
         isOutlined: true,
         isLoading: false,

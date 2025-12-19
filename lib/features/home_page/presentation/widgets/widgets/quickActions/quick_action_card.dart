@@ -72,8 +72,8 @@ class _QuickActionCardState extends State<QuickActionCard> {
 
   Widget _buildLeadingIcon() {
     return Container(
-      width: AppConstants.w * 0.10,
-      height: AppConstants.w * 0.10,
+      width: AppConstants.w * 0.055,
+      height: AppConstants.w * 0.055,
       decoration: BoxDecoration(
         color: AppColors.primaryColor.withOpacity(0.2),
         borderRadius: BorderRadius.circular(AppConstants.w * 0.028),
@@ -81,7 +81,7 @@ class _QuickActionCardState extends State<QuickActionCard> {
       child: Icon(
         widget.icon,
         color: AppColors.primaryColor,
-        size: AppConstants.w * 0.055,
+        size: AppConstants.w * 0.04,
       ),
     );
   }
@@ -99,19 +99,22 @@ class _QuickActionCardState extends State<QuickActionCard> {
               fontSize: AppConstants.w * 0.039,
               fontWeight: FontWeight.w700,
             ),
-            maxLines: 1,
+            maxLines:2,
             overflow: TextOverflow.ellipsis,
           ),
           SizedBox(height: AppConstants.h * 0.0025),
-          Text(
-            widget.subtitle,
-            style: TextStyle(
-              color: AppColors.primaryColor.withOpacity(0.8),
-              fontSize: AppConstants.w * 0.028,
-              fontWeight: FontWeight.w500,
+          Flexible
+            (
+            child: Text(
+              widget.subtitle,
+              style: TextStyle(
+                color: AppColors.primaryColor.withOpacity(0.8),
+                fontSize: AppConstants.w * 0.028,
+                fontWeight: FontWeight.w500,
+              ),
+              maxLines: 6,
+              overflow: TextOverflow.ellipsis,
             ),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
           ),
         ],
       ),

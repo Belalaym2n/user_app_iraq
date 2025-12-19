@@ -34,6 +34,7 @@ class _BuildSmoothingState extends State<BuildSmoothing> {
         children: [
           /// PAGE INDICATOR
           SmoothPageIndicator(
+
             controller: widget.pageController,
             count: widget.items.length,
             effect: ExpandingDotsEffect(

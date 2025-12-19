@@ -7,6 +7,7 @@ import '../data/data_sources/remote/profile_remote_ds_imp.dart';
 import '../data/repositories/profile_data_repo.dart';
 import '../domain/repositories/profile_domain_repo.dart';
 import '../domain/use_cases/get_profile_use_case.dart';
+import '../domain/use_cases/update_profile_use_case.dart';
 import '../presentation/bloc/profile_bloc.dart';
 
 void profileDI(GetIt getIt) {
@@ -22,9 +23,11 @@ void profileDI(GetIt getIt) {
 
   getIt.registerLazySingleton(() => GetProfileUseCase(getIt()));
   getIt.registerLazySingleton(() => LogoutUseCase(getIt()));
+  getIt.registerLazySingleton(() => UpdateProfileUseCase(getIt()));
 
   getIt.registerFactory(
         () => ProfileBloc(
+          updateProfileUseCase: getIt(),
       getProfile: getIt(),
       logoutUseCase: getIt(),
      ),

@@ -18,7 +18,6 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   ) async {
     emit(SignUpLoading());
     final result = await signUpUseCase(user: event.user);
-
     if (result.isSuccess) {
       emit(SignUpSuccess(LocaleKeys.register_account_created_success.tr()));
     } else {
