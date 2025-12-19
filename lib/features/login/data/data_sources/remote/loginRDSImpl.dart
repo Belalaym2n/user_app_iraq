@@ -2,6 +2,7 @@ import '../../../../../core/apiManager/api_manager.dart';
 import '../../../../../core/apiManager/end_points.dart';
 import '../../../../../core/cahsing/app_keys.dart';
 import '../../../../../core/cahsing/get_storage_helper.dart';
+import '../../../../../core/cahsing/load_data.dart';
 import '../../../../../core/cahsing/secure_storage.dart';
 import '../../../../../core/handleErrors/result_pattern.dart';
 import '../../../../signUp/data/models/user_model.dart';
@@ -14,7 +15,7 @@ class LoginRDSImpl implements LoginRDS {
     final response = await ApiService.request(
       endpoint: AppEndPoints.login,
       method: "POST",
-      queryParameters: {"locale": "en"},
+      queryParameters: {"locale":  UserLocalService.cachedUser?.lang ?? "en"},
       data: model.toJson(),
     );
 
@@ -43,11 +44,12 @@ class LoginRDSImpl implements LoginRDS {
 
   @override
   Future<Result> sendPasswordResetEmail(String email) async {
+    print("locale ${ UserLocalService.cachedUser?.lang ?? "en"}");
     // TODO: implement sendPasswordResetEmail
     final response = await ApiService.request(
       endpoint: AppEndPoints.forget_pass,
       method: "POST",
-      queryParameters: {"locale": "en"},
+      queryParameters: {"locale":  UserLocalService.cachedUser?.lang ?? "en"},
       data: {"email": email},
     );
     if (response is Result) {

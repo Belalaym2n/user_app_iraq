@@ -35,11 +35,13 @@ final descriptionController = TextEditingController();
 final material = TextEditingController();
 final budget = TextEditingController();
 final weight = TextEditingController();
+final routesController = TextEditingController();
 
 class _LoadsItemState extends State<LoadsItem> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(backgroundColor: AppColors.primaryColor, toolbarHeight: 0),
       body: SingleChildScrollView(
         child: Form(
@@ -86,7 +88,10 @@ class _LoadsItemState extends State<LoadsItem> {
                     SchedulingWidget(),
                     SizedBox(height: AppConstants.h * 0.02),
 
-                    BuildBudgetWidget(budget: budget),
+                    BuildBudgetWidget(
+
+                        routesController:routesController ,
+                        budget: budget),
                     SizedBox(height: AppConstants.h * 0.02),
 
                     Padding(

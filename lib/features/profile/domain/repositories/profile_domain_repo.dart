@@ -4,5 +4,5 @@ import '../../data/models/profile_model.dart';
 abstract class ProfileDomainRepo {
   Future<Result> getProfile();
   Future<Result> logout();
-  Future<Result> updateProfile(UserProfileModel user);
+  Future<Result> updateProfile(int userId, UserProfileModel user);
 }

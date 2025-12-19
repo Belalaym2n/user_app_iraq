@@ -3,8 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:user_app_iraq/config/routes/app_router.dart';
+import 'package:user_app_iraq/core/cahsing/app_keys.dart';
+import 'package:user_app_iraq/core/cahsing/get_storage_helper.dart';
 import 'package:user_app_iraq/generated/locale_keys.g.dart';
 
+import '../../../../../core/cahsing/load_data.dart';
 import '../../../../../core/sharedWidgets/animation_helper.dart';
 import '../../../../../core/utils/app_colors.dart';
 import '../../../../../core/utils/app_constants.dart';
@@ -52,9 +55,6 @@ class _MobileHeaderState extends State<MobileHeader>
     super.dispose();
   }
 
-  /// ============================================
-  /// 🔥 animationDoSlide (مثل الطريقة اللي بتحبها)
-  /// ============================================
   Widget animationDoSlide({
     required int index,
     required int delay,
@@ -123,8 +123,7 @@ class _MobileHeaderState extends State<MobileHeader>
 
           SizedBox(height: AppConstants.h * 0.02),
 
-          /// 🔥 الشركة (من الشمال)
-          animationDoSlide(
+           animationDoSlide(
             index: 1,
             delay: 450,
             child: _buildCompanyBox(),
@@ -138,16 +137,19 @@ class _MobileHeaderState extends State<MobileHeader>
     return Row(
       children: [
         /// 🔥 النصوص (من الشمال)
-        animationDoSlide(
-          index: 1,
-          delay: 200,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _welcomeUser(),
-              SizedBox(height: AppConstants.h * 0.005),
-              _manageText(),
-            ],
+        SizedBox(
+          width: AppConstants.w*0.5,
+          child: animationDoSlide(
+            index: 1,
+            delay: 200,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _welcomeUser(),
+                SizedBox(height: AppConstants.h * 0.005),
+                _manageText(),
+              ],
+            ),
           ),
         ),
 
@@ -172,6 +174,8 @@ class _MobileHeaderState extends State<MobileHeader>
           delay: 350,
           child: _buildProfileButton(context),
         ),
+        SizedBox(width: AppConstants.w * 0.02),
+
       ],
     );
   }
@@ -228,7 +232,8 @@ class _MobileHeaderState extends State<MobileHeader>
       height: AppConstants.h * 0.06,
       width: AppConstants.w * 0.9,
       padding: EdgeInsets.symmetric(
-        vertical: AppConstants.h * 0.015,
+        vertical: 0,
+        // vertical: AppConstants.h * 0.015,
         horizontal: AppConstants.w * 0.04,
       ),
       decoration: BoxDecoration(
@@ -280,7 +285,11 @@ class _MobileHeaderState extends State<MobileHeader>
 
   Widget _welcomeUser() {
     return Text(
-      "${LocaleKeys.Home_welcome.tr()}, User",
+      "${LocaleKeys.Home_welcome.tr()}, "
+          "${UserLocalService.cachedUser?.name
+          ?? GetStorageHelper.read(AppKeys.name)
+          ?? 'User'}",
+
       style: TextStyle(
         color: Colors.white,
         fontSize: AppConstants.w * 0.05,
@@ -294,7 +303,7 @@ class _MobileHeaderState extends State<MobileHeader>
 
   Widget _companyName() {
     return Text(
-      'FreightX',
+      'جيتك',
       style: TextStyle(
         color: AppColors.primaryColor,
         fontSize: AppConstants.w * 0.061,

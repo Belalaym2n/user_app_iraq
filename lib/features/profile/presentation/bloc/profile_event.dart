@@ -11,10 +11,11 @@ class GetProfileEvent extends ProfileEvent {}
 class LogoutEvent extends ProfileEvent {}
 
 class UpdateProfileEvent extends ProfileEvent {
+  final int userId;
   final UserProfileModel user;
 
-  UpdateProfileEvent(this.user);
+  UpdateProfileEvent({required this.userId, required this.user});
 
   @override
-  List<Object?> get props => [user];
+  List<Object?> get props => [userId, user];
 }

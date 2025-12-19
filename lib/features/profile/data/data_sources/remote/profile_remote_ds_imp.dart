@@ -1,4 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dio/dio.dart' show FormData;
+import 'package:user_app_iraq/core/cahsing/app_keys.dart';
+import 'package:user_app_iraq/core/cahsing/get_storage_helper.dart';
 import 'package:user_app_iraq/features/profile/data/models/profile_model.dart';
 
 import '../../../../../core/apiManager/api_manager.dart';
@@ -29,7 +32,6 @@ class ProfileRemoteDSImp implements ProfileRemoteDS {
   Future<Result> deleteAcc() async {
     // TODO: implement deleteAcc
     throw UnimplementedError();
-
   }
 
   @override
@@ -46,5 +48,31 @@ class ProfileRemoteDSImp implements ProfileRemoteDS {
     await SecureStorageHelper.clear();
 
     return Result.success(response);
-   }
+  }
+
+  @override
+  Future<Result> updateUserProfile(int userId, UserProfileModel user) async {
+    // 🔥 استخدم الـ userId اللي جاي من الـ parameter
+    final formData = FormData.fromMap({
+      'name': user.name,
+      'email': user.email,
+      'phone': user.phone,
+      // ... باقي الحقول
+    });
+
+    final response = await ApiService.requestWithFormData(
+      endpoint: '/users/$userId',
+      method: "POST",
+      data: formData,
+      queryParameters: {"locale": "en"},
+    );
+
+
+    if (response is Result) {
+      return response;
+    }
+
+    await GetStorageHelper.write(AppKeys.name, user.name);
+    return Result.success(UserProfileModel.fromJson(response["data"]));
+  }
 }

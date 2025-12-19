@@ -1,6 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:user_app_iraq/core/sharedWidgets/text_styles.dart';
+ import 'package:user_app_iraq/core/sharedWidgets/text_styles.dart';
 import 'package:user_app_iraq/core/sharedWidgets/top_screen_widget.dart';
 import 'package:user_app_iraq/core/utils/app_colors.dart';
 import 'package:user_app_iraq/core/utils/app_constants.dart';
@@ -25,7 +26,7 @@ class _ProfileScreenItemState extends State<ProfileScreenItem> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
+      backgroundColor: Colors.white,
 
       appBar: AppBar(
         leading: null,
@@ -54,7 +55,7 @@ class _ProfileScreenItemState extends State<ProfileScreenItem> {
 
                   title: showTitle
                       ? Text(
-                    "Profile",
+                    LocaleKeys.Profile_ProfileName.tr(),
                     style: AppTextStyles.headlineLarge().copyWith(
                       color: Colors.white,
                       fontSize: AppConstants.w * 0.055,
@@ -71,9 +72,6 @@ class _ProfileScreenItemState extends State<ProfileScreenItem> {
             ),
           ),
 
-          /// -------------------------------
-          /// SCREEN BODY CONTENT
-          /// -------------------------------
           SliverToBoxAdapter(
             child: Padding(
               padding: EdgeInsets.symmetric(
@@ -83,7 +81,9 @@ class _ProfileScreenItemState extends State<ProfileScreenItem> {
               child: Column(
                 children: [
                   /// CARD
-                  BuildStateCard(),
+                  BuildStateCard(
+                    profileModel: widget.profileModel,
+                  ),
                   SizedBox(height: AppConstants.h * 0.025), // بدل 20
 
                   /// MENU
@@ -91,11 +91,13 @@ class _ProfileScreenItemState extends State<ProfileScreenItem> {
                   SizedBox(height: AppConstants.h * 0.025), // بدل 20
 
                   /// QUICK ACTIONS
-                  BuildQuickActions(),
-                  SizedBox(height: AppConstants.h * 0.04), // بدل 32
+                  // BuildQuickActions(),
+                  // SizedBox(height: AppConstants.h * 0.04), // بدل 32
 
                   /// BUTTONS
                   ProfileButtons(),
+                  SizedBox(height: AppConstants.h * 0.1), // بدل 20
+
                 ],
               ),
             ),

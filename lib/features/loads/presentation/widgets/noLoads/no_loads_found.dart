@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:user_app_iraq/config/routes/app_router.dart';
 import 'package:user_app_iraq/core/sharedWidgets/text_styles.dart';
 import 'package:user_app_iraq/core/utils/app_colors.dart';
 import 'package:user_app_iraq/core/utils/app_constants.dart';
@@ -80,7 +81,9 @@ class _NoLoadsFoundState extends State<NoLoadsFound> {
 
   Widget _buildActionButton() {
     return ElevatedButton.icon(
-      onPressed: () {},
+      onPressed: () {
+        Navigator.pushNamed(context, AppRoutes.add_load);
+      },
       icon: const Icon(Icons.add_rounded),
       label: Text(LocaleKeys.Home_post_load.tr()),
       style: ElevatedButton.styleFrom(

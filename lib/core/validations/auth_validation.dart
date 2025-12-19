@@ -31,12 +31,11 @@ class AuthValidator {
 
     final cleaned = value.replaceAll(RegExp(r'\s+'), '');
 
-    final regex = RegExp(
-        r'^(?:0(75|76|77|78)\d{7}|(?:\+964|00964)(75|76|77|78)\d{7})$'
-    );
+    // يقبل أرقام فقط مع + في الأول (اختياري)
+    final regex = RegExp(r'^\+?\d{7,15}$');
 
     if (!regex.hasMatch(cleaned)) {
-      return LocaleKeys.register_Auth_iraq_phone_invalid.tr();
+      return LocaleKeys.register_Auth_iraq_phone_required.tr();
     }
 
     return null;

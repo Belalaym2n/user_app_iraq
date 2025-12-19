@@ -46,9 +46,6 @@ class Routes {
       case AppRoutes.splash:
         return MaterialPageRoute(builder: (context) => SplashScreen());
       //
-      case AppRoutes.loadDetailsScreen:
-        return MaterialPageRoute(builder: (context) => LoadDetailsScreen());
-    //
 
       case AppRoutes.autoLogin:
         return MaterialPageRoute(builder: (context) => AutoLogin());

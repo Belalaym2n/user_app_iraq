@@ -24,7 +24,7 @@ class _BuildActionsState extends State<BuildActions> {
         crossAxisCount: 2,
         crossAxisSpacing:  0.043*AppConstants.w,
         mainAxisSpacing: 0.043*AppConstants.w,
-        childAspectRatio: 0.0036*AppConstants.w,
+        childAspectRatio: 0.003*AppConstants.w,
       ),
       itemCount: actions.length,
       itemBuilder: (context, index) {
@@ -37,17 +37,20 @@ class _BuildActionsState extends State<BuildActions> {
           builder: (context, value, child) {
             return Transform.scale(
               scale: value,
-              child: QuickActionCard(
-                  icon: action.icon,
-                  title: action.title,
-                  subtitle: action.subtitle,
+              child: SizedBox(
 
-                  color: action.color,
-                  onTap: () {
-                    action.navigation();
-                    print("object");
-                  }
+                child: QuickActionCard(
+                    icon: action.icon,
+                    title: action.title,
+                    subtitle: action.subtitle,
 
+                    color: action.color,
+                    onTap: () {
+                      action.navigation();
+                      print("object");
+                    }
+
+                ),
               ),
             );
           },

@@ -5,17 +5,21 @@ import '../../../../core/sharedWidgets/text_styles.dart';
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/app_constants.dart';
 
-Widget  buildCard({
+Widget buildCard({
   required String title,
   required IconData icon,
-    bool isLoading=false  ,
+  bool isLoading = false,
   required List<Widget> children,
 }) {
   return Container(
-    padding: const EdgeInsets.all(16),
+    padding: EdgeInsets.all(
+      AppConstants.w * 0.044, // 16 / 360
+    ),
     decoration: BoxDecoration(
-      color:AppColors.cardColor,
-      borderRadius: BorderRadius.circular(12),
+      color: AppColors.cardColor,
+      borderRadius: BorderRadius.circular(
+        AppConstants.w * 0.033, // 12 / 360
+      ),
       border: Border.all(color: AppColors.borderColor),
     ),
     child: Column(
@@ -24,30 +28,40 @@ Widget  buildCard({
         Row(
           children: [
             Container(
-              padding: const EdgeInsets.all(12),
+              padding: EdgeInsets.all(
+                AppConstants.w * 0.033, // 12 / 360
+              ),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [isLoading?Colors.white: AppColors.primaryColor,isLoading?Colors.white:  AppColors.primaryLight],
+                  colors: [
+                    isLoading ? Colors.white : AppColors.primaryColor,
+                    isLoading ? Colors.white : AppColors.primaryLight
+                  ],
                 ),
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(
+                  AppConstants.w * 0.033, // 12 / 360
+                ),
               ),
               child: Icon(
                 icon,
                 color: Colors.white,
-                size: 24,
+                size: AppConstants.w * 0.066, // 24 / 360
               ),
             ),
-             const SizedBox(width: 8),
-            Text(title, style: AppTextStyles.headlineLarge().copyWith(
-              fontWeight: FontWeight.w700,
-               fontSize: 18
-            )),
+            SizedBox(width: AppConstants.w * 0.022), // 8 / 360
+            Text(
+              title,
+              style: AppTextStyles.headlineLarge().copyWith(
+                fontWeight: FontWeight.w700,
+                fontSize: AppConstants.w * 0.050, // 18 / 360
+              ),
+            ),
           ],
         ),
-        const SizedBox(height: 16),
+        SizedBox(height: AppConstants.h * 0.020), // 16 / 776
         ...children,
         SizedBox(
-          height: AppConstants.h*0.01,
+          height: AppConstants.h * 0.01, // Already responsive ✓
         )
       ],
     ),

@@ -31,13 +31,11 @@ class _BuildQuickActionsState extends State<BuildQuickActions> {
         children: [
           SizedBox(height: AppConstants.h * 0.012), // 10 / 776
 
-          // Section Header
-          _build_headline(),
+           _build_headline(),
 
           SizedBox(height: AppConstants.h * 0.012), // 10 / 776
 
-          // Action Cards Grid
-          const BuildActions(),
+           const BuildActions(),
         ],
       ),
     );

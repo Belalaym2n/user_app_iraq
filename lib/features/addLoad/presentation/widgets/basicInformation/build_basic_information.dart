@@ -118,7 +118,7 @@ class _BuildBasicInformationState extends State<BuildBasicInformation> {
         const SizedBox(height: 20),
 
         DefaultDropdown<VehicleModel>(
-          hintText: 'Select vehicle',
+          hintText: LocaleKeys.Add_Load_select_vehicle.tr(),
           items: widget.vehicles
               .map(
                 (v) => DropdownMenuItem<VehicleModel>(

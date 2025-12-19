@@ -92,7 +92,7 @@ class _BottomNavState extends State<BottomNav> {
                   vertical: AppConstants.h * 0.02,
                 ),
                 icon: Icons.home_outlined, // Home icon
-                text: 'Home',
+                text: LocaleKeys.Home_HomeName.tr(),
                 iconColor: Colors.white, // Icon color to match the theme
               ),
          
@@ -115,7 +115,7 @@ class _BottomNavState extends State<BottomNav> {
                   vertical: AppConstants.h * 0.02,
                 ),
                 icon: Icons.person, // Notification icon
-                text: "Profile",
+                text: LocaleKeys.Profile_ProfileName.tr(),
                 iconColor: Colors.white, // Cool tone for notifications
               ),
             ],
