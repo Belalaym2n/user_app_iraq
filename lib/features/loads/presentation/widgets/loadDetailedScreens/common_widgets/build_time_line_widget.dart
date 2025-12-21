@@ -22,8 +22,37 @@ class TripTimelineScreen extends StatelessWidget {
         description: 'Trip request has been created',
         status: TripStatus.pending,
         icon: Icons.assignment_turned_in_outlined,
-        timestamp: DateTime.now().subtract(const Duration(hours: 5)),
-      ),
+        timestamp:tripDetailsModel.createdAt!),
+
+      if(tripDetailsModel.acceptedAt!=null)
+        TimelineEvent(
+            title: LocaleKeys.MyLoadsScreen_accepted.tr(),
+            description:  'Trip request has been accepted',
+            status: tripDetailsModel.status,
+            icon: Icons.assignment_turned_in_outlined,
+            timestamp:tripDetailsModel.acceptedAt!),
+      if(tripDetailsModel.startedAt!=null)
+        TimelineEvent(
+            title: LocaleKeys.MyLoadsScreen_biddingStarted.tr(),
+            description:  'Trip request has been started',
+            status: tripDetailsModel.status,
+            icon: Icons.assignment_turned_in_outlined,
+            timestamp:tripDetailsModel.startedAt!),
+      if(tripDetailsModel.cancelledAt!=null)
+        TimelineEvent(
+            title: LocaleKeys.MyLoadsScreen_cancelled.tr(),
+            description:  'Trip request has been cancelled',
+            status: TripStatus.cancelled,
+            icon: Icons.assignment_turned_in_outlined,
+            timestamp:tripDetailsModel.cancelledAt!),
+
+        if(tripDetailsModel.completedAt!=null)
+        TimelineEvent(
+            title: LocaleKeys.MyLoadsScreen_completed.tr(),
+            description:  'Trip request has been completed',
+            status: tripDetailsModel.status,
+            icon: Icons.assignment_turned_in_outlined,
+            timestamp:tripDetailsModel.completedAt !),
     ];
 
     return SingleChildScrollView(
@@ -189,7 +218,7 @@ class _Indicator extends StatelessWidget {
           width: 32,
           height: 32,
           decoration: BoxDecoration(
-            color: event.isCompleted
+            color: event.isGreen
                 ? event.color
                 : event.color.withOpacity(0.3),
             shape: BoxShape.circle,
@@ -200,7 +229,7 @@ class _Indicator extends StatelessWidget {
           Expanded(
             child: Container(
               width: 2,
-              color: event.isCompleted
+              color: event.isGreen
                   ? event.color.withOpacity(0.3)
                   : AppColors.borderColor,
             ),
@@ -223,12 +252,12 @@ class _EventCard extends StatelessWidget {
       margin: EdgeInsets.only(bottom: isLast ? 0 : 20),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: event.isCompleted
-            ? event.color.withOpacity(0.1)
+        color: event.isGreen
+            ? Colors.green .withOpacity(0.3)
             : AppColors.neutralGray,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: event.isCompleted
+          color: event.isGreen
               ? event.color.withOpacity(0.3)
               : AppColors.borderColor,
         ),
@@ -236,7 +265,10 @@ class _EventCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(event.title, style: AppTextStyles.headlineSmall()),
+          Text(event.title, style: AppTextStyles.headlineSmall(
+          ).copyWith(
+
+          )),
           const SizedBox(height: 4),
           Text(
             event.description,

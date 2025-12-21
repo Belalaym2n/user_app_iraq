@@ -15,12 +15,12 @@ class UserProfileModel {
   final String? country;
 
   final DateTime? emailVerifiedAt;
-  final bool? twoFactorEnabled;
+  final bool twoFactorEnabled;
 
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
+  final DateTime createdAt;
+  final DateTime updatedAt;
 
-    TripStatisticsModel? tripStatistics;
+  final TripStatisticsModel? tripStatistics;
 
   UserProfileModel({
     required this.id,
@@ -37,9 +37,9 @@ class UserProfileModel {
     this.postalCode,
     this.country,
     this.emailVerifiedAt,
-       this.twoFactorEnabled,
-      this.createdAt,
-      this.updatedAt,
+    required this.twoFactorEnabled,
+    required this.createdAt,
+    required this.updatedAt,
     this.tripStatistics,
   });
 
@@ -66,8 +66,10 @@ class UserProfileModel {
 
       twoFactorEnabled: json['two_factor_enabled'] ?? false,
 
-      createdAt: DateTime.tryParse(json['created_at'] ?? '') ?? DateTime.now(),
-      updatedAt: DateTime.tryParse(json['updated_at'] ?? '') ?? DateTime.now(),
+      createdAt: DateTime.tryParse(json['created_at'] ?? '') ??
+          DateTime.now(),
+      updatedAt: DateTime.tryParse(json['updated_at'] ?? '') ??
+          DateTime.now(),
 
       tripStatistics: json['trip_statistics'] != null
           ? TripStatisticsModel.fromJson(json['trip_statistics'])
@@ -77,19 +79,27 @@ class UserProfileModel {
 
   Map<String, dynamic> toJson() {
     return {
-       "name": name,
+      "id": id,
+      "name": name,
       "email": email,
-       "phone": phone,
+      "type": type,
+      "phone": phone,
       "photo_url": photoUrl,
       "date_of_birth": dateOfBirth,
-        "email_verified_at": emailVerifiedAt?.toIso8601String(),
+      "gender": gender,
+      "address": address,
+      "city": city,
+      "state": state,
+      "postal_code": postalCode,
+      "country": country,
+      "email_verified_at": emailVerifiedAt?.toIso8601String(),
       "two_factor_enabled": twoFactorEnabled,
-      "created_at": createdAt?.toIso8601String()??'',
-      "updated_at": updatedAt?.toIso8601String()??'',
-     };
+      "created_at": createdAt.toIso8601String(),
+      "updated_at": updatedAt.toIso8601String(),
+      "trip_statistics": tripStatistics?.toJson(),
+    };
   }
 }
-
 class TripStatisticsModel {
   final int totalTrips;
   final int pendingTrips;

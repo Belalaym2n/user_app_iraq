@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 
 import '../../../../../../../core/utils/app_constants.dart';
 import '../../../../../data/models/last_trip_model.dart' show TripModel;
+import '../../../loadDetailedScreens/widgets/bidsDesign/bid_item.dart';
+import '../../../offers/mainScreen/show_all_offers.dart';
 import '../buttons/view_button.dart';
 import '../buttons/view_details_button.dart';
 import '../common_widgets/load_status.dart';
@@ -25,9 +27,15 @@ TripModel tripModel;
           SizedBox(
             height: AppConstants.h*0.02,
           ),
+          ShowAllOffersOnMainScreen(
+            tripModel: tripModel,
+
+            offers: tripModel.offers,
+          ),
           Row(
             children: [
-              Expanded(child: ViewDetailsButton(                tripModel: tripModel,
+              Expanded(child: ViewDetailsButton(
+                tripModel: tripModel,
               )),
               const SizedBox(width: 16),
 

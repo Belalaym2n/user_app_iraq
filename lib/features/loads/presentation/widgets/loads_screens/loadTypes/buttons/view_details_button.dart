@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:user_app_iraq/config/routes/app_router.dart';
 
 import 'package:user_app_iraq/core/utils/app_constants.dart';
-import 'package:user_app_iraq/features/loads/presentation/widgets/loads_screens/loadTypes/load_details.dart';
+import 'package:user_app_iraq/features/loads/presentation/widgets/loads_screens/loadTypes/common_widgets/load_details.dart';
 
 import '../../../../../../../core/utils/app_colors.dart';
 import '../../../../../../../core/utils/app_constants.dart';
@@ -12,8 +12,9 @@ import '../../../../../data/models/last_trip_model.dart' show TripModel;
 import '../../../../pages/load_detsils_screen.dart';
 
 class ViewDetailsButton extends StatelessWidget {
-    ViewDetailsButton({super.key,required this.tripModel});
+    ViewDetailsButton({super.key,required this.tripModel,  this.buttonName});
   TripModel tripModel;
+  String ?buttonName;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +40,8 @@ class ViewDetailsButton extends StatelessWidget {
                 size: AppConstants.w * 0.045,
               ),
               label: Text(
-                LocaleKeys.MyLoadsScreen_viewDetails.tr(),
+    buttonName==null?
+    LocaleKeys.MyLoadsScreen_viewDetails.tr():buttonName!,
                 style: TextStyle(
                   fontSize: AppConstants.w * 0.036,
                 ),

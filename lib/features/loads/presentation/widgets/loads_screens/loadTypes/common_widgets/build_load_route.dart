@@ -1,9 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:user_app_iraq/core/utils/app_constants.dart';
- import '../../../../../../core/sharedWidgets/text_styles.dart';
-import '../../../../../../core/utils/app_colors.dart';
-import '../../../../data/models/last_trip_model.dart';
+ import '../../../../../../../core/sharedWidgets/text_styles.dart';
+import '../../../../../../../core/utils/app_colors.dart';
+import '../../../../../data/models/last_trip_model.dart';
 
 class RouteInfo extends StatelessWidget {
   final TripModel load;

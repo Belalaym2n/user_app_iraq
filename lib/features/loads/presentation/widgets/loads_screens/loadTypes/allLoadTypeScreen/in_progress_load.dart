@@ -17,7 +17,7 @@ class InProgressLoad extends StatelessWidget {
       required this.onConfirmCancel,
       required this.tripModel});
 TripModel tripModel;
-VoidCallbackAction onConfirmCancel;
+    VoidCallback  onConfirmCancel;
   @override
   Widget build(BuildContext context) {
     return LoadWrapper(

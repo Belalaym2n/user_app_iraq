@@ -30,7 +30,7 @@ class LoadHeader extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _LoadTitleRow(
-                title:" load.title",
+                title:load.tripTitle??'',
                 tr: tr,
               ),
               SizedBox(height: AppConstants.h * 0.010),
@@ -97,7 +97,7 @@ class _LoadIdBadge extends StatelessWidget {
         ),
       ),
       child: Text(
-        "${LocaleKeys.MyLoadsScreen_load.tr()} #$displayId 23234".trim(),
+        "${LocaleKeys.MyLoadsScreen_load.tr()} #$displayId ".trim(),
         style: AppTextStyles.bodyLarge().copyWith(
           fontSize: AppConstants.w * 0.034,
           color: AppColors.primaryColor,

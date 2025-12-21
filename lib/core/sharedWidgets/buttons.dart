@@ -85,12 +85,14 @@ Widget large_button({
   required VoidCallback? onPressed, // ✅ كده يقبل null
   required String buttonName,
   bool isDisable = false,
+  IconData? icon,
+  Color? color,
   bool isDesktop = false,
 }) => Align(
   alignment: Alignment.center,
   child: ElevatedButton(
     style: ElevatedButton.styleFrom(
-      backgroundColor: AppColors.primaryColor,
+      backgroundColor:color==null? AppColors.primaryColor:color,
       minimumSize: Size(AppConstants.w * 0.8, 50),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
     ),
@@ -99,13 +101,24 @@ Widget large_button({
 
     // ✅ مش لازم تعمل async call هنا
     child: Center(
-      child: Text(
-        buttonName,
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: !isDesktop ? AppConstants.w / 18 : AppConstants.w / 65,
-          fontFamily: 'Nexa Bold 650',
-        ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+        if(icon!=null)
+          Icon(icon,color: Colors.white,size:  AppConstants.w / 18,),
+if(icon!=null)
+  SizedBox(
+    width: AppConstants.w*0.02),
+          Text(
+            buttonName,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: !isDesktop ? AppConstants.w / 18 : AppConstants.w / 65,
+              fontFamily: 'Nexa Bold 650',
+            ),
+          ),
+        ],
       ),
     ),
   ),

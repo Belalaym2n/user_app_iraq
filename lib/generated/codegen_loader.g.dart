@@ -372,6 +372,8 @@ class CodegenLoader extends AssetLoader{
     "Auth_phone_invalid": "رقم الهاتف غير صحيح"
   },
   "MyLoadsScreen": {
+    "accepted": "مقبول",
+    "rejected": "مرفوض",
     "myLoads": "حمولاتي",
     "selectAll": "تحديد الكل",
     "cancel": "إلغاء",
@@ -864,6 +866,8 @@ static const Map<String,dynamic> _en = {
     "Validations_description_min_length": "Description must be at least 5 characters"
   },
   "MyLoadsScreen": {
+    "accepted": "Accepted",
+    "rejected": "Rejected",
     "myLoads": "My Loads",
     "selectAll": "Select All",
     "cancel": "Cancel",

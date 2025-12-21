@@ -1,7 +1,13 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart'
-    show CircularProgressIndicator, Scaffold, Colors, showDialog, Dialog;
+    show
+        CircularProgressIndicator,
+        Scaffold,
+        Colors,
+        showDialog,
+        Dialog,
+        AppBar;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:user_app_iraq/core/sharedWidgets/app_snack_bar.dart';
@@ -18,7 +24,7 @@ import '../../data/models/last_trip_model.dart';
 import '../bloc/getTripsBloc/trips_bloc.dart';
 import '../bloc/getTripsBloc/trips_events.dart';
 import '../bloc/getTripsBloc/trips_status.dart';
- import '../widgets/noLoads/no_loads_found.dart';
+import '../widgets/noLoads/no_loads_found.dart';
 
 class LoadsScreen extends StatefulWidget {
   const LoadsScreen({super.key});
@@ -32,6 +38,7 @@ class _LoadsScreenState extends State<LoadsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: AppBar(toolbarHeight: 0, elevation: 0),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -44,9 +51,8 @@ class _LoadsScreenState extends State<LoadsScreen> {
                 getIt<GetTripsUseCase>(),
                 getIt<CancelTripUseCase>(),
               )..add(GetTripsEvent()),
-              child:BlocConsumer<TripsBloc, TripsState>(
+              child: BlocConsumer<TripsBloc, TripsState>(
                 listener: (context, state) {
-
                   if (state is TripsLoaded) {
                     if (state.isCancelling) {
                       showDialog(
@@ -63,7 +69,7 @@ class _LoadsScreenState extends State<LoadsScreen> {
                       Navigator.of(context, rootNavigator: true).pop();
                       AppSnackBar.showSuccess(
                         context,
-                       " LocaleKeys.MyLoadsScreen_cancelSuccess.tr()",
+                        " LocaleKeys.MyLoadsScreen_cancelSuccess.tr()",
                       );
                     }
 
@@ -83,14 +89,12 @@ class _LoadsScreenState extends State<LoadsScreen> {
                     final trips = state.filteredTrips;
                     final selectedTab = state.selectedTab.index;
 
-                    print("selelcted $selectedTab");
 
-
-                       return LoadsScreenItem(
-                        trips: trips,
-                        selectedTab: state.selectedTab,
-                      );
-
+                    return LoadsScreenItem(
+                      tripStatisticsModel: state.tripStatistics,
+                      trips: trips,
+                      selectedTab: state.selectedTab,
+                    );
                   }
 
                   return const SizedBox.shrink();
@@ -102,19 +106,23 @@ class _LoadsScreenState extends State<LoadsScreen> {
       ),
     );
   }
-  final fakeUser = UserProfileModel(
 
+  final fakeUser = UserProfileModel(
     id: 57,
     name: 'Belal Ahmed',
     email: 'belal@test.com',
     phone: '+201000000000',
     photoUrl: null,
-    createdAt: DateTime.now().subtract(const Duration(days: 30)), type: 'user',
+    createdAt: DateTime.now().subtract(const Duration(days: 30)),
+    type: 'user',
+    twoFactorEnabled: false,
+    updatedAt: DateTime.now(),
   );
 
   final List<TripModel> fakeTrips = [
-    /// 🟡 PENDING TRIP
     TripModel(
+      offers: [],
+
       id: 101,
       status: TripStatus.pending,
       pickupAddress: 'Nasr City, Cairo',
@@ -129,21 +137,26 @@ class _LoadsScreenState extends State<LoadsScreen> {
       scheduledAt: DateTime.now().add(const Duration(days: 1)),
       description: 'Furniture delivery',
       notes: 'Fragile items',
-      user:  UserProfileModel(
-
+      user: UserProfileModel(
         id: 57,
         name: 'Belal Ahmed',
         email: 'belal@test.com',
         phone: '+201000000000',
         photoUrl: null,
-        createdAt: DateTime.now().subtract(const Duration(days: 30)), type: 'user',
+        createdAt: DateTime.now().subtract(const Duration(days: 30)),
+        type: 'user',
+        twoFactorEnabled: false,
+        updatedAt: DateTime.now(),
       ),
       createdAt: DateTime.now().subtract(const Duration(hours: 2)),
       updatedAt: DateTime.now(),
+      tripTitle: '',
     ),
 
     /// 🟢 COMPLETED TRIP
     TripModel(
+      tripTitle: '',
+      offers: [],
       id: 102,
       status: TripStatus.pending,
       pickupAddress: 'Maadi, Cairo',
@@ -157,14 +170,16 @@ class _LoadsScreenState extends State<LoadsScreen> {
       scheduledAt: DateTime.now().subtract(const Duration(days: 3)),
       description: 'Construction materials',
       notes: 'Delivered successfully',
-      user:  UserProfileModel(
-
+      user: UserProfileModel(
         id: 57,
         name: 'Belal Ahmed',
         email: 'belal@test.com',
         phone: '+201000000000',
         photoUrl: null,
-        createdAt: DateTime.now().subtract(const Duration(days: 30)), type: 'user',
+        createdAt: DateTime.now().subtract(const Duration(days: 30)),
+        type: 'user',
+        twoFactorEnabled: false,
+        updatedAt: DateTime.now(),
       ),
       createdAt: DateTime.now().subtract(const Duration(days: 4)),
       updatedAt: DateTime.now().subtract(const Duration(days: 3)),
@@ -173,10 +188,19 @@ class _LoadsScreenState extends State<LoadsScreen> {
 
   Widget get_trips_loading() {
     return Skeletonizer(
-        enabled: true,
-        child: LoadsScreenItem(
-
-            selectedTab: TripsTab.pending,
-            trips: fakeTrips));
+      enabled: true,
+      child: LoadsScreenItem(
+        tripStatisticsModel: TripStatisticsModel(
+          totalTrips: 0,
+          pendingTrips: 0,
+          acceptedTrips: 0,
+          startedTrips: 0,
+          completedTrips: 0,
+          cancelledTrips: 0,
+        ),
+        selectedTab: TripsTab.pending,
+        trips: fakeTrips,
+      ),
+    );
   }
 }

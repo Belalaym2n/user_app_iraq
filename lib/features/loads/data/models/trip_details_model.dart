@@ -1,105 +1,174 @@
-
 import '../../../addLoad/data/models/vehicle_model.dart';
 import '../../../profile/data/models/profile_model.dart';
 import 'driver_info.dart';
 import 'last_trip_model.dart';
 import 'offers_model.dart';
 
+import '../../../addLoad/data/models/vehicle_model.dart';
+import '../../../profile/data/models/profile_model.dart';
+import 'last_trip_model.dart';
+import 'offers_model.dart';
+
 class TripDetailsModel extends TripModel {
-  final DateTime? acceptedAt;
-  final DateTime? startedAt;
-  final DateTime? completedAt;
-  final DateTime? cancelledAt;
-  final String? cancellationReason;
-  final List<OfferModel> offers;
-  final DriverInfo? acceptedDriver;
-  final VehicleModel? acceptedVehicle;
-
   TripDetailsModel({
-    required super.id,
-    required super.status,
-    required super.pickupAddress,
-    required super.pickupLat,
-    required super.pickupLng,
-    required super.destinationAddress,
-    required super.destinationLat,
-    required super.destinationLng,
-    required super.vehicleType,
-    required super.basePrice,
-    required super.scheduledAt,
-    required super.description,
-    super.notes,
-    required super.user,
-    required super.createdAt,
-    required super.updatedAt,
+    required int id,
+    required String tripTitle,
+    required TripStatus status,
 
-    this.acceptedAt,
-    this.startedAt,
-    this.completedAt,
-    this.cancelledAt,
-    this.cancellationReason,
-    this.offers = const [],
-    this.acceptedDriver,
-    this.acceptedVehicle,
-  });
+    required String pickupAddress,
+    required double pickupLat,
+    required double pickupLng,
+    DateTime? pickupDate,
 
-  factory TripDetailsModel.fromJson(Map<String, dynamic> json) {
+    required String destinationAddress,
+    required double destinationLat,
+    required double destinationLng,
+    DateTime? destinationDate,
+
+    required String vehicleType,
+    required double basePrice,
+    DateTime? scheduledAt,
+
+    required String description,
+    String? notes,
+    String? weight,
+    String? material,
+
+    UserProfileModel? user,
+    required List<OfferModel> offers,
+
+    DateTime? acceptedAt,
+    DateTime? startedAt,
+    DateTime? completedAt,
+    DateTime? cancelledAt,
+    String? cancellationReason,
+
+    DateTime? createdAt,
+    DateTime? updatedAt,
+  }) : super(
+    id: id,
+    tripTitle: tripTitle,
+    status: status,
+
+    pickupAddress: pickupAddress,
+    pickupLat: pickupLat,
+    pickupLng: pickupLng,
+    pickupDate: pickupDate,
+
+    destinationAddress: destinationAddress,
+    destinationLat: destinationLat,
+    destinationLng: destinationLng,
+    destinationDate: destinationDate,
+
+    vehicleType: vehicleType,
+    basePrice: basePrice,
+    scheduledAt: scheduledAt,
+
+    description: description,
+    notes: notes,
+    weight: weight,
+    material: material,
+
+    user: user,
+    offers: offers,
+
+    acceptedAt: acceptedAt,
+    startedAt: startedAt,
+    completedAt: completedAt,
+    cancelledAt: cancelledAt,
+    cancellationReason: cancellationReason,
+
+    createdAt: createdAt,
+    updatedAt: updatedAt,
+  );
+
+  // =========================
+  // FROM JSON (NULL SAFE)
+  // =========================
+  factory TripDetailsModel.fromJson(Map<String, dynamic>? json) {
+    if (json == null) {
+      return TripDetailsModel(
+        id: 0,
+        tripTitle: '',
+        status: TripStatus.pending,
+        pickupAddress: '',
+        pickupLat: 0,
+        pickupLng: 0,
+        destinationAddress: '',
+        destinationLat: 0,
+        destinationLng: 0,
+        vehicleType: '',
+        basePrice: 0,
+        description: '',
+        offers: const [],
+      );
+    }
+
     return TripDetailsModel(
-      id: json['id'],
+      id: json['id'] is int ? json['id'] : 0,
+      tripTitle: json['trip_title'] ?? '',
       status: tripStatusFromString(json['status']),
 
-      pickupAddress: json['pickup_address'],
-      pickupLat: _toDouble(json['pickup_lat']),
-      pickupLng: _toDouble(json['pickup_lng']),
+      pickupAddress: json['pickup_address'] ?? '',
+      pickupLat: _parseDouble(json['pickup_lat']),
+      pickupLng: _parseDouble(json['pickup_lng']),
+      pickupDate: _parseDate(json['pickup_date']),
 
-      destinationAddress: json['destination_address'],
-      destinationLat: _toDouble(json['destination_lat']),
-      destinationLng: _toDouble(json['destination_lng']),
+      destinationAddress: json['destination_address'] ?? '',
+      destinationLat: _parseDouble(json['destination_lat']),
+      destinationLng: _parseDouble(json['destination_lng']),
+      destinationDate: _parseDate(json['destination_date']),
 
-      vehicleType: json['vehicle_type'],
-      basePrice: _toDouble(json['base_price']),
+      vehicleType: json['vehicle_type'] ?? '',
+      basePrice: _parseDouble(json['base_price']),
+      scheduledAt: _parseDate(json['scheduled_at']),
 
-      scheduledAt: DateTime.parse(json['scheduled_at']),
       description: json['description'] ?? '',
       notes: json['notes'],
+      weight: json['weight'],
+      material: json['material'],
 
-      user: UserProfileModel.fromJson(json['user']),
-      createdAt: DateTime.parse(json['created_at']),
-      updatedAt: DateTime.parse(json['updated_at']),
-
-      acceptedAt: json['accepted_at'] != null
-          ? DateTime.parse(json['accepted_at'])
-          : null,
-      startedAt: json['started_at'] != null
-          ? DateTime.parse(json['started_at'])
-          : null,
-      completedAt: json['completed_at'] != null
-          ? DateTime.parse(json['completed_at'])
-          : null,
-      cancelledAt: json['cancelled_at'] != null
-          ? DateTime.parse(json['cancelled_at'])
+      user: json['user'] is Map<String, dynamic>
+          ? UserProfileModel.fromJson(json['user'])
           : null,
 
+      offers: (json['offers'] is List)
+          ? (json['offers'] as List)
+          .map((e) => OfferModel.fromJson(e))
+          .toList()
+          : [],
+
+      acceptedAt: _parseDate(json['accepted_at']),
+      startedAt: _parseDate(json['started_at']),
+      completedAt: _parseDate(json['completed_at']),
+      cancelledAt: _parseDate(json['cancelled_at']),
       cancellationReason: json['cancellation_reason'],
 
-      offers: (json['offers'] as List?)
-          ?.map((e) => OfferModel.fromJson(e))
-          .toList() ??
-          [],
-
-      acceptedDriver: json['accepted_driver'] != null &&
-          (json['accepted_driver'] as Map).isNotEmpty
-          ? DriverInfo.fromMap(json['accepted_driver'])
-          : null,
-
-      acceptedVehicle: json['accepted_vehicle'] != null &&
-          (json['accepted_vehicle'] as Map).isNotEmpty
-          ? VehicleModel.fromJson(json['accepted_vehicle'])
-          : null,
+      createdAt: _parseDate(json['created_at']),
+      updatedAt: _parseDate(json['updated_at']),
     );
   }
 }
-double _toDouble(dynamic value) {
+
+// =========================
+// SAFE HELPERS
+// =========================
+double _parseDouble(dynamic value) {
+  if (value == null) return 0.0;
+  if (value is num) return value.toDouble();
+  return double.tryParse(value.toString()) ?? 0.0;
+}
+
+DateTime? _parseDate(dynamic value) {
+  if (value == null) return null;
+  return DateTime.tryParse(value.toString());
+}
+
+
+
+
+
+double toDouble(dynamic value) {
   if (value == null) return 0.0;
   if (value is num) return value.toDouble();
   return double.parse(value.toString());

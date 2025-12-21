@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:user_app_iraq/features/loads/presentation/bloc/getTripsBloc/trips_status.dart';
 
+import '../../../../profile/data/models/profile_model.dart';
 import '../../../data/models/last_trip_model.dart';
 import '../../../domain/use_cases/get_trip_use_case.dart';
 import '../../../domain/use_cases/cancel_use_case.dart';
@@ -31,8 +32,20 @@ class TripsBloc extends Bloc<TripsEvent, TripsState> {
      final result = await getTripsUseCase();
 
     if (result.isSuccess) {
+      final TripStatisticsModel statistics =
+      result.data.isNotEmpty &&  result.data.first.user?.tripStatistics != null
+          ?  result.data.first.user!.tripStatistics!
+          : TripStatisticsModel(
+        totalTrips: 0,
+        pendingTrips: 0,
+        acceptedTrips: 0,
+        startedTrips: 0,
+        completedTrips: 0,
+        cancelledTrips: 0,
+      );
       emit(
         TripsLoaded(
+          tripStatistics: statistics,
           trips: result.data,
         ),
       );
@@ -84,6 +97,7 @@ class TripsBloc extends Bloc<TripsEvent, TripsState> {
       final updatedTrips = current.trips.map((trip) {
         if (trip.id.toString() == event.tripId) {
           return trip.copyWith(
+
             status: TripStatus.cancelled,
             updatedAt: DateTime.now(),
           );

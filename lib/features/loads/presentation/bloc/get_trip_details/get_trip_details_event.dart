@@ -1,6 +1,3 @@
-
-import '../../../data/models/last_trip_model.dart';
-
 abstract class TripDetailsEvent {}
 
 class LoadTripDetailsEvent extends TripDetailsEvent {
@@ -8,5 +5,14 @@ class LoadTripDetailsEvent extends TripDetailsEvent {
 
   LoadTripDetailsEvent({
     required this.tripId,
-   });
+  });
+}
+
+class AcceptTripEvent extends TripDetailsEvent {
+  final int tripId;
+  final int offerID;
+   AcceptTripEvent({
+    required this.tripId,
+    required this.offerID,
+  });
 }

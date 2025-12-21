@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 import '../../../../core/utils/app_colors.dart';
 import '../../../../generated/locale_keys.g.dart';
@@ -21,8 +22,9 @@ class TimelineEvent {
     required this.timestamp,
   });
 
-  bool get isCompleted =>
-      status != TripStatus.pending && status != TripStatus.cancelled;
+  bool get isGreen =>
+      status == TripStatus.started ||
+          status == TripStatus.accepted|| status == TripStatus.completed ;
 
   Color get color => status.color;
 
@@ -36,11 +38,11 @@ extension TripStatusX on TripStatus {
       case TripStatus.pending:
         return AppColors.warningColor;
       case TripStatus.accepted:
-        return AppColors.infoColor;
+        return Colors.green;
       case TripStatus.started:
         return AppColors.primaryColor;
       case TripStatus.completed:
-        return AppColors.successColor;
+        return Colors.green;
       case TripStatus.cancelled:
         return AppColors.errorColor;
     }

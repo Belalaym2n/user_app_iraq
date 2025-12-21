@@ -8,22 +8,7 @@ class NoBidsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: AppColors.borderColor),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.textMuted.withOpacity(0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: Center(
+    return   Center(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: AppConstants.w * 0.08),
           child: Column(
@@ -71,7 +56,7 @@ class NoBidsWidget extends StatelessWidget {
             ],
           ),
         ),
-      ),
+
     );
   }
 }

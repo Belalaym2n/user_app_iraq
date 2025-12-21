@@ -2,8 +2,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:user_app_iraq/core/utils/app_constants.dart';
 import 'package:user_app_iraq/features/loads/data/models/last_trip_model.dart';
-import '../../../../../../core/sharedWidgets/text_styles.dart';
-import '../../../../../../core/utils/app_colors.dart';
+import '../../../../../../../core/sharedWidgets/text_styles.dart';
+import '../../../../../../../core/utils/app_colors.dart';
 
 class LoadDetails extends StatelessWidget {
   final TripModel load;
@@ -22,7 +22,7 @@ class LoadDetails extends StatelessWidget {
           Expanded(
             child: _LoadDetailChip(
               icon: Icons.category_rounded,
-              text:" load.title",
+              text:load.material.toString(),
               color: AppColors.accentColor,
             ),
           ),
@@ -30,7 +30,7 @@ class LoadDetails extends StatelessWidget {
           Expanded(
             child: _LoadDetailChip(
               icon: Icons.fitness_center_rounded,
-              text: "23kg",
+              text: load.weight.toString(),
               color: AppColors.secondaryColor,
             ),
           ),

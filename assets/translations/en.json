@@ -357,6 +357,10 @@
     "Validations_description_min_length": "Description must be at least 5 characters"
   },
   "MyLoadsScreen": {
+    "tripCancelledSuccessfully": "The trip has been cancelled successfully.",
+
+    "accepted":"Accepted",
+    "rejected":"Rejected",
     "myLoads": "My Loads",
     "selectAll": "Select All",
     "cancel": "Cancel",
