@@ -1,19 +1,63 @@
-import 'package:user_app_iraq/features/loads/data/models/trip_details_model.dart';
+import 'package:equatable/equatable.dart';
+import '../../../data/models/trip_details_model.dart';
 
-import '../../../data/models/last_trip_model.dart';
+sealed class TripDetailsState extends Equatable {
+  const TripDetailsState();
 
-abstract class TripDetailsState {}
+  @override
+  List<Object?> get props => [];
+}
 
-class TripDetailsLoading extends TripDetailsState {}
+/// 🔹 INITIAL
+class TripDetailsInitial extends TripDetailsState {
+  const TripDetailsInitial();
+}
 
+/// 🔹 LOADING
+class TripDetailsLoading extends TripDetailsState {
+  const TripDetailsLoading();
+}
+
+/// 🔹 LOADED
 class TripDetailsLoaded extends TripDetailsState {
   final TripDetailsModel trip;
 
-  TripDetailsLoaded(this.trip);
+  final bool isAccepting;
+  final bool acceptSuccess;
+  final String? acceptError;
+
+  const TripDetailsLoaded({
+    required this.trip,
+    this.isAccepting = false,
+    this.acceptSuccess = false,
+    this.acceptError,
+  });
+
+  TripDetailsLoaded copyWith({
+    TripDetailsModel? trip,
+    bool? isAccepting,
+    bool? acceptSuccess,
+    String? acceptError,
+  }) {
+    return TripDetailsLoaded(
+      trip: trip ?? this.trip,
+      isAccepting: isAccepting ?? this.isAccepting,
+      acceptSuccess: acceptSuccess ?? false, // reset
+      acceptError: acceptError,
+    );
+  }
+
+  @override
+  List<Object?> get props =>
+      [trip, isAccepting, acceptSuccess, acceptError];
 }
 
+/// 🔹 ERROR
 class TripDetailsError extends TripDetailsState {
   final String message;
 
-  TripDetailsError(this.message);
+  const TripDetailsError(this.message);
+
+  @override
+  List<Object?> get props => [message];
 }

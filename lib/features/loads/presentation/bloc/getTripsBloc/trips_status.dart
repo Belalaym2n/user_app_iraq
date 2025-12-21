@@ -1,9 +1,11 @@
 import 'package:equatable/equatable.dart';
 import '../../../../addLoad/data/models/load_model.dart' hide TripModel;
+import '../../../../profile/data/models/profile_model.dart';
 import '../../../data/models/last_trip_model.dart';
 
  enum TripsTab {
   pending,
+  accepted,
   completed,
   inTransit,
   cancelled,
@@ -22,6 +24,7 @@ class TripsLoading extends TripsState {}
 class TripsLoaded extends TripsState {
   final List<TripModel> trips;
   final TripsTab selectedTab;
+  final TripStatisticsModel tripStatistics;
 
   final bool isCancelling;
   final bool cancelSuccess;
@@ -29,6 +32,7 @@ class TripsLoaded extends TripsState {
 
   const TripsLoaded({
     required this.trips,
+    required  this.tripStatistics,
     this.selectedTab = TripsTab.pending,
     this.isCancelling = false,
     this.cancelSuccess = false,
@@ -37,12 +41,14 @@ class TripsLoaded extends TripsState {
 
   TripsLoaded copyWith({
     List<TripModel>? trips,
+    TripStatisticsModel? tripsStatic,
     TripsTab? selectedTab,
     bool? isCancelling,
     bool? cancelSuccess,
     String? cancelError,
   }) {
     return TripsLoaded(
+      tripStatistics: tripsStatic??this.tripStatistics,
       trips: trips ?? this.trips,
       selectedTab: selectedTab ?? this.selectedTab,
       isCancelling: isCancelling ?? this.isCancelling,
@@ -61,6 +67,8 @@ class TripsLoaded extends TripsState {
         return trips.where((e) => e.status == TripStatus.started).toList();
       case TripsTab.cancelled:
         return trips.where((e) => e.status == TripStatus.cancelled).toList();
+      case TripsTab.accepted:
+        return trips.where((e) => e.status == TripStatus.accepted).toList();
     }
   }
 

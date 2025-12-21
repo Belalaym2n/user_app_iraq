@@ -3,71 +3,56 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:user_app_iraq/core/utils/app_constants.dart';
+import 'package:user_app_iraq/features/loads/data/models/offers_model.dart';
 import 'package:user_app_iraq/features/loads/data/models/trip_details_model.dart';
 import 'package:user_app_iraq/features/loads/presentation/widgets/loadDetailedScreens/widgets/bidsDesign/no_bids.dart';
-import 'package:user_app_iraq/features/loads/presentation/widgets/loads_screens/loadTypes/load_details.dart';
+import 'package:user_app_iraq/features/loads/presentation/widgets/loads_screens/loadTypes/common_widgets/load_details.dart';
 
 import '../../../../../../core/utils/app_colors.dart';
 import '../../../../../../generated/locale_keys.g.dart';
 
 import '../../../../data/models/last_trip_model.dart';
 import '../../../../data/models/trip_status.dart';
+import '../../../bloc/getTripsBloc/trips_status.dart';
 import '../common_widgets/contact_driver_hidden.dart';
 import '../common_widgets/load_details_wrapper.dart';
 import '../common_widgets/build_time_line_widget.dart';
 import '../common_widgets/load_info.dart';
 import '../common_widgets/payment_details.dart';
+import '../widgets/screensType/canceled_trip_screen.dart';
+import '../widgets/screensType/completed_design.dart';
+import '../widgets/screensType/posted_details_screen.dart';
+import '../widgets/screensType/started_load_screen.dart';
+import '../widgets/screensType/trip_accepted.dart';
 
 class LoadDetailedScreenItem extends StatelessWidget {
   final TripDetailsModel load;
+  OfferModel? offerModel;
   final IconData Function(String) getStatusIcon; // ✅
 
-    LoadDetailedScreenItem({
+  LoadDetailedScreenItem({
     Key? key,
     required this.load,
+    this.offerModel,
     required this.getStatusIcon,
   }) : super(key: key);
 
   // في الـ Controller
-  final timelineEvents = <TimelineEvent>[
-    TimelineEvent(
-      title: LocaleKeys.MyLoadsScreen_loadPosted.tr(),
-      description: 'Your load has been posted successfully',
-      status: TripStatus.pending,
-      icon: Icons.check_circle_rounded,
-      timestamp: DateTime.now().subtract(Duration(days: 2)),
-    ),
-  ].obs;
 
   // في الـ Screen
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.backgroundColor,
+      appBar: AppBar(toolbarHeight: 0, elevation: 0),
       body: LoadDetailsWrapper(
+        getStatusColor: _getStatusColor,
         loadModel: load,
         childWidget: SingleChildScrollView(
-          child: Column(
-            children: [
-              TripTimelineScreen(tripDetailsModel: load),
-           NoBidsWidget(),
-              SizedBox(
-                height: AppConstants.h*0.04,
-              ),
-              LoadInfo(load: load),
-              SizedBox(
-                height: AppConstants.h*0.04,
-              ),
-              TripPaymentDetails(
-                tripDetailsModel: load ,
-              ),
-              SizedBox(
-                height: AppConstants.h*0.04,
-              ),
-              ContactDriverHidden(),
-              SizedBox(
-                height: AppConstants.h*0.04,
-              ),
-            ],
+          child: showScreenItemBaseOnStatus(
+            load,
+            load.status,
+            offerModel,
           ), // في الـ Screen
           // EnhancedLoadDetailsCardSectionOnScreen(load: widget.load,
         ),
@@ -76,16 +61,38 @@ class LoadDetailedScreenItem extends StatelessWidget {
   }
 }
 
-Color _getStatusColor(dynamic status) {
-  switch (status.toString().toLowerCase()) {
-    case 'active':
+Widget showScreenItemBaseOnStatus(
+  TripDetailsModel trip,
+  TripStatus tripStatus,
+  OfferModel? offerModel,
+) {
+  switch (tripStatus) {
+    case TripStatus.pending:
+      return PostedDetailsScreen(tripDetailsModel: trip);
+
+    case TripStatus.started:
+      return StartedLoadScreen(offerModel: offerModel!, tripDetailsModel: trip);
+    case TripStatus.accepted:
+      // TODO: Handle this case.
+      return AcceptedTrip(offerModel: offerModel!, tripDetailsModel: trip);
+
+    case TripStatus.completed:
+      // TODO: Handle this case.
+      return  CompletedDesign(offerModel: offerModel!, tripDetailsModel: trip);
+    case TripStatus.cancelled:
+      // TODO: Handle this case.
+       return CanceledTripScreen( tripDetailsModel: trip);
+  }
+}
+
+Color _getStatusColor(TripStatus tripStatus) {
+  switch (tripStatus) {
+    case TripStatus.completed:
       return AppColors.successColor;
-    case 'pending':
-      return AppColors.warningColor;
-    case 'completed':
-      return AppColors.primaryColor;
-    default:
+    case TripStatus.pending || TripStatus.started || TripStatus.accepted:
       return AppColors.infoColor;
+    case TripStatus.cancelled:
+      return AppColors.errorColor;
   }
 }
 

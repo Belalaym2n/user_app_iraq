@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:user_app_iraq/core/utils/app_constants.dart';
 
+import '../../../../../profile/data/models/profile_model.dart';
 import '../../../../data/models/last_trip_model.dart' show TripModel;
 
 import '../../../bloc/getTripsBloc/trips_bloc.dart';
@@ -13,10 +14,12 @@ import '../loadsTap/tabs_controller.dart';
 import 'all_loads_item.dart';
 
 class LoadsScreenItem extends StatefulWidget {
-  LoadsScreenItem({super.key, required this.trips, required this.selectedTab});
+  LoadsScreenItem({super.key,required this.tripStatisticsModel,
+    required this.trips, required this.selectedTab});
 
   final List<TripModel> trips;
   final TripsTab selectedTab;
+  final TripStatisticsModel tripStatisticsModel;
 
   @override
   State<LoadsScreenItem> createState() => _LoadsScreenItemState();
@@ -29,6 +32,7 @@ class _LoadsScreenItemState extends State<LoadsScreenItem> {
       children: [
         SizedBox(height: AppConstants.h * 0.02),
         TabControllerItem(
+          tripStatisticsModel: widget.tripStatisticsModel,
           selectedTab: widget.selectedTab,
           trips: widget.trips,
           onTabChanged: (tab) {

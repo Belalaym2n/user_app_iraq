@@ -4,6 +4,7 @@ import '../data/data_sources/remote/trip_ds.dart';
 import '../data/data_sources/remote/trip_ds_imp.dart';
 import '../data/repositories/trip_repo_imp.dart';
 import '../domain/repositories/trip_domina_repo.dart';
+import '../domain/use_cases/accept_trip_use_case.dart';
 import '../domain/use_cases/get_trip_details.dart';
 import '../domain/use_cases/get_trip_use_case.dart';
 import '../presentation/bloc/getTripsBloc/trips_bloc.dart';
@@ -23,5 +24,6 @@ void tripsDI(GetIt getIt) {
   getIt.registerLazySingleton(() => GetTripDetailsUseCase(getIt()));
 
   getIt.registerFactory(() => TripsBloc(getIt(),getIt()));
-  getIt.registerFactory(() => TripDetailsBloc(getIt()));
+  getIt.registerFactory(() => AcceptTripUseCase(getIt()));
+  getIt.registerFactory(() => TripDetailsBloc(getIt(),getIt()));
 }

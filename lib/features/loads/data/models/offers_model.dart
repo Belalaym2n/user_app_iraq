@@ -1,4 +1,6 @@
 import 'package:user_app_iraq/features/loads/data/models/driver_info.dart';
+import 'package:user_app_iraq/features/loads/data/models/trip_details_model.dart';
+import 'package:user_app_iraq/features/loads/data/models/vehicle_info_model.dart';
 
 import '../../../addLoad/data/models/vehicle_model.dart';
 
@@ -8,11 +10,8 @@ class OfferModel {
   final String? notes;
   final OfferStatus status;
 
-  final DriverInfo? driver;
-  final VehicleModel? vehicle;
-
-  final DateTime? acceptedAt;
-  final DateTime? rejectedAt;
+  final DriverModel driver;
+  final VehicleMiniModel vehicle;
 
   final DateTime createdAt;
   final DateTime updatedAt;
@@ -22,10 +21,8 @@ class OfferModel {
     required this.offeredPrice,
     required this.status,
     this.notes,
-    this.driver,
-    this.vehicle,
-    this.acceptedAt,
-    this.rejectedAt,
+    required this.driver,
+    required this.vehicle,
     required this.createdAt,
     required this.updatedAt,
   });
@@ -33,26 +30,17 @@ class OfferModel {
   factory OfferModel.fromJson(Map<String, dynamic> json) {
     return OfferModel(
       id: json['id'],
-      offeredPrice: (json['offered_price'] as num).toDouble(),
+      offeredPrice: toDouble(json['offered_price']),
       notes: json['notes'],
       status: offerStatusFromString(json['status']),
-      driver: json['driver'] != null
-          ? DriverInfo.fromMap(json['driver'])
-          : null,
-      vehicle: json['vehicle'] != null
-          ? VehicleModel.fromJson(json['vehicle'])
-          : null,
-      acceptedAt: json['accepted_at'] != null
-          ? DateTime.parse(json['accepted_at'])
-          : null,
-      rejectedAt: json['rejected_at'] != null
-          ? DateTime.parse(json['rejected_at'])
-          : null,
+      driver: DriverModel.fromJson(json['driver']),
+      vehicle: VehicleMiniModel.fromJson(json['vehicle']),
       createdAt: DateTime.parse(json['created_at']),
       updatedAt: DateTime.parse(json['updated_at']),
     );
   }
 }
+
 enum OfferStatus {
   pending,
   accepted,

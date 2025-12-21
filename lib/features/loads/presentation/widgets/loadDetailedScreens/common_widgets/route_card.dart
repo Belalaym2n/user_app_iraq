@@ -1,117 +1,118 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:user_app_iraq/features/loads/data/models/last_trip_model.dart' show TripModel, TripStatus;
- import '../../../../../../core/sharedWidgets/text_styles.dart';
-import '../../../../../../core/utils/app_colors.dart';
+import 'package:user_app_iraq/core/utils/app_constants.dart';
+import 'package:user_app_iraq/features/loads/data/models/last_trip_model.dart'
+    show TripModel, TripStatus;
 
+import '../../../../../../core/sharedWidgets/text_styles.dart';
+import '../../../../../../core/utils/app_colors.dart';
 import '../../../../../../generated/locale_keys.g.dart';
- import '../../../../data/models/last_trip_model.dart' show TripModel;
+
+import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:user_app_iraq/core/utils/app_constants.dart';
+import 'package:user_app_iraq/features/loads/data/models/last_trip_model.dart'
+    show TripModel, TripStatus;
+
+import '../../../../../../core/sharedWidgets/text_styles.dart';
+import '../../../../../../core/utils/app_colors.dart';
+import '../../../../../../generated/locale_keys.g.dart';
 
 class EnhancedRouteCard extends StatelessWidget {
   final TripModel load;
 
-  const EnhancedRouteCard({
-    Key? key,
-    required this.load,
-  }) : super(key: key);
+  const EnhancedRouteCard({Key? key, required this.load}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final double w = AppConstants.w;
+    final double h = AppConstants.h;
+
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      padding: const EdgeInsets.all(20),
-      decoration: _buildCardDecoration(),
+      margin: EdgeInsets.symmetric(
+        horizontal: w * 0.044, // 16 / 360
+        vertical: h * 0.010,   // 8 / 777
+      ),
+      padding: EdgeInsets.all(
+        w * 0.055, // 20 / 360
+      ),
+      decoration: _buildCardDecoration(w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildHeader(),
-          const SizedBox(height: 20),
-          _buildRouteTimeline(),
-          // if (_hasSpecialInstructions) ...[
-          //   const SizedBox(height: 16),
-          //   _buildSpecialInstructionsCard(),
-          // ],
+          _buildHeader(w),
+          SizedBox(height: h * 0.026), // 20 / 777
+          _buildRouteTimeline(w, h),
         ],
       ),
     );
   }
 
-  // ============== Card Decoration ==============
+  // ================= Card Decoration =================
 
-  BoxDecoration _buildCardDecoration() {
+  BoxDecoration _buildCardDecoration(double w) {
     return BoxDecoration(
       color: AppColors.cardColor,
-      borderRadius: BorderRadius.circular(20),
-      border: Border.all(
-        color: AppColors.borderColor,
+      borderRadius: BorderRadius.circular(
+        w * 0.055, // 20 / 360
       ),
+      border: Border.all(color: AppColors.borderColor),
       boxShadow: [
         BoxShadow(
           color: AppColors.textMuted.withOpacity(0.05),
-          blurRadius: 10,
-          offset: const Offset(0, 4),
+          blurRadius: w * 0.028, // 10 / 360
+          offset: Offset(
+            0,
+            w * 0.011, // 4 / 360
+          ),
         ),
       ],
     );
   }
 
-  // ============== Header ==============
+  // ================= Header =================
 
-  Widget _buildHeader() {
+  Widget _buildHeader(double w) {
     return Row(
       children: [
-        _buildHeaderIcon(),
-        const SizedBox(width: 12),
+        _buildHeaderIcon(w),
+        SizedBox(width: w * 0.033), // 12 / 360
         Text(
           LocaleKeys.MyLoadsScreen_routeDetails.tr(),
           style: AppTextStyles.headlineMedium(),
         ),
         const Spacer(),
-        // if (load.distance != null) _buildDistanceBadge(),
       ],
     );
   }
 
-  Widget _buildHeaderIcon() {
+  Widget _buildHeaderIcon(double w) {
     return Container(
-      padding: const EdgeInsets.all(10),
+      padding: EdgeInsets.all(
+        w * 0.028, // 10 / 360
+      ),
       decoration: BoxDecoration(
         color: AppColors.primaryColor.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(
+          w * 0.033, // 12 / 360
+        ),
       ),
       child: Icon(
         Icons.route_rounded,
         color: AppColors.primaryColor,
-        size: 24,
+        size: w * 0.067, // 24 / 360
       ),
     );
   }
 
-  // Widget _buildDistanceBadge() {
-  //   return Container(
-  //     padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-  //     decoration: BoxDecoration(
-  //       color: AppColors.secondaryColor.withOpacity(0.1),
-  //       borderRadius: BorderRadius.circular(20),
-  //     ),
-  //     child: Text(
-  //       '${load.distance!.toStringAsFixed(0)} ${LocaleKeys.Add_Load_kilometer.tr()}',
-  //       style: AppTextStyles.labelLarge().copyWith(
-  //         color: AppColors.secondaryColor,
-  //         fontWeight: FontWeight.w600,
-  //       ),
-  //     ),
-  //   );
-  // }
+  // ================= Route Timeline =================
 
-  // ============== Route Timeline ==============
-
-  Widget _buildRouteTimeline() {
+  Widget _buildRouteTimeline(double w, double h) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _buildTimelineLine(),
-        const SizedBox(width: 16),
+        _buildTimelineLine(w, h),
+        SizedBox(width: w * 0.044), // 16 / 360
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -119,14 +120,15 @@ class EnhancedRouteCard extends StatelessWidget {
               _LocationInfo(
                 label: LocaleKeys.MyLoadsScreen_pickup.tr(),
                 location: load.pickupAddress,
-                date: load.scheduledAt,
+                date: load.pickupDate ?? DateTime.now(),
                 isCompleted: _isPickupCompleted,
               ),
-              const SizedBox(height: 48),
+              SizedBox(height: h * 0.062), // 48 / 777
               _LocationInfo(
                 label: LocaleKeys.MyLoadsScreen_delivery.tr(),
                 location: load.destinationAddress,
-                date: load.scheduledAt,
+                date: load.destinationDate ??
+                    DateTime.now().add(const Duration(days: 2)),
                 isCompleted: _isDeliveryCompleted,
               ),
             ],
@@ -136,17 +138,19 @@ class EnhancedRouteCard extends StatelessWidget {
     );
   }
 
-  Widget _buildTimelineLine() {
+  Widget _buildTimelineLine(double w, double h) {
     return Column(
       children: [
         _buildTimelineCircle(
           color: AppColors.successColor,
           icon: Icons.radio_button_checked,
+          w: w,
         ),
-        _buildTimelineConnector(),
+        _buildTimelineConnector(w, h),
         _buildTimelineCircle(
           color: AppColors.errorColor,
           icon: Icons.flag_rounded,
+          w: w,
         ),
       ],
     );
@@ -155,27 +159,27 @@ class EnhancedRouteCard extends StatelessWidget {
   Widget _buildTimelineCircle({
     required Color color,
     required IconData icon,
+    required double w,
   }) {
     return Container(
-      width: 24,
-      height: 24,
-      decoration: BoxDecoration(
-        color: color,
-        shape: BoxShape.circle,
-      ),
+      width: w * 0.067, // 24 / 360
+      height: w * 0.067, // 24 / 360
+      decoration: BoxDecoration(color: color, shape: BoxShape.circle),
       child: Icon(
         icon,
         color: Colors.white,
-        size: 16,
+        size: w * 0.044, // 16 / 360
       ),
     );
   }
 
-  Widget _buildTimelineConnector() {
+  Widget _buildTimelineConnector(double w, double h) {
     return Container(
-      width: 2,
-      height: 80,
-      margin: const EdgeInsets.symmetric(vertical: 4),
+      width: w * 0.006, // 2 / 360
+      height: h * 0.103, // 80 / 777
+      margin: EdgeInsets.symmetric(
+        vertical: h * 0.005, // 4 / 777
+      ),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,
@@ -189,97 +193,51 @@ class EnhancedRouteCard extends StatelessWidget {
     );
   }
 
-
-  Widget _buildSpecialInstructionsCard() {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: AppColors.warningColor.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: AppColors.warningColor.withOpacity(0.3),
-        ),
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Icon(
-            Icons.info_outline_rounded,
-            color: AppColors.warningColor,
-            size: 16,
-          ),
-          const SizedBox(width: 8),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  LocaleKeys.MyLoadsScreen_description.tr(),
-                  style: AppTextStyles.labelLarge().copyWith(
-                    color: AppColors.warningColor,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                // Text(
-                //   load.specialInstructions!,
-                //   style: AppTextStyles.bodySmall().copyWith(
-                //     color: AppColors.warningColor.withOpacity(0.8),
-                //   ),
-                // ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  // ============== Helpers ==============
-
-  // bool get _hasSpecialInstructions =>
-  //     load.specialInstructions?.isNotEmpty == true;
+  // ================= Helpers =================
 
   bool get _isPickupCompleted =>
       load.status == TripStatus.started ||
           load.status == TripStatus.completed;
 
-  bool get _isDeliveryCompleted => load.status == TripStatus.completed;
+  bool get _isDeliveryCompleted =>
+      load.status == TripStatus.completed;
 }
 
-// ============== Location Info Widget ==============
 
 class _LocationInfo extends StatelessWidget {
   final String label;
   final String location;
-  final DateTime? date;
+  final DateTime date;
   final bool isCompleted;
 
   const _LocationInfo({
     Key? key,
     required this.label,
     required this.location,
-    this.date,
+    required this.date,
     required this.isCompleted,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final double w = MediaQuery.of(context).size.width;
+    final double h = MediaQuery.of(context).size.height;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _buildLabelRow(),
-        const SizedBox(height: 4),
+        _buildLabelRow(w),
+        SizedBox(height: h * 0.005), // 4 / 777
         _buildLocationText(),
-        if (date != null) ...[
-          const SizedBox(height: 4),
-          _buildDateTimeRow(),
-        ],
+        SizedBox(height: h * 0.005), // 4 / 777
+        _buildDateTimeRow(w),
       ],
     );
   }
 
-  Widget _buildLabelRow() {
+  // ================= Label Row =================
+
+  Widget _buildLabelRow(double w) {
     return Row(
       children: [
         Text(
@@ -290,19 +248,26 @@ class _LocationInfo extends StatelessWidget {
           ),
         ),
         if (isCompleted) ...[
-          const SizedBox(width: 8),
-          _buildCompletedBadge(),
+          SizedBox(width: w * 0.022), // 8 / 360
+          _buildCompletedBadge(w),
         ],
       ],
     );
   }
 
-  Widget _buildCompletedBadge() {
+  // ================= Completed Badge =================
+
+  Widget _buildCompletedBadge(double w) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+      padding: EdgeInsets.symmetric(
+        horizontal: w * 0.022, // 8 / 360
+        vertical: w * 0.006,   // 2 / 360
+      ),
       decoration: BoxDecoration(
-        color: AppColors.successColor.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(12),
+        color: AppColors.successColor.withOpacity(0.1), // 10%
+        borderRadius: BorderRadius.circular(
+          w * 0.033, // 12 / 360
+        ),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -310,9 +275,9 @@ class _LocationInfo extends StatelessWidget {
           Icon(
             Icons.check_circle_rounded,
             color: AppColors.successColor,
-            size: 12,
+            size: w * 0.033, // 12 / 360
           ),
-          const SizedBox(width: 4),
+          SizedBox(width: w * 0.011), // 4 / 360
           Text(
             LocaleKeys.MyLoadsScreen_completed.tr(),
             style: AppTextStyles.bodySmall().copyWith(
@@ -325,6 +290,8 @@ class _LocationInfo extends StatelessWidget {
     );
   }
 
+  // ================= Location =================
+
   Widget _buildLocationText() {
     return Text(
       location,
@@ -334,44 +301,30 @@ class _LocationInfo extends StatelessWidget {
     );
   }
 
-  Widget _buildDateTimeRow() {
-    return Row(
-      children: [
-        _buildDateSection(),
-        const SizedBox(width: 8),
-        _buildTimeSection(),
-      ],
-    );
-  }
+  // ================= Date & Time =================
 
-  Widget _buildDateSection() {
+  Widget _buildDateTimeRow(double w) {
     return Row(
       children: [
         Icon(
           Icons.calendar_today_rounded,
-          size: 12,
+          size: w * 0.033, // 12 / 360
           color: AppColors.textMuted,
         ),
-        const SizedBox(width: 4),
+        SizedBox(width: w * 0.011), // 4 / 360
         Text(
-          DateFormat('MMM dd, yyyy').format(date!),
+          DateFormat('MMM dd, yyyy').format(date),
           style: AppTextStyles.bodySmall(),
         ),
-      ],
-    );
-  }
-
-  Widget _buildTimeSection() {
-    return Row(
-      children: [
+        SizedBox(width: w * 0.022), // 8 / 360
         Icon(
           Icons.access_time_rounded,
-          size: 12,
+          size: w * 0.033, // 12 / 360
           color: AppColors.textMuted,
         ),
-        const SizedBox(width: 4),
+        SizedBox(width: w * 0.011), // 4 / 360
         Text(
-          DateFormat('HH:mm').format(date!),
+          DateFormat('HH:mm').format(date),
           style: AppTextStyles.bodySmall(),
         ),
       ],

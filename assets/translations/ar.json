@@ -392,6 +392,16 @@
     "Auth_phone_invalid": "رقم الهاتف غير صحيح"
   },
   "MyLoadsScreen": {
+    "tripCancelledSuccessfully": "تم إلغاء الرحلة بنجاح.",
+
+
+
+
+
+
+
+    "accepted": "مقبول",
+    "rejected": "مرفوض",
     "myLoads": "حمولاتي",
     "selectAll": "تحديد الكل",
     "cancel": "إلغاء",

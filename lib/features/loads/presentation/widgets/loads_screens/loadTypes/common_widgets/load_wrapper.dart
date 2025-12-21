@@ -8,8 +8,8 @@ import '../../../../../../../core/sharedWidgets/text_styles.dart';
 import '../../../../../../../core/utils/app_colors.dart';
 
 import '../../../../../data/models/last_trip_model.dart';
-import '../build_load_route.dart';
-import '../load_details.dart';
+import 'build_load_route.dart';
+import 'load_details.dart';
 import 'build_load_header.dart';
 
 class LoadWrapper extends StatefulWidget {
@@ -63,8 +63,7 @@ class _LoadWrapperState extends State<LoadWrapper> {
                   LoadHeader(load: widget.load),
                   SizedBox(height: AppConstants.h * 0.021),
                   RouteInfo(load: widget.load),
-                  SizedBox(height: AppConstants.h * 0.021),
-                  LoadDetails(load: widget.load),
+                   LoadDetails(load: widget.load),
                   widget.child,
                 ],
               ),

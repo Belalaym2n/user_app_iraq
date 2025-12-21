@@ -1,7 +1,7 @@
 //
 // import 'package:flutter/cupertino.dart';
 // import 'package:flutter/material.dart';
-// import 'package:user_app_iraq/features/loads/data/models/bids_model.dart' show BidModel;
+// import 'package:user_app_iraq/features/loads/data/models/offers.dart' show BidModel;
 // import 'package:user_app_iraq/features/loads/data/models/load_model.dart' show LoadModel;
 //
 // import '../../../../../../../core/sharedWidgets/text_styles.dart';

@@ -8,7 +8,6 @@ import '../../../../../core/apiManager/end_points.dart';
 import '../../../../../core/handleErrors/result_pattern.dart';
 import '../../models/last_trip_model.dart' show TripModel;
 
-
 class TripsRemoteDSImp implements TripsRemoteDS {
   @override
   Future<Result> getTrips() async {
@@ -22,10 +21,25 @@ class TripsRemoteDSImp implements TripsRemoteDS {
       return response;
     }
 
-    final List trips = response['data'];
-    final result = trips.map((e) => TripModel.fromJson(e)).toList();
+    // 👇 data الأساسية
+    final outerData = response['data'];
 
-    return Result.success(result);
+    if (outerData == null || outerData is! Map<String, dynamic>) {
+      return Result.success(<TripModel>[]);
+    }
+
+    // 👇 data اللي جواها List
+    final innerData = outerData['data'];
+
+    if (innerData == null || innerData is! List) {
+      return Result.success(<TripModel>[]);
+    }
+
+    final trips = innerData
+        .map((e) => TripModel.fromJson(e as Map<String, dynamic>))
+        .toList();
+
+    return Result.success(trips);
   }
 
   @override
@@ -34,16 +48,13 @@ class TripsRemoteDSImp implements TripsRemoteDS {
     final response = await ApiService.request(
       endpoint: "${AppEndPoints.trips}/$id/cancel",
       method: "POST",
-      data: {
-        "cancellation_reason": "Driver unavailable"
-      },
+      data: {"cancellation_reason": "Driver unavailable"},
       queryParameters: {"locale": "en"},
     );
 
     if (response is Result) {
       return response;
     }
-
 
     return Result.success(true); // مجرد تأكيد نجاح
   }
@@ -57,11 +68,27 @@ class TripsRemoteDSImp implements TripsRemoteDS {
       queryParameters: {'locale': 'en'},
     );
     if (response is Result) {
-
       return response;
     }
     final result = TripDetailsModel.fromJson(response['data']);
 
-        return Result.success(result);
+    return Result.success(result);
+  }
+
+  @override
+  Future<Result> acceptTrip(int tripID, int offerID) async {
+    final response = await ApiService.request(
+      endpoint: "${AppEndPoints.trips}/$tripID/accept-offer",
+      method: "POST",
+      data: {"offer_id": offerID},
+      queryParameters: {"locale": "en"},
+    );
+
+    if (response is Result) {
+      return response;
+    }
+    final result = TripDetailsModel.fromJson(response['data']);
+
+    return Result.success(result);
   }
 }

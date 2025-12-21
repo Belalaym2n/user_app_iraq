@@ -342,6 +342,8 @@ abstract class  LocaleKeys {
   static const Validations_enterBudget = 'Validations.enterBudget';
   static const Validations_Auth_phone_invalid = 'Validations.Auth_phone_invalid';
   static const Validations = 'Validations';
+  static const MyLoadsScreen_accepted = 'MyLoadsScreen.accepted';
+  static const MyLoadsScreen_rejected = 'MyLoadsScreen.rejected';
   static const MyLoadsScreen_myLoads = 'MyLoadsScreen.myLoads';
   static const MyLoadsScreen_selectAll = 'MyLoadsScreen.selectAll';
   static const MyLoadsScreen_cancel = 'MyLoadsScreen.cancel';

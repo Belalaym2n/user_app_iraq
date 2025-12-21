@@ -6,6 +6,7 @@ import 'package:user_app_iraq/core/utils/app_constants.dart';
 import 'package:user_app_iraq/features/loads/presentation/widgets/loads_screens/loadsTap/tap_item.dart';
 import 'package:user_app_iraq/generated/locale_keys.g.dart';
 
+import '../../../../../profile/data/models/profile_model.dart';
 import '../../../../data/models/last_trip_model.dart';
 import '../../../bloc/getTripsBloc/trips_bloc.dart';
 import '../../../bloc/getTripsBloc/trips_events.dart';
@@ -17,19 +18,32 @@ class TabControllerItem extends StatelessWidget {
     required this.selectedTab,
     required this.trips,
     required this.onTabChanged,
+    required this.tripStatisticsModel,
   });
 
   final TripsTab selectedTab;
   final List<TripModel> trips;
+  final TripStatisticsModel tripStatisticsModel;
   final ValueChanged<TripsTab> onTabChanged;
 
   @override
   Widget build(BuildContext context) {
     final labels = [
       LocaleKeys.MyLoadsScreen_posted.tr(),
+      LocaleKeys.MyLoadsScreen_accepted.tr(),
+
       LocaleKeys.MyLoadsScreen_completed.tr(),
-      LocaleKeys.MyLoadsScreen_inTransit.tr(),
+      LocaleKeys.MyLoadsScreen_biddingStarted.tr(),
+
       LocaleKeys.MyLoadsScreen_cancel.tr(),
+    ];
+    final tripTabCounts = [
+      tripStatisticsModel.pendingTrips,
+      tripStatisticsModel.acceptedTrips,
+      tripStatisticsModel.completedTrips,
+      tripStatisticsModel.startedTrips,
+
+      tripStatisticsModel.cancelledTrips,
     ];
 
     return SizedBox(
@@ -49,7 +63,7 @@ class TabControllerItem extends StatelessWidget {
                 onTap: () => onTabChanged(tab),
                 child: OrderStatusWidget(
                   statusName: labels[index],
-                  orderCount: _countForTab(tab, trips),
+                  orderCount: tripTabCounts[index],
                   isSelected: isSelected,
                 ),
               ),
@@ -58,18 +72,5 @@ class TabControllerItem extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  int _countForTab(TripsTab tab, List<TripModel> trips) {
-    switch (tab) {
-      case TripsTab.pending:
-        return trips.where((e) => e.status == TripStatus.pending).length;
-      case TripsTab.completed:
-        return trips.where((e) => e.status == TripStatus.completed).length;
-      case TripsTab.inTransit:
-        return trips.where((e) => e.status == TripStatus.started).length;
-      case TripsTab.cancelled:
-        return trips.where((e) => e.status == TripStatus.cancelled).length;
-    }
   }
 }

@@ -21,4 +21,10 @@ class TripsDataRepo implements TripsDomainRepo {
     // TODO: implement getTripDetails
     return remoteDS.getTripDetails(tripId);
   }
+
+  @override
+  Future<Result> accept(int tripId,int offerId) {
+    // TODO: implement accept
+    return remoteDS.acceptTrip(tripId,offerId);
+  }
 }

@@ -6,7 +6,7 @@
 // import '../../../../../../core/sharedWidgets/text_styles.dart';
 // import '../../../../../../core/utils/app_colors.dart';
 // import '../../../../../../generated/locale_keys.g.dart';
-// import '../../../../data/models/bids_model.dart';
+// import '../../../../data/models/offers.dart';
 // import '../../../../data/models/bids_status_model.dart';
 //
 // class EnhancedBidsSection extends StatelessWidget {

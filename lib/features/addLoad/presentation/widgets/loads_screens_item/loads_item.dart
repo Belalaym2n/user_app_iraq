@@ -29,15 +29,28 @@ class LoadsItem extends StatefulWidget {
   State<LoadsItem> createState() => _LoadsItemState();
 }
 
-final _formKey = GlobalKey<FormState>();
-final loadController = TextEditingController();
-final descriptionController = TextEditingController();
-final material = TextEditingController();
-final budget = TextEditingController();
-final weight = TextEditingController();
-final routesController = TextEditingController();
+
 
 class _LoadsItemState extends State<LoadsItem> {
+  final _formKey = GlobalKey<FormState>();
+
+  final loadController = TextEditingController();
+  final descriptionController = TextEditingController();
+  final material = TextEditingController();
+  final budget = TextEditingController();
+  final weight = TextEditingController();
+  final routesController = TextEditingController();
+
+  @override
+  void dispose() {
+    loadController.dispose();
+    descriptionController.dispose();
+    material.dispose();
+    budget.dispose();
+    weight.dispose();
+    routesController.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -89,9 +102,9 @@ class _LoadsItemState extends State<LoadsItem> {
                     SizedBox(height: AppConstants.h * 0.02),
 
                     BuildBudgetWidget(
-
-                        routesController:routesController ,
-                        budget: budget),
+                      routesController: routesController,
+                      budget: budget,
+                    ),
                     SizedBox(height: AppConstants.h * 0.02),
 
                     Padding(
@@ -120,6 +133,14 @@ class _LoadsItemState extends State<LoadsItem> {
       print("validate");
       final state = context.read<AddLoadBloc>().state;
       TripModel fakeLoad = TripModel(
+        weight: weight.text,
+        material: material.text,
+
+
+        tripTitle: loadController.text,
+        destinationDate: state.deliveryDate,
+
+        offers: [],
         vehicleType: state.selectedVehicle?.vehicleType.toString() ?? '',
 
         pickupLat: state.pickupLocation?.lat ?? 0,
@@ -128,14 +149,14 @@ class _LoadsItemState extends State<LoadsItem> {
         pickupLng: state.pickupLocation?.lng ?? 0,
         description: descriptionController.text,
         basePrice: double.tryParse(budget.text) ?? 0.0,
+        scheduledAt: state.pickupDate,
 
         destinationAddress: state.deliveryLocation?.address ?? '',
         destinationLat: state.deliveryLocation?.lat ?? 0,
         destinationLng: state.deliveryLocation?.lng ?? 0,
 
-        scheduledAt: state.pickupDate ,
+        pickupDate: state.pickupDate,
       );
-
 
       context.read<AddLoadBloc>().add(SubmitLoadEvent(fakeLoad));
     }
