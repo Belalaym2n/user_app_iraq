@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
  import 'package:user_app_iraq/features/home_page/presentation/widgets/widgets/quickActions/build_quick_actions.dart';
 
 import '../../../../../core/utils/app_colors.dart';
+import '../../../../ads/presentation/pages/get_ads_screen.dart';
 import '../widgets/floatingActionButton/floating_action_button.dart';
 import '../widgets/home_page_header.dart';
 
@@ -38,16 +39,12 @@ class _HomeScreenItemState extends State<HomeScreenItem> {
       body: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(child: MobileHeader()),
-          const SliverToBoxAdapter(child: SizedBox(height: 8)),
-          SliverToBoxAdapter(child: BuildQuickActions()),
+          SliverToBoxAdapter(
+            child: AdsCarouselWidget(),
+          ),
+           SliverToBoxAdapter(child: BuildQuickActions()),
 
-          // SliverToBoxAdapter(child: ActiveShipmentsSection()),
-          // const SliverToBoxAdapter(child: SizedBox(height:0)),
-          //
-          // SliverToBoxAdapter(child: EmptyShipmentsWidget()),
-          //
-          // SliverToBoxAdapter(child: JourneysEmpty()),
-          //   SliverToBoxAdapter(child: SizedBox(height:AppConstants.h*0.15)),
+
 
         ],
       ),

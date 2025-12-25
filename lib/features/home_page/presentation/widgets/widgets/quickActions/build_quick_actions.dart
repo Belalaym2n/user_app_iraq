@@ -29,11 +29,9 @@ class _BuildQuickActionsState extends State<BuildQuickActions> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: AppConstants.h * 0.012), // 10 / 776
 
            _build_headline(),
 
-          SizedBox(height: AppConstants.h * 0.012), // 10 / 776
 
            const BuildActions(),
         ],

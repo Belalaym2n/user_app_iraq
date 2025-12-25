@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:user_app_iraq/core/utils/app_constants.dart';
 import 'package:user_app_iraq/features/loads/data/models/trip_details_model.dart';
 
+import '../../../../../complaint/presentation/pages/complaint_page.dart';
+import '../../../../../rate/presentation/pages/rate_screen_page.dart';
 import '../../../../data/models/last_trip_model.dart';
 import '../loadDetailsButton/loadDetailsButton.dart';
 import 'build_header.dart' show EnhancedSliverAppBar;
@@ -45,7 +47,7 @@ class LoadDetailsWrapper extends StatelessWidget {
                   withoutTacking(
                     loadModel.status == TripStatus.pending ||
                         TripStatus.cancelled == loadModel.status ||
-                        loadModel.status == TripStatus.accepted||
+                        loadModel.status == TripStatus.accepted ||
                         loadModel.status == TripStatus.completed,
                   ),
                 ],
@@ -53,24 +55,49 @@ class LoadDetailsWrapper extends StatelessWidget {
             ),
           ),
 
-          LoadBottomActionBar(status: loadModel.status),
+          LoadBottomActionBar(
+            onTrackTrip: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ComplaintScreen(),
+                ),
+              );
+            },
+            onRate: () async {
+              showModalBottomSheet(
+                context: context,
+                isScrollControlled: true,
+                backgroundColor: Colors.transparent,
+                builder: (context) => RatingBottomSheet(
+                  tripId: 232,
+                  tripTitle: 'Trip to Basra', // Optional
+                ),
+              ).then((value) {
+                if (value == true) {
+                  // Rating submitted successfully
+                  print('Rating submitted!');
+                }
+              });
+            },
+
+            status: loadModel.status,
+          ),
         ],
       ),
     );
   }
 
-Widget  withoutTacking(bool isTrack) {
+  Widget withoutTacking(bool isTrack) {
+    return Column(
+      children: [
+        if (!isTrack) LoadLiveTracking(),
 
-       return Column(
-            children: [
-              if(!isTrack)
-                LoadLiveTracking(),
-
-              EnhancedRouteCard(load: loadModel),
-              TripTimelineScreen(tripDetailsModel: loadModel),
-              childWidget,
-            ],
-          );
+        EnhancedRouteCard(load: loadModel),
+        TripTimelineScreen(tripDetailsModel: loadModel),
+        childWidget,
+      ],
+    );
   }
 
   IconData get_status_icon(status) {
