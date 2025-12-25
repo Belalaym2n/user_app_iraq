@@ -70,15 +70,16 @@ class LoadBottomActionBar extends StatelessWidget {
           ),
           right: _primaryButton(
 
-            color: AppColors.primaryColor,
-            icon: Icons.message,
-            label: 'contact_driver'.tr(),
-            onTap: onContactDriver,
-          ),
+          color: AppColors.primaryColor,
+          icon: Icons.message,
+          label: 'contact_driver'.tr(),
+          onTap: onContactDriver,
+        ),
         );
       case TripStatus.started:
         return _doubleActions(
           left: _outlinedButton(
+
             icon: Icons.phone,
             label: 'contact_driver'.tr(),
             onTap: onContactDriver,
@@ -91,14 +92,22 @@ class LoadBottomActionBar extends StatelessWidget {
         );
 
       case TripStatus.completed:
-        return _singleAction(
-          _primaryButton(
-            icon: Icons.star,
-            label: 'rate_experience'.tr(),
-            color: AppColors.primaryColor,
-            onTap: onRate,
-          ),
-        );
+        return _doubleActions(
+    left:_outlinedButton(
+      icon: Icons.report_problem,
+      label: 'Send Problem'.tr(),
+      onTap: onTrackTrip,
+    ),
+
+      right: _primaryButton(
+        icon: Icons.star,
+        color: AppColors.primaryColor,
+
+
+         label: 'rate_experience'.tr(),
+        onTap: onRate,
+
+    ));
 
       default:
         return _singleAction(
@@ -130,9 +139,8 @@ class LoadBottomActionBar extends StatelessWidget {
     Color? color,
   }) {
     return ElevatedButton.icon(
-      onPressed: (){
+      onPressed: onTap, // ✅ الصح
 
-      },
       icon: Icon(icon),
       label: Text(label),
       style: ElevatedButton.styleFrom(

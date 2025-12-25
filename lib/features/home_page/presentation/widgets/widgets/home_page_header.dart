@@ -90,7 +90,7 @@ class _MobileHeaderState extends State<MobileHeader>
 
 
     return AnimatedContainer(
-      height: AppConstants.h * 0.2,
+      height: AppConstants.h * 0.17,
       duration: const Duration(milliseconds: 600),
       curve: Curves.easeInOut,
 
@@ -101,8 +101,8 @@ class _MobileHeaderState extends State<MobileHeader>
 
       decoration: BoxDecoration(
         borderRadius: BorderRadius.only(
-          bottomRight: Radius.circular(AppConstants.w * 0.1),
-          bottomLeft: Radius.circular(AppConstants.w * 0.1),
+          bottomRight: Radius.circular(AppConstants.w * 0.05),
+          bottomLeft: Radius.circular(AppConstants.w * 0.05),
         ),
         color: AppColors.primaryColor,
         boxShadow: [
@@ -117,11 +117,10 @@ class _MobileHeaderState extends State<MobileHeader>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: AppConstants.h * 0.01),
 
           _buildHeader(context),
 
-          SizedBox(height: AppConstants.h * 0.02),
+          SizedBox(height: AppConstants.h * 0.01),
 
            animationDoSlide(
             index: 1,
@@ -229,7 +228,7 @@ class _MobileHeaderState extends State<MobileHeader>
 
   Widget _buildCompanyBox() {
     return Container(
-      height: AppConstants.h * 0.06,
+      height: AppConstants.h * 0.05,
       width: AppConstants.w * 0.9,
       padding: EdgeInsets.symmetric(
         vertical: 0,
